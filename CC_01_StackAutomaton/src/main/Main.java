@@ -15,6 +15,6 @@ public class Main {
 		Automaton a = new Automaton(stateSet, inputAlphabet, stackAlphabet,
 							initialState, initialStackSymbol, transitionRules, 
 							acceptStates);
-		
+		a.evaluateString("programDestroyer");
 	}
 }
