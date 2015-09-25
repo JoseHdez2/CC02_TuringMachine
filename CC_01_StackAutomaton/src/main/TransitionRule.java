@@ -41,6 +41,22 @@ public class TransitionRule {
 		this.nextState = nextState;
 	}
 
+	public Character getRequiredInputCharacter() {
+		return requiredInputCharacter;
+	}
+
+	public void setRequiredInputCharacter(Character requiredInputCharacter) {
+		this.requiredInputCharacter = requiredInputCharacter;
+	}
+
+	public Symbol getRequiredStackSymbol() {
+		return requiredStackSymbol;
+	}
+
+	public void setRequiredStackSymbol(Symbol requiredStackSymbol) {
+		this.requiredStackSymbol = requiredStackSymbol;
+	}
+	
 	public ArrayList<Character> getStackSymbolsToPush() {
 		return stackSymbolsToPush;
 	}
