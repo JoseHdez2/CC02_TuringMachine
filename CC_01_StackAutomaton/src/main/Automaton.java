@@ -1,6 +1,8 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.Stack;
 
 import util.Sys;
 
@@ -9,7 +11,7 @@ public class Automaton {
 	Set<Character> inputAlphabet;
 	Set<Character> stackAlphabet;
 	State initialState;
-	Character initialStackSymbol;
+	Symbol initialStackSymbol;
 	Set<TransitionRule> transitionRules;
 	Set<State> acceptStates;
 	
@@ -17,7 +19,7 @@ public class Automaton {
 				Set<Character> inputAlphabet,
 				Set<Character> stackAlphabet,
 				State initialState,
-				Character initialStackSymbol,
+				Symbol initialStackSymbol,
 				Set<State> acceptStates){
 		this.stateSet = stateSet;
 		this.inputAlphabet = inputAlphabet;
@@ -38,7 +40,17 @@ public class Automaton {
 	 * Evaluates an input string. The main purpose of a logical automata.
 	 * @return	Boolean indicating acceptance of input string.
 	 */
-	boolean evaluateString(String inputString){
+	public boolean evaluateString(String inputString){
+		ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
+		// Add the initial configuration into the statuses array.
+		Stack<Symbol> initialStack = new Stack<Symbol>();
+		initialStack.push(initialStackSymbol);
+		possibleStatuses.add(new AutomatonStatus(initialState, inputString, initialStack));
+		// Iterate until all possibilities are exhausted.
+		for (AutomatonStatus as : possibleStatuses){
+			
+		}
+		// If all possibilities have been exhausted and no
 		return false;
 	}
 }

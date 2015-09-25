@@ -4,7 +4,7 @@ public class State {
 	String name;
 
 	State(String name){
-		setName(name);
+		this.name = name;
 	}
 	
 	/*

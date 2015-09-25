@@ -2,9 +2,17 @@ package main;
 
 import java.util.ArrayList;
 
+/**
+ * @author jose
+ * 
+ *	Class that defines a transition rule, 
+ *	which the automata use to move between states.
+ */
 public class TransitionRule {
 	State prevState;
 	State nextState;
+	Character requiredInputCharacter; // Must be first character in rest of input string.
+	Symbol requiredStackSymbol;	// Must be in top of stack.
 	ArrayList<Character> stackSymbolsToPush;
 	
 	TransitionRule(State prevState, State nextState, ArrayList<Character> stackSymbolsToPush){
