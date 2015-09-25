@@ -5,10 +5,10 @@ import java.io.File;
 /**
  * @author jose
  * 
- * This class creates automata from a file.
+ * This class creates an automaton from a file.
  *
  */
-public class AutomatonCreator {
+public class AutomataCreator {
 	/*
 	static public Automaton createAutomaton(File file){
 		return new Automaton(new Set<State>(),
