@@ -4,6 +4,10 @@ package main;
 public class Symbol{
 	Character c;
 	
+	Symbol(Character c){
+		this.c = c;
+	}
+	
 	public String toString(){
 		return c.toString();
 	}

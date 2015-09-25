@@ -1,31 +1,35 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
 import util.Sys;
 
 public class Automaton {
-	Set<State> stateSet;
-	Set<Character> inputAlphabet;
-	Set<Character> stackAlphabet;
+	HashSet<State> stateSet;
+	HashSet<Character> inputAlphabet;
+	HashSet<Symbol> stackAlphabet;
 	State initialState;
 	Symbol initialStackSymbol;
-	Set<TransitionRule> transitionRules;
-	Set<State> acceptStates;
+	HashSet<TransitionRule> transitionRules;
+	HashSet<State> acceptStates;
 	
-	Automaton(	Set<State> stateSet, 
-				Set<Character> inputAlphabet,
-				Set<Character> stackAlphabet,
+	Automaton(	HashSet<State> stateSet, 
+				HashSet<Character> inputAlphabet,
+				HashSet<Symbol> stackAlphabet,
 				State initialState,
 				Symbol initialStackSymbol,
-				Set<State> acceptStates){
+				HashSet<TransitionRule> transitionRules,
+				HashSet<State> acceptStates){
 		this.stateSet = stateSet;
 		this.inputAlphabet = inputAlphabet;
 		this.stackAlphabet = stackAlphabet;
 		this.initialState = initialState;
 		this.initialStackSymbol = initialStackSymbol;
+		this.transitionRules = transitionRules;
+		this.acceptStates = acceptStates;
 		
 		// TODO make sure all arguments are correct.
 		
