@@ -22,6 +22,25 @@ public class TransitionRule {
 	}
 	
 	/*
+	 * Equals and hashCode.
+	 */
+	
+	public boolean equals(Object ob){
+		if (ob == null) return false;
+		if (ob.getClass() != getClass()) return false;
+		TransitionRule other = (TransitionRule)ob;
+		if (!prevState.equals(other.prevState)) return false;
+		// TODO rest of them
+		return true;
+	}
+	
+	public int hashCode() {
+		return prevState.hashCode() ^ nextState.hashCode() ^ 
+				requiredInputCharacter.hashCode() ^ requiredStackSymbol.hashCode() ^
+				stackSymbolsToPush.hashCode();
+	}
+
+	/*
 	 * Setters and getters.
 	 */
 
