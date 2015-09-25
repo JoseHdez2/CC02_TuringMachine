@@ -47,10 +47,19 @@ public class Automaton {
 		initialStack.push(initialStackSymbol);
 		possibleStatuses.add(new AutomatonStatus(initialState, inputString, initialStack));
 		// Iterate until all possibilities are exhausted.
+		// TODO not add and remove from a list you are iterating.
 		for (AutomatonStatus as : possibleStatuses){
 			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(as);
+			if (applicableTransitions.isEmpty()){
+				possibleStatuses.remove(as);
+				break;
+			}
 			for (TransitionRule tr : applicableTransitions){
 				AutomatonStatus newStatus = applyTransition(as, tr);
+				if (newStatus.getCurrentStack().isEmpty() &&
+						newStatus.getRemainingInputString().isEmpty())
+					return true;
+				// TODO not limit ourselves to yes or no; do the trace.
 				possibleStatuses.add(newStatus);
 			}
 			possibleStatuses.remove(as);
