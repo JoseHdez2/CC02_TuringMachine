@@ -15,9 +15,14 @@ public class TransitionRule {
 	Symbol requiredStackSymbol;	// Must be in top of stack.
 	ArrayList<Character> stackSymbolsToPush;
 	
-	TransitionRule(State prevState, State nextState, ArrayList<Character> stackSymbolsToPush){
+	TransitionRule(State prevState, State nextState,
+			Character requiredInputCharacter,
+			Symbol requiredStackSymbol,
+			ArrayList<Character> stackSymbolsToPush){
 		this.prevState = prevState;
 		this.nextState = nextState;
+		this.requiredInputCharacter = requiredInputCharacter;
+		this.requiredStackSymbol = requiredStackSymbol;
 		this.stackSymbolsToPush = stackSymbolsToPush;
 	}
 	
