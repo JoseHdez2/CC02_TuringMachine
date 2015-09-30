@@ -30,6 +30,10 @@ public class TransitionRule {
 		if (ob.getClass() != getClass()) return false;
 		TransitionRule other = (TransitionRule)ob;
 		if (!prevState.equals(other.prevState)) return false;
+		if (!nextState.equals(other.nextState)) return false;
+		if (!requiredInputCharacter.equals(other.requiredInputCharacter)) return false;
+		if (!requiredStackSymbol.equals(other.requiredStackSymbol)) return false;
+		if (!stackSymbolsToPush.equals(other.stackSymbolsToPush)) return false;
 		// TODO rest of them
 		return true;
 	}
