@@ -17,7 +17,6 @@ public class Main {
 							initialState, initialStackSymbol, transitionRules, 
 							acceptStates);
 		a.evaluateString("programDestroyer");
-		if (Pattern.matches("#.*", "# mi comment")) System.out.println("bien");
 		
 	}
 }

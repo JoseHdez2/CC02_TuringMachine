@@ -28,7 +28,8 @@ public abstract class AutomataCreator {
 		Path path = Paths.get(fileName);
 		ArrayList<String> lines = new ArrayList<String>();
 
-		// 1) Read file. Get all but comment lines.
+		// 1) Read file lines.
+		
 		try (Scanner scanner = new Scanner(path, ENCODING.name())) {
 			while (scanner.hasNextLine()) {
 				lines.add(scanner.nextLine());
@@ -42,7 +43,7 @@ public abstract class AutomataCreator {
 		ArrayList<String> emptyLines = new ArrayList<String>();
 		ArrayList<ArrayList<String>> tokenizedLines = new ArrayList<ArrayList<String>>();
 
-		// Discard useless lines and tokenize valid ones.
+		// Tokenize valid lines and discard useless ones.
 		for (String line : lines) {
 			if (Pattern.matches(EMPTY_LINE, line)) {
 				emptyLines.add(line);
@@ -52,7 +53,10 @@ public abstract class AutomataCreator {
 					Arrays.asList(line.trim().split("\\s+")));
 			tokenizedLines.add(tokenizedLine);
 		}
+		lines.removeAll(emptyLines);
 
+		// 3) Convert tokens into valid constructor arguments.
+		
 		HashSet<State> stateSet = new HashSet<State>();
 		for (String token : tokenizedLines.get(0)) {
 			stateSet.add(new State(token));
@@ -78,10 +82,7 @@ public abstract class AutomataCreator {
 		}
 
 		HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
-		ArrayList<ArrayList<String>> transLines = 
-				(ArrayList<ArrayList<String>>)tokenizedLines.subList(5, tokenizedLines.size());
-		
-		for (ArrayList<String> tl : transLines){
+		for (ArrayList<String> tl : tokenizedLines.subList(5, tokenizedLines.size())){
 			State prevState = new State(tl.get(0));
 			Character requiredInputCharacter = tl.get(1).charAt(0);
 			Symbol requiredStackSymbol = new Symbol(tl.get(2));
@@ -91,7 +92,7 @@ public abstract class AutomataCreator {
 					requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
 		}
 
-		// 3) Feed arguments into Automaton constructor.
+		// 4) Feed arguments into Automaton constructor.
 		return new Automaton(stateSet, inputAlphabet, stackAlphabet,
 				initialState, initialStackSymbol, transitionRules, acceptStates);
 	}
