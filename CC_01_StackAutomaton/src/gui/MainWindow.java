@@ -2,31 +2,28 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.UIManager;
 
 public class MainWindow {
 
-	boolean englishGUI = true;
-	private static final HashMap<String, String> guiVocab;
-	static
-	{
-		guiVocab = new HashMap<String, String>();
-		guiVocab.put("Load", "Cargar");
-		guiVocab.put("Run", "Correr");
-	}
+	boolean englishGUI = false;
+	int lang = englishGUI ? 0 : 1;
 	
-	String STR_LOAD = englishGUI ? "Load" : "Cargar";
-	String STR_RUN = englishGUI ? "Run" : "Correr";
+	final String[] STR_LOAD = {"Load", "Cargar"};
+	final String[] STR_RUN = {"Run", "Correr"};
+	final String[] STR_TRACE = {"Trace", "Traza"};
+	final String[] STR_TRANS = {"Transitions", "Transiciones"};
 	
 	private JFrame frame;
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -35,6 +32,7 @@ public class MainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -65,28 +63,30 @@ public class MainWindow {
 		JPanel panelSouth = new JPanel();
 		frame.getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
-		JButton btnLoad = new JButton(guiVocab.get("Load"));
+		JButton btnLoad = new JButton(STR_LOAD[lang]);
+		panelNorth.add(btnLoad, BorderLayout.NORTH);
 		
-		JButton btnRun = new JButton(guiVocab.get("Run"));
+		JButton btnRun = new JButton(STR_RUN[lang]);
 		panelSouth.add(btnRun);
 		
-		JLabel lblMaquina = new JLabel("Transiciones");
+		JLabel lblMaquina = new JLabel(STR_TRANS[lang]);
 		panelNorth.add(lblMaquina);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{1, 2, 3, 4, 5},
-				{1, 2, 3, 4, 5},
-				{1, 2, 3, 4, 5},
-			},
-			new String[] {
-				"State In", "State Out", "String In", "Stack In", "Stack Out"
-			}
-		));
-		panelNorth.add(table);
+		JPanel panelTrans = new JPanel();
+		frame.getContentPane().add(panelTrans, BorderLayout.CENTER);
 		
-		JLabel lblTraza = new JLabel("Traza");
+		String[][] tableData =
+			{
+				{"q1", "q2", "a1", "A1", "A2"},
+			};
+		String[] tableColumns = {"State In", "State Out", "String In", "Stack In", "Stack Out"};
+		table = new JTable(tableData, tableColumns);
+		table.setEnabled(false);
+		scrollPane = new JScrollPane(table);
+		
+		panelTrans.add(scrollPane, BorderLayout.SOUTH);
+		
+		JLabel lblTraza = new JLabel(STR_TRACE[lang]);
 		panelSouth.add(lblTraza);
 		
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
