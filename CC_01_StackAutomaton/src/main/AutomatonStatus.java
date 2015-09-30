@@ -20,6 +20,27 @@ public class AutomatonStatus {
 		this.remainingInputString = remainingInputString;
 		this.currentStack = currentStack;
 	}
+
+	/*
+	 * Equals and hashCode.
+	 */
+	
+	public boolean equals(Object ob){
+		if (ob == null) return false;
+		if (ob.getClass() != getClass()) return false;
+		AutomatonStatus other = (AutomatonStatus)ob;
+		if (!currentState.equals(other.currentState)) return false;
+		if (!remainingInputString.equals(other.remainingInputString)) return false;
+		if (!currentStack.equals(other.currentStack)) return false;
+		// TODO rest of them
+		return true;
+	}
+	
+	public int hashCode() {
+		return 	currentState.hashCode() ^
+				remainingInputString.hashCode() ^ 
+				currentStack.hashCode();
+	}
 	
 	/*
 	 *  Getters and setters.

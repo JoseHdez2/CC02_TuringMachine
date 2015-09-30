@@ -1,6 +1,7 @@
 package main;
 
 import java.util.HashSet;
+import java.util.regex.Pattern;
 
 public class Main {
 	public static void main(String[] args) {
@@ -16,5 +17,7 @@ public class Main {
 							initialState, initialStackSymbol, transitionRules, 
 							acceptStates);
 		a.evaluateString("programDestroyer");
+		if (Pattern.matches("#.*", "# mi comment")) System.out.println("bien");
+		
 	}
 }
