@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -19,33 +21,22 @@ import java.util.regex.Pattern;
  */
 public abstract class AutomataCreator {
 	
-	// Regexes used as building blocks to create the patterns below.
-	final String STR_SYM_ONE = "\\w";
-	final String STR_SYM_MANY = "\\w(\\s+\\w+)*";
-	final String STR_OPT_COMM = "(#.*)?";
-	final String STR_OPT_SPC = "\\s*";
-	
-	// Regexes that represent the types of input lines.
-	final String STR_LINE_COMM = STR_OPT_COMM;
-	final String STR_LINE_ONE = STR_OPT_SPC + STR_SYM_ONE + STR_OPT_SPC + STR_OPT_COMM;
-	final String STR_LINE_MANY = STR_OPT_SPC + STR_SYM_MANY + STR_OPT_SPC + STR_OPT_COMM;
-	
-	// Patterns used to determine the nature of each of the input file's lines.
-	Pattern patternComment = Pattern.compile(STR_LINE_COMM);
-	Pattern patternSymbolGroup = Pattern.compile(STR_LINE_MANY);
-	Pattern patternSymbolSingle = Pattern.compile(STR_LINE_ONE);
+	final static Charset ENCODING = StandardCharsets.UTF_8;
+	// Regexes for detecting useless lines.
+	final String LINE_EMPTY = "\\s*";
+	final String LINE_COMMENT = LINE_EMPTY + "#.*";
 
-	void createAutomaton(String fileName) throws IOException {
+	Automaton createAutomaton(String fileName) throws IOException {
 		
 	    Path path = Paths.get(fileName);
 	    ArrayList<String> lines = new ArrayList<String>();
 	    
-	    // Get all but comment lines.
+	    // 1) Read file. Get all but comment lines.
 	    try (Scanner scanner =  new Scanner(path, ENCODING.name())){
 	    	while (scanner.hasNextLine()){
 	    		String line = scanner.nextLine();
-	    		if(Pattern.matches("\\s*#.*", line)) break;	// Comment line; ignore.
-	    		if(Pattern.matches("", line)) break;	// Empty line; ignore.
+	    		if(Pattern.matches(LINE_COMMENT, line)) break;	// Comment line; ignore.
+	    		if(Pattern.matches(LINE_EMPTY, line)) break;	// Empty line; ignore.
 	    		lines.add(line);
 	    	}
 	    } catch (Exception e) {
@@ -53,45 +44,56 @@ public abstract class AutomataCreator {
 	    	e.printStackTrace();
 		}
 	    
-	    // Remove empty lines.
-	    for (String line : lines){
-	    	if (line.length() == 0) lines.remove(line);
+	    // 2) Convert valid lines into arguments.
+	    
+	    ArrayList<ArrayList<String>> splat = new ArrayList<ArrayList<String>>();
+	    
+	    // For each line: remove whitespace and tokenize.
+	    for (String str : lines){
+	    	ArrayList<String> splaat = 
+	    			new ArrayList<String>(Arrays.asList(str.trim().split("\\s+"))); 
+	    	splat.add(splaat);
 	    }
 	    
-	    // Convert lines
-	}
-	
-	final static Charset ENCODING = StandardCharsets.UTF_8;
-	/*
-	void readLargerTextFile(String fileName) throws IOException {
-	    Path path = Paths.get(fileName);
-	    try (Scanner scanner =  new Scanner(path, ENCODING.name())){
-	      while (scanner.hasNextLine()){
-	        //process each line in some way
-	        log(scanner.nextLine());
-	      }      
+	    HashSet<State> stateSet = new HashSet<State>();
+	    String[] split = lines.get(0).split("\\s+");
+	    for (String str : split){
+	    	stateSet.add(new State(str));
 	    }
-	 }
-	 */
-	
-	/* Pattern pattern = 
-            Pattern.compile(console.readLine("%nEnter your regex: "));
-
-            Matcher matcher = 
-            pattern.matcher(console.readLine("Enter input string to search: "));
-
-            boolean found = false;
-            while (matcher.find()) {
-                console.format("I found the text" +
-                    " \"%s\" starting at " +
-                    "index %d and ending at index %d.%n",
-                    matcher.group(),
-                    matcher.start(),
-                    matcher.end());
-                found = true;
-            }
-            if(!found){
-                console.format("No match found.%n");
-            }
-	 */
+	    
+	    HashSet<Character> inputAlphabet = new HashSet<Character>();
+	    split = lines.get(1).split("\\s+");
+	    for (String str : split){
+	    	inputAlphabet.add(str.charAt(0));
+	    }
+	    
+	    HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
+	    split = lines.get(2).trim().split("\\s+");
+	    for (String str : split){
+	    	stackAlphabet.add(new Symbol(str));
+	    }
+	    
+		State initialState = new State(lines.get(3).trim());
+		
+		Symbol initialStackSymbol = new Symbol(lines.get(4).trim());
+		
+		HashSet<State> acceptStates = new HashSet<State>();
+		split = lines.get(4).trim().split("\\s+");
+		for (String str : split){
+			stateSet.add(new State(str));
+		}
+		
+		HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+		ArrayList<String> tLines = (ArrayList<String>)lines.subList(5, lines.size());
+		
+	    // 3) Feed arguments into Automaton constructor.
+	    return new Automaton(
+	    		stateSet,
+	    		inputAlphabet,
+	    		stackAlphabet,
+	    		initialState,
+	    		initialStackSymbol,
+	    		transitionRules,
+	    		acceptStates);
+	}
 }
