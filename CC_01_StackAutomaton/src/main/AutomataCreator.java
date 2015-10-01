@@ -23,6 +23,79 @@ public abstract class AutomataCreator {
 	final static Charset ENCODING = StandardCharsets.UTF_8;
 	final String EMPTY_LINE = "\\s*";
 
+	
+	Automaton createAutomatonB(String fileName) throws IOException {
+
+		Path path = Paths.get(fileName);
+		ArrayList<String> lines = new ArrayList<String>();
+
+		// 1) Read file lines.
+		
+		try (Scanner scanner = new Scanner(path, ENCODING.name())) {
+			while (scanner.hasNextLine()) {
+				lines.add(scanner.nextLine());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		ArrayList<String> emptyLines = new ArrayList<String>();
+		ArrayList<ArrayList<String>> tokenizedLines = new ArrayList<ArrayList<String>>();
+
+		// Tokenize valid lines and discard useless ones.
+		for (String line : lines) {
+			if (Pattern.matches(EMPTY_LINE, line)) {
+				emptyLines.add(line);
+				continue;
+			}
+			ArrayList<String> tokenizedLine = new ArrayList<String>(
+					Arrays.asList(line.trim().split("\\s+")));
+			tokenizedLines.add(tokenizedLine);
+		}
+		lines.removeAll(emptyLines);
+
+		// 3) Convert tokens into valid constructor arguments.
+		
+		HashSet<State> stateSet = new HashSet<State>();
+		for (String token : tokenizedLines.get(0)) {
+			stateSet.add(new State(token));
+		}
+
+		HashSet<Character> inputAlphabet = new HashSet<Character>();
+		for (String token : tokenizedLines.get(1)) {
+			inputAlphabet.add(token.charAt(0));
+		}
+
+		HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
+		for (String token : tokenizedLines.get(2)) {
+			stackAlphabet.add(new Symbol(token));
+		}
+
+		State initialState = new State(lines.get(3).trim());
+
+		Symbol initialStackSymbol = new Symbol(lines.get(4).trim());
+
+		HashSet<State> acceptStates = new HashSet<State>();
+		for (String str : tokenizedLines.get(4)) {
+			stateSet.add(new State(str));
+		}
+
+		HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+		for (ArrayList<String> tl : tokenizedLines.subList(5, tokenizedLines.size())){
+			State prevState = new State(tl.get(0));
+			Character requiredInputCharacter = tl.get(1).charAt(0);
+			Symbol requiredStackSymbol = new Symbol(tl.get(2));
+			State nextState = new State(tl.get(3));
+			ArrayList<Character> stackSymbolsToPush = new ArrayList<Character>(tl.get(4).charAt(0));
+			transitionRules.add(new TransitionRule(prevState, nextState, 
+					requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
+		}
+
+		// 4) Feed arguments into Automaton constructor.
+		return new Automaton(stateSet, inputAlphabet, stackAlphabet,
+				initialState, initialStackSymbol, transitionRules, acceptStates);
+	}
+	
 	Automaton createAutomaton(String fileName) throws IOException {
 
 		Path path = Paths.get(fileName);
@@ -38,12 +111,11 @@ public abstract class AutomataCreator {
 			e.printStackTrace();
 		}
 
-		// 2) Convert valid lines into arguments.
+		// 2) Tokenize valid lines and discard useless ones.
 
 		ArrayList<String> emptyLines = new ArrayList<String>();
 		ArrayList<ArrayList<String>> tokenizedLines = new ArrayList<ArrayList<String>>();
 
-		// Tokenize valid lines and discard useless ones.
 		for (String line : lines) {
 			if (Pattern.matches(EMPTY_LINE, line)) {
 				emptyLines.add(line);
