@@ -1,8 +1,6 @@
 package main;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,6 +8,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import util.StringProcessing;
 
 /**
  * @author jose
@@ -19,84 +19,31 @@ import java.util.regex.Pattern;
  *         constructor.
  */
 public abstract class AutomataCreator {
-
-	final static Charset ENCODING = StandardCharsets.UTF_8;
-
-	/**
-	 * Reads the lines of a file and returns them as an ArrayList
-	 * @param fileName
-	 * @return An ArrayList<String> where each of the elements is a line.
-	 * @throws IOException
-	 */
-	ArrayList<String> readFileLines(String fileName) throws IOException {
-		Path path = Paths.get(fileName);
-		ArrayList<String> fileLines = new ArrayList<String>();
-		
-		try (Scanner scanner = new Scanner(path, ENCODING.name())) {
-			while (scanner.hasNextLine()) {
-				fileLines.add(scanner.nextLine());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return fileLines;
-	}
 	
-	/**
-	 * For each string in stringList, only keep the left part of the leftmost '#' if there is any.
-	 * @param stringList
-	 * @return	stringList with all of its comments stripped.
-	 */
-	ArrayList<String> stripComments(ArrayList<String> stringList) {
+	ArrayList<ArrayList<String>> readAutomatonData(String fileName) throws IOException {
 		
-		for (String str : stringList) {
-			str = str.split("#")[0];
-		}
+		// Read the file lines.
+		ArrayList<String> lines = StringProcessing.readFileLines(fileName);
 		
-		return stringList;
-	}
-	
-	/**
-	 * Removes all empty and whitespace lines from an ArrayList<String>.
-	 * @param stringList
-	 * @return A copy of stringList, with all empty (and whitespace) lines removed.
-	 */
-	ArrayList<String> removeAllEmptyLines(ArrayList<String> stringList) {
-		final String EMPTY_LINE = "\\s*";
+		// Remove comments.
+		lines = StringProcessing.stripComments(lines);
+		
+		// Remove all empty lines.
+		lines = StringProcessing.removeAllEmptyLines(lines);
 
-		ArrayList<String> emptyLines = new ArrayList<String>();
-		
-		for (String str : stringList) {
-			if (Pattern.matches(EMPTY_LINE, str))
-				emptyLines.add(str);
-		}
-		stringList.removeAll(emptyLines);
-		
-		return stringList;
-	}
-	
-	ArrayList<String[]> tokenizeLines(ArrayList<String> stringList) {
-		// TODO: Return AL<AL<String>> instead of AL<String[]>?
-		ArrayList<String[]> tokenizedLines = new ArrayList<String[]>();
-		
-		for (String str : stringList) {
-			String[] tokens = str.split("\\s+");
-			tokenizedLines.add(tokens);
-		}
+		// Tokenize the remaining, valid lines.
+		ArrayList<ArrayList<String>> tokenizedLines = StringProcessing.tokenizeLines(lines);
 		
 		return tokenizedLines;
 	}
 	
-	Automaton createAutomaton(String fileName) throws IOException {
-		
-		ArrayList<String> lines = readFileLines(fileName);
-		lines = stripComments(lines);
-		lines = removeAllEmptyLines(lines);
-
-		ArrayList<String[]> tokenizedLines = tokenizeLines(lines);
-
-		// 3) Convert tokens into valid constructor arguments.
+	/**
+	 * Take automaton data, convert tokens into valid constructor arguments
+	 * and call the Automaton constructor with them.
+	 * @param automatonData
+	 * @return
+	 */
+	Automaton createAutomatonFromData(ArrayList<ArrayList<String>> automatonData){
 		
 		HashSet<State> stateSet = new HashSet<State>();
 		for (String token : tokenizedLines.get(0)) {
@@ -121,7 +68,7 @@ public abstract class AutomataCreator {
 		for (String str : tokenizedLines.get(4)) {
 			stateSet.add(new State(str));
 		}
-
+		
 		HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
 		for (ArrayList<String> tl : tokenizedLines.subList(5, tokenizedLines.size())){
 			State prevState = new State(tl.get(0));
@@ -136,7 +83,7 @@ public abstract class AutomataCreator {
 		// 4) Feed arguments into Automaton constructor.
 		return new Automaton(stateSet, inputAlphabet, stackAlphabet,
 				initialState, initialStackSymbol, transitionRules, acceptStates);
-	}
+	};
 	
 	Automaton createAutomatonOld(String fileName) throws IOException {
 

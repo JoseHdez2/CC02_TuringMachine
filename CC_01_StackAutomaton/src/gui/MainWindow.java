@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class MainWindow {
@@ -21,10 +23,14 @@ public class MainWindow {
 	int lang = englishGUI ? 0 : 1;
 	
 	final String[] STR_WINDOW_TITLE = {"Pushdown Automaton", "Automata de Pila"};
+	final String[] STR_WINDOW_LOAD =
+		{"Load automaton definition...", "Cargar definición de autómata..."};
+	
 	final String[] STR_LOAD = {"Load", "Cargar"};
 	final String[] STR_RUN = {"Run", "Correr"};
 	final String[] STR_TRACE = {"Trace", "Traza"};
 	final String[] STR_TRANS = {"Transitions", "Transiciones"};
+
 	
 	private JFrame frame;
 	private JTable tableTrans;
@@ -95,7 +101,10 @@ public class MainWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				FileDialog openFile = new FileDialog((JFrame)SwingUtilities.getWindowAncestor(btnLoad), 
+						STR_WINDOW_LOAD[lang], FileDialog.LOAD);
+				openFile.setDirectory(System.getProperty("user.dir"));
+				openFile.setVisible(true);
 			}
 			
 		});
