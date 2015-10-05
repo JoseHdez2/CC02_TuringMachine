@@ -2,6 +2,10 @@ package main;
 
 import java.util.HashSet;
 
+import structs.State;
+import structs.Symbol;
+import structs.TransitionRule;
+
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("This is a program, hello.");

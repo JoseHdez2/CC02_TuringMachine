@@ -1,10 +1,11 @@
-package main;
+package structs;
 
 import java.util.Stack;
 
 /**
  * @author jose
- *	A tuple that represents the status of a given automaton.
+ *	A tuple that represents the status of a given automaton
+ *  as a frozen frame during the evaluation of a string.
  *	It holds the current state, the remaining string to be evaluated
  *	and the status of the stack. 
  */
@@ -13,7 +14,7 @@ public class AutomatonStatus {
 	String remainingInputString;
 	Stack<Symbol> currentStack;
 	
-	AutomatonStatus(State currentState,
+	public AutomatonStatus(State currentState,
 			String remainingInputString, 
 			Stack<Symbol> currentStack){
 		this.currentState = currentState;

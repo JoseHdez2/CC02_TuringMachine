@@ -4,8 +4,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
+import structs.AutomatonStatus;
+import structs.State;
+import structs.Symbol;
+import structs.TransitionRule;
 import util.Sys;
 
+/**
+ * @author jose
+ *
+ *  The automaton itself. The only class that knows how to work with
+ *  the AutomatonData it contains (e.g. apply transitions).
+ */
 public class Automaton {
 	HashSet<State> stateSet;
 	HashSet<Character> inputAlphabet;
@@ -15,7 +25,7 @@ public class Automaton {
 	HashSet<TransitionRule> transitionRules;
 	HashSet<State> acceptStates;
 	
-	Automaton(	HashSet<State> stateSet, 
+	public Automaton(	HashSet<State> stateSet, 
 				HashSet<Character> inputAlphabet,
 				HashSet<Symbol> stackAlphabet,
 				State initialState,
@@ -80,8 +90,8 @@ public class Automaton {
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
  		for (TransitionRule tr : transitionRules){
  			if (tr.getPrevState() == as.getCurrentState() &&
- 				tr.requiredInputCharacter == as.getRemainingInputString().charAt(0) &&
- 				tr.requiredStackSymbol == as.getCurrentStack().peek()){
+ 				tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0) &&
+ 				tr.getRequiredStackSymbol() == as.getCurrentStack().peek()){
  				applicableTransitions.add(tr);
  			}
  		}
@@ -100,9 +110,9 @@ public class Automaton {
 	 */
 	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
 		State newState = tr.getNextState();
-		String oldString = as.remainingInputString;
+		String oldString = as.getRemainingInputString();
 		String newString = oldString.substring(0, oldString.length()-2);
-		Stack<Symbol> newStack = as.currentStack;
+		Stack<Symbol> newStack = as.getCurrentStack();
 		newStack.pop();
 		
 		return new AutomatonStatus(newState, newString, newStack);

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import structs.State;
+import structs.Symbol;
+import structs.TransitionRule;
 import util.StringProcessing;
 
 /**

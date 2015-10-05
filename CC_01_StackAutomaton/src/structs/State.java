@@ -1,9 +1,9 @@
-package main;
+package structs;
 
 public class State {
 	String name;
 
-	State(String name){
+	public State(String name){
 		this.name = name;
 	}
 	

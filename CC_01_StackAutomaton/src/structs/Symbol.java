@@ -1,9 +1,9 @@
-package main;
+package structs;
 
 public class Symbol {
 	String name;
 
-	Symbol(String name){
+	public Symbol(String name){
 		this.name = name;
 	}
 	

@@ -1,4 +1,4 @@
-package main;
+package structs;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class TransitionRule {
 	Symbol requiredStackSymbol;	// Must be in top of stack.
 	ArrayList<Character> stackSymbolsToPush;
 	
-	TransitionRule(State prevState, State nextState,
+	public TransitionRule(State prevState, State nextState,
 			Character requiredInputCharacter,
 			Symbol requiredStackSymbol,
 			ArrayList<Character> stackSymbolsToPush){
