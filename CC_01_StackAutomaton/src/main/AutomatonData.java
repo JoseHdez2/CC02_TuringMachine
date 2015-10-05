@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import structs.State;
@@ -40,7 +41,41 @@ public class AutomatonData extends TokenizedLines {
      * the arbitrary automaton file structure.
      */
     AutomatonData(TokenizedLines tokLines){
-        //stateSet.
+
+        HashSet<State> stateSet = new HashSet<State>();
+        for (String token : tokLines.get(0)) {
+            stateSet.add(new State(token));
+        }
+
+        HashSet<Character> inputAlphabet = new HashSet<Character>();
+        for (String token : tokLines.get(1)) {
+            inputAlphabet.add(token.charAt(0));
+        }
+
+        HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
+        for (String token : tokLines.get(2)) {
+            stackAlphabet.add(new Symbol(token));
+        }
+
+        State initialState = new State(tokLines.get(3).get(0));
+
+        Symbol initialStackSymbol = new Symbol(tokLines.get(4).get(0));
+
+        HashSet<State> acceptStates = new HashSet<State>();
+        for (String str : tokLines.get(4)) {
+            stateSet.add(new State(str));
+        }
+        
+        HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+        for (ArrayList<String> tl : tokLines.subList(5, tokLines.size())){
+            State prevState = new State(tl.get(0));
+            Character requiredInputCharacter = tl.get(1).charAt(0);
+            Symbol requiredStackSymbol = new Symbol(tl.get(2));
+            State nextState = new State(tl.get(3));
+            ArrayList<Character> stackSymbolsToPush = new ArrayList<Character>(tl.get(4).charAt(0));
+            transitionRules.add(new TransitionRule(prevState, nextState, 
+                    requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
+        }
     }
     
     public HashSet<State> getStateSet() {

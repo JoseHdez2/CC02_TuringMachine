@@ -1,6 +1,6 @@
 # Pushdown Automata Simulator
 
-Pushdown Automata Simulator coded in Java by Jose Hernandez.
+Pushdown automata simulator coded in Java by Jose Hernandez.
 
 ## Packages overview
 
