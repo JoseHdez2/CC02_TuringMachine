@@ -17,8 +17,6 @@ import javax.swing.UIManager;
 
 public class MainWindow {
 
-
-	
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
 	
@@ -50,6 +48,7 @@ public class MainWindow {
 		{
 			{"q1", "a1", "A1"},
 		};
+	
 	String[][] tableTraceColumns = 
 		{
 			{"Current State", "Remaining String", "Stack Content"},
