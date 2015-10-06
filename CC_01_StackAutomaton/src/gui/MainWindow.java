@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import main.AutomataCreator;
+import structs.AutomatonData;
 import util.TokenizedLines;
 
 public class MainWindow {
@@ -25,6 +26,7 @@ public class MainWindow {
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
 	String chosenFileFullPath = null;
+	AutomatonData automatonData = null;
 	
 	final String[] STR_WINDOW_TITLE = {"Pushdown Automaton", "Automata de Pila"};
 	final String[] STR_WINDOW_LOAD =
@@ -113,9 +115,16 @@ public class MainWindow {
 				
 				// Update table (load data from new file into table)
 				try {
-                    TokenizedLines tl = AutomataCreator.readAutomatonData(chosenFileFullPath);
-                    MyTableModel tableTransModel = new MyTableModel(tl);
-                    tableTrans.setModel(tableTransModel);
+                    TokenizedLines tl = AutomataCreator.prepareAutomatonData(chosenFileFullPath);
+                    System.out.println("Here goes ICHI:");
+                    System.out.println(tl.toString());
+                    automatonData = AutomataCreator.readAutomatonData(chosenFileFullPath);
+                    TokenizedLines transitions = 
+                            AutomataCreator.getTransitionsAsTokenizedLines(automatonData);
+                    MyTableModel tableTransModel = new MyTableModel(transitions);
+                    System.out.println("Here goes NI:");
+                    System.out.println(transitions.toString());
+//                    tableTrans.setModel(tableTransModel);
 //                    tableTrans.setColumnModel(tableTransColumns[lang]);
                 } catch (IOException e1) {
                     e1.printStackTrace();

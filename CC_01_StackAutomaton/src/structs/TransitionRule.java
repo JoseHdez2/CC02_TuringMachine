@@ -48,7 +48,7 @@ public class TransitionRule {
 				requiredInputCharacter.hashCode() ^ requiredStackSymbol.hashCode() ^
 				stackSymbolsToPush.hashCode();
 	}
-
+	
 	/*
 	 * Setters and getters.
 	 */

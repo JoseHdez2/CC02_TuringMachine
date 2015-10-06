@@ -7,6 +7,10 @@ public class State {
 		this.name = name;
 	}
 	
+	public String toString(){
+	    return name;
+	}
+	
 	/*
 	 * Equals and hashCode.
 	 */
