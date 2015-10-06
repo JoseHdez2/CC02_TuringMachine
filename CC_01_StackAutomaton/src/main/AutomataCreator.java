@@ -2,12 +2,9 @@ package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
-import structs.State;
-import structs.Symbol;
-import structs.TransitionRule;
 import util.StringProcessing;
+import util.TokenizedLines;
 
 /**
  * @author jose
@@ -18,7 +15,7 @@ import util.StringProcessing;
  */
 public abstract class AutomataCreator {
 	
-	ArrayList<ArrayList<String>> readAutomatonData(String fileName) throws IOException {
+	public static TokenizedLines readAutomatonData(String fileName) throws IOException {
 		
 		// Read the file lines.
 		ArrayList<String> lines = StringProcessing.readFileLines(fileName);
@@ -30,7 +27,7 @@ public abstract class AutomataCreator {
 		lines = StringProcessing.removeAllEmptyLines(lines);
 
 		// Tokenize the remaining, valid lines.
-		ArrayList<ArrayList<String>> tokenizedLines = StringProcessing.tokenizeLines(lines);
+		TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines);
 		
 		return tokenizedLines;
 	}

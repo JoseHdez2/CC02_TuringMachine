@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,10 +17,14 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import main.AutomataCreator;
+import util.TokenizedLines;
+
 public class MainWindow {
 
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
+	String chosenFileFullPath = null;
 	
 	final String[] STR_WINDOW_TITLE = {"Pushdown Automaton", "Automata de Pila"};
 	final String[] STR_WINDOW_LOAD =
@@ -29,12 +35,11 @@ public class MainWindow {
 	final String[] STR_TRACE = {"Trace", "Traza"};
 	final String[] STR_TRANS = {"Transitions", "Transiciones"};
 
-	
 	private JFrame frame;
 	private JTable tableTrans;
 	private JScrollPane scrollPane;
 
-	String[][] tableTransData =
+	String[][] tableTransDummyData =
 		{
 			{"q1", "q2", "a1", "A1", "A2"},
 		};
@@ -44,7 +49,7 @@ public class MainWindow {
 			{"Estado 1", "Estado 2", "Entrada", "De pila", "A pila"},
 		};
 	
-	String[][] tableTraceData =
+	String[][] tableTraceDummyData =
 		{
 			{"q1", "a1", "A1"},
 		};
@@ -104,6 +109,17 @@ public class MainWindow {
 						STR_WINDOW_LOAD[lang], FileDialog.LOAD);
 				openFile.setDirectory(System.getProperty("user.dir"));
 				openFile.setVisible(true);
+				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
+				
+				// Update table (load data from new file into table)
+				try {
+                    TokenizedLines tl = AutomataCreator.readAutomatonData(chosenFileFullPath);
+                    MyTableModel tableTransModel = new MyTableModel(tl);
+                    tableTrans.setModel(tableTransModel);
+//                    tableTrans.setColumnModel(tableTransColumns[lang]);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
 			}
 			
 		});
@@ -117,7 +133,8 @@ public class MainWindow {
 		JPanel panelTrans = new JPanel();
 		frame.getContentPane().add(panelTrans, BorderLayout.CENTER);
 		
-		tableTrans = new JTable(tableTransData, tableTransColumns[lang]);
+		tableTrans = new JTable(tableTransDummyData, tableTransColumns[lang]);
+
 		tableTrans.setEnabled(false);
 		scrollPane = new JScrollPane(tableTrans);
 		

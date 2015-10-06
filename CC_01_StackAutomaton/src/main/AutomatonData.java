@@ -20,13 +20,21 @@ public class AutomatonData extends TokenizedLines {
     
     // Arbitrary automaton file structure constants.
     // Tokenized lines where each of the datums are located.
-    int TOK_LN_STATE_SET = 0;
-    int TOK_LN_STRING_ALPH = 1;
-    int TOK_LN_STACK_ALPH = 2;
-    int TOK_LN_INIT_STATE = 3;
-    int TOK_LN_INIT_STACK = 4;
-    int TOK_LN_ACCEPT_STATE = 5;
-    // No TOK_LN_TRANS_FUNCT because it's multiline data.
+    final int TOK_LINE_STATE_SET = 0;
+    final int TOK_LINE_INPUT_ALPH = 1;
+    final int TOK_LINE_STACK_ALPH = 2;
+    final int TOK_LINE_INIT_STATE = 3;
+    final int TOK_LINE_INIT_STACK = 4;
+    final int TOK_LINE_ACCEPT_STATES = 5;
+    // No TOK_LINE_TRANS_FUNCT because it's multiline data.
+    
+    // Token positions in lines for transition functions.
+    final int POS_PREV_STATE = 0;
+    final int POS_NEXT_STATE = 3;
+    final int POS_REQ_INP_CHAR = 1;
+    final int POS_REQ_STACK_SYM = 2;
+    final int POS_STACK_SYM_TO_PUSH = 4;
+    // TODO: should we allow to push many symbols in same transition?
     
     HashSet<State> stateSet;
     HashSet<Character> inputAlphabet;
@@ -43,26 +51,26 @@ public class AutomatonData extends TokenizedLines {
     AutomatonData(TokenizedLines tokLines){
 
         HashSet<State> stateSet = new HashSet<State>();
-        for (String token : tokLines.get(0)) {
+        for (String token : tokLines.get(TOK_LINE_STATE_SET)) {
             stateSet.add(new State(token));
         }
 
         HashSet<Character> inputAlphabet = new HashSet<Character>();
-        for (String token : tokLines.get(1)) {
+        for (String token : tokLines.get(TOK_LINE_INPUT_ALPH)) {
             inputAlphabet.add(token.charAt(0));
         }
 
         HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
-        for (String token : tokLines.get(2)) {
+        for (String token : tokLines.get(TOK_LINE_STACK_ALPH)) {
             stackAlphabet.add(new Symbol(token));
         }
 
-        State initialState = new State(tokLines.get(3).get(0));
+        State initialState = new State(tokLines.get(TOK_LINE_INIT_STATE).get(0));
 
-        Symbol initialStackSymbol = new Symbol(tokLines.get(4).get(0));
+        Symbol initialStackSymbol = new Symbol(tokLines.get(TOK_LINE_INIT_STACK).get(0));
 
         HashSet<State> acceptStates = new HashSet<State>();
-        for (String str : tokLines.get(4)) {
+        for (String str : tokLines.get(TOK_LINE_ACCEPT_STATES)) {
             stateSet.add(new State(str));
         }
         

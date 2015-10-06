@@ -72,8 +72,8 @@ public abstract class StringProcessing {
 	 * @param stringList
 	 * @return
 	 */
-	public static ArrayList<ArrayList<String>> tokenizeLines(ArrayList<String> stringList) {
-		ArrayList<ArrayList<String>> tokenizedLines = new ArrayList<ArrayList<String>>();
+	public static TokenizedLines tokenizeLines(ArrayList<String> stringList) {
+		TokenizedLines tokenizedLines = new TokenizedLines();
 		
 		for (String str : stringList) {
 			ArrayList<String> tokens = new ArrayList<String>(Arrays.asList(str.split("\\s+")));
