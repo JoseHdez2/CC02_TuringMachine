@@ -1,9 +1,9 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Stack;
 
+import structs.AutomatonData;
 import structs.AutomatonStatus;
 import structs.State;
 import structs.Symbol;
@@ -17,34 +17,16 @@ import util.Sys;
  *  the AutomatonData it contains (e.g. apply transitions).
  */
 public class Automaton {
-	HashSet<State> stateSet;
-	HashSet<Character> inputAlphabet;
-	HashSet<Symbol> stackAlphabet;
-	State initialState;
-	Symbol initialStackSymbol;
-	HashSet<TransitionRule> transitionRules;
-	HashSet<State> acceptStates;
+	AutomatonData data;
 	
-	public Automaton(	HashSet<State> stateSet, 
-				HashSet<Character> inputAlphabet,
-				HashSet<Symbol> stackAlphabet,
-				State initialState,
-				Symbol initialStackSymbol,
-				HashSet<TransitionRule> transitionRules,
-				HashSet<State> acceptStates){
-		this.stateSet = stateSet;
-		this.inputAlphabet = inputAlphabet;
-		this.stackAlphabet = stackAlphabet;
-		this.initialState = initialState;
-		this.initialStackSymbol = initialStackSymbol;
-		this.transitionRules = transitionRules;
-		this.acceptStates = acceptStates;
+	public Automaton(AutomatonData data){
+		this.data = data;
 		
 		// TODO make sure all arguments are correct.
 		
 		// Make sure all acceptStates are in stateSet.
-		for (State s : acceptStates){
-			if(!stateSet.contains(s))
+		for (State s : data.getAcceptStates()){
+			if(!data.getStateSet().contains(s))
 				Sys.abort("Algun estado de aceptacion no se encuentra entre los estados definidos.");
 		}
 	}
@@ -57,8 +39,8 @@ public class Automaton {
 		ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
-		initialStack.push(initialStackSymbol);
-		possibleStatuses.add(new AutomatonStatus(initialState, inputString, initialStack));
+		initialStack.push(data.getInitialStackSymbol());
+		possibleStatuses.add(new AutomatonStatus(data.getInitialState(), inputString, initialStack));
 		// Iterate until all possibilities are exhausted.
 		// TODO not add and remove from a list you are iterating.
 		for (AutomatonStatus as : possibleStatuses){
@@ -88,7 +70,7 @@ public class Automaton {
 	 */
 	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus as){
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
- 		for (TransitionRule tr : transitionRules){
+ 		for (TransitionRule tr : data.getTransitionRules()){
  			if (tr.getPrevState() == as.getCurrentState() &&
  				tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0) &&
  				tr.getRequiredStackSymbol() == as.getCurrentStack().peek()){
