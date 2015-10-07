@@ -40,12 +40,13 @@ public abstract class StringProcessing {
 	 * @return	stringList with all of its comments stripped.
 	 */
 	public static ArrayList<String> stripComments(ArrayList<String> stringList) {
-		
+		ArrayList<String> strippedStringList = new ArrayList<String>();
+	    
 		for (String str : stringList) {
-			str = str.split("#")[0];
+			strippedStringList.add(str.split("#")[0]);
 		}
 		
-		return stringList;
+		return strippedStringList;
 	}
 	
 	/**

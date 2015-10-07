@@ -17,11 +17,12 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import main.AutomataCreator;
+import main.AutomataReader;
 import structs.AutomatonData;
+import util.StringProcessing;
 import util.TokenizedLines;
 
-public class MainWindow {
+public class FrameMain {
 
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
@@ -37,7 +38,8 @@ public class MainWindow {
 	final String[] STR_TRACE = {"Trace", "Traza"};
 	final String[] STR_TRANS = {"Transitions", "Transiciones"};
 
-	private JFrame frame;
+	private JFrame frameMain;
+	private FrameTrace frameTrace;
 	private JTable tableTrans;
 	private JScrollPane scrollPane;
 
@@ -66,12 +68,13 @@ public class MainWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+	    
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
+					FrameMain window = new FrameMain();
+					window.frameMain.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,7 +85,7 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	public FrameMain() {
 		initialize();
 	}
 
@@ -90,15 +93,15 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame(STR_WINDOW_TITLE[lang]);
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameMain = new JFrame(STR_WINDOW_TITLE[lang]);
+		frameMain.setBounds(100, 100, 450, 300);
+		frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelNorth = new JPanel();
-		frame.getContentPane().add(panelNorth, BorderLayout.NORTH);
+		frameMain.getContentPane().add(panelNorth, BorderLayout.NORTH);
 		
 		JPanel panelSouth = new JPanel();
-		frame.getContentPane().add(panelSouth, BorderLayout.SOUTH);
+		frameMain.getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
 		JButton btnLoad = new JButton(STR_LOAD[lang]);
 		panelNorth.add(btnLoad, BorderLayout.NORTH);
@@ -111,24 +114,10 @@ public class MainWindow {
 						STR_WINDOW_LOAD[lang], FileDialog.LOAD);
 				openFile.setDirectory(System.getProperty("user.dir"));
 				openFile.setVisible(true);
-				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
-				
-				// Update table (load data from new file into table)
-				try {
-                    TokenizedLines tl = AutomataCreator.prepareAutomatonData(chosenFileFullPath);
-                    System.out.println("Here goes ICHI:");
-                    System.out.println(tl.toString());
-                    automatonData = AutomataCreator.readAutomatonData(chosenFileFullPath);
-                    TokenizedLines transitions = 
-                            AutomataCreator.getTransitionsAsTokenizedLines(automatonData);
-                    MyTableModel tableTransModel = new MyTableModel(transitions);
-                    System.out.println("Here goes NI:");
-                    System.out.println(transitions.toString());
-//                    tableTrans.setModel(tableTransModel);
-//                    tableTrans.setColumnModel(tableTransColumns[lang]);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+//				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
+				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
+				System.out.println(chosenFileFullPath);
+				updateLoadedAutomaton();
 			}
 			
 		});
@@ -136,11 +125,20 @@ public class MainWindow {
 		JButton btnRun = new JButton(STR_RUN[lang]);
 		panelSouth.add(btnRun);
 		
+		btnRun.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameTrace = new FrameTrace(automatonData);
+            }
+            
+        });
+		
 		JLabel lblMaquina = new JLabel(STR_TRANS[lang]);
 		panelNorth.add(lblMaquina);
 		
 		JPanel panelTrans = new JPanel();
-		frame.getContentPane().add(panelTrans, BorderLayout.CENTER);
+		frameMain.getContentPane().add(panelTrans, BorderLayout.CENTER);
 		
 		tableTrans = new JTable(tableTransDummyData, tableTransColumns[lang]);
 
@@ -155,4 +153,15 @@ public class MainWindow {
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
 	}
 
+	public void updateLoadedAutomaton(){
+        try {
+            automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        TokenizedLines transitions = 
+                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
+        tableTrans.setModel(new MyTableModel(transitions));
+//      tableTrans.setColumnModel(tableTransColumns[lang]);
+	}
 }

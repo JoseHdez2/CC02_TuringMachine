@@ -13,12 +13,12 @@ public class TransitionRule {
 	State nextState;
 	Character requiredInputCharacter; // Must be first character in rest of input string.
 	Symbol requiredStackSymbol;	// Must be in top of stack.
-	ArrayList<Character> stackSymbolsToPush;
+	ArrayList<Symbol> stackSymbolsToPush;
 	
 	public TransitionRule(State prevState, State nextState,
 			Character requiredInputCharacter,
 			Symbol requiredStackSymbol,
-			ArrayList<Character> stackSymbolsToPush){
+			ArrayList<Symbol> stackSymbolsToPush){
 		this.prevState = prevState;
 		this.nextState = nextState;
 		this.requiredInputCharacter = requiredInputCharacter;
@@ -85,11 +85,11 @@ public class TransitionRule {
 		this.requiredStackSymbol = requiredStackSymbol;
 	}
 	
-	public ArrayList<Character> getStackSymbolsToPush() {
+	public ArrayList<Symbol> getStackSymbolsToPush() {
 		return stackSymbolsToPush;
 	}
 
-	public void setStackSymbolsToPush(ArrayList<Character> stackSymbolsToPush) {
+	public void setStackSymbolsToPush(ArrayList<Symbol> stackSymbolsToPush) {
 		this.stackSymbolsToPush = stackSymbolsToPush;
 	}
 }

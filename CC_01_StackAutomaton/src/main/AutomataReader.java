@@ -19,7 +19,7 @@ import util.TokenizedLines;
  *         It contains the only functions that work with the low-level structure
  *         of the automata files.
  */
-public abstract class AutomataCreator {
+public abstract class AutomataReader {
 	
 	/**
 	 * @param fileName Path to an automaton file (arbitrary file structure)
@@ -51,7 +51,7 @@ public abstract class AutomataCreator {
     final static int TOK_LINE_INIT_STATE = 3;
     final static int TOK_LINE_INIT_STACK = 4;
     final static int TOK_LINE_ACCEPT_STATES = 5;
-    // No TOK_LINE_TRANS_FUNCT because it's multiline data.
+    final static int TOK_LINE_TRANS_FUNCT = 6; // Where the transition lines BEGIN.
     
     // Tokens positions in each transition rule line, in the automaton file.
     final static int POS_PREV_STATE = 0;
@@ -89,12 +89,15 @@ public abstract class AutomataCreator {
         }
         
         HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
-        for (ArrayList<String> tl : tokLines.subList(5, tokLines.size())){
-            State prevState = new State(tl.get(0));
-            Character requiredInputCharacter = tl.get(1).charAt(0);
-            Symbol requiredStackSymbol = new Symbol(tl.get(2));
-            State nextState = new State(tl.get(3));
-            ArrayList<Character> stackSymbolsToPush = new ArrayList<Character>(tl.get(4).charAt(0));
+        
+        for (ArrayList<String> tl : tokLines.subList(TOK_LINE_TRANS_FUNCT, tokLines.size())){
+            State prevState = new State(tl.get(POS_PREV_STATE));
+            State nextState = new State(tl.get(POS_NEXT_STATE));
+            Character requiredInputCharacter = tl.get(POS_REQ_INP_CHAR).charAt(0);
+            Symbol requiredStackSymbol = new Symbol(tl.get(POS_REQ_STACK_SYM));
+            ArrayList<Symbol> stackSymbolsToPush = new ArrayList<Symbol>();
+            stackSymbolsToPush.add(new Symbol(String.valueOf(tl.get(POS_STACK_SYM_TO_PUSH).charAt(0))));
+            // TODO: allow for more than one stack symbol. currently a fix to let one.
             transitionRules.add(new TransitionRule(prevState, nextState, 
                     requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
         }
@@ -116,11 +119,7 @@ public abstract class AutomataCreator {
         
         for (TransitionRule tr : ad.getTransitionRules()){
             
-            ArrayList<String> transitionRuleLine = new ArrayList<String>();
-            
-            for (int i = 0; i < 5; i++){
-                transitionRuleLine.add("dummy");
-            }
+            ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
             
             transitionRuleLine.set(REPOS_PREV_STATE, tr.getPrevState().toString());
             transitionRuleLine.set(REPOS_NEXT_STATE, tr.getNextState().toString());
