@@ -114,8 +114,8 @@ public class FrameMain {
 						STR_WINDOW_LOAD[lang], FileDialog.LOAD);
 				openFile.setDirectory(System.getProperty("user.dir"));
 				openFile.setVisible(true);
-//				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
-				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
+				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
+//				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
 				System.out.println(chosenFileFullPath);
 				updateLoadedAutomaton();
 			}
@@ -155,13 +155,22 @@ public class FrameMain {
 
 	public void updateLoadedAutomaton(){
         try {
+            TokenizedLines tl = AutomataReader.prepareAutomatonData(chosenFileFullPath);
+            System.out.println("Here goes ICHI:");
+            System.out.println(tl.toString());
             automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
+            TokenizedLines transitions = 
+                    AutomataReader.getTransitionsAsTokenizedLines(automatonData);
+            MyTableModel tableTransModel = new MyTableModel(transitions);
+            System.out.println("Here goes NI:");
+            System.out.println(transitions.toString());
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        TokenizedLines transitions = 
-                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
-        tableTrans.setModel(new MyTableModel(transitions));
+//        TokenizedLines transitions = 
+//                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
+        
+//        tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
 	}
 }

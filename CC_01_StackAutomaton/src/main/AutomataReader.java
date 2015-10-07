@@ -119,7 +119,11 @@ public abstract class AutomataReader {
         
         for (TransitionRule tr : ad.getTransitionRules()){
             
-            ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
+//            ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
+            ArrayList<String> transitionRuleLine = new ArrayList<String>();
+            for (int i = 0; i < 5; i++){
+                transitionRuleLine.add("dummy");
+            }
             
             transitionRuleLine.set(REPOS_PREV_STATE, tr.getPrevState().toString());
             transitionRuleLine.set(REPOS_NEXT_STATE, tr.getNextState().toString());
