@@ -56,6 +56,7 @@ public class Automaton {
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (TransitionRule tr : applicableTransitions){
     				AutomatonStatus newStatus = applyTransition(as, tr);
+    				System.out.println("heh....");
     				traceHist.add(AutomataReader.getStatusAsTokenizedLine(newStatus));
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
@@ -81,9 +82,17 @@ public class Automaton {
 	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus as){
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
  		for (TransitionRule tr : data.getTransitionRules()){
- 			if (tr.getPrevState() == as.getCurrentState() &&
+ 		    if (tr.getPrevState().getName().equals(as.getCurrentState().getName()))
+ 		        System.out.println("prevState names are same!");
+ 		    System.out.println(tr.getPrevState().getName());
+ 		    System.out.println(as.getCurrentState().getName());
+ 		    if (tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))
+ 		       System.out.println("inputCharacter are same!");
+ 		    if (tr.getRequiredStackSymbol().getName() == as.getCurrentStack().peek().getName())
+ 		        System.out.println("requiredStack are same!");
+ 			if (tr.getPrevState().getName().equals(as.getCurrentState().getName()) &&
  				tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0) &&
- 				tr.getRequiredStackSymbol() == as.getCurrentStack().peek()){
+ 				tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
  				applicableTransitions.add(tr);
  			}
  		}
@@ -103,10 +112,18 @@ public class Automaton {
 	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
 		State newState = tr.getNextState();
 		String oldString = as.getRemainingInputString();
-		String newString = oldString.substring(0, oldString.length()-2);
+		String newString = oldString.substring(1, oldString.length());
 		Stack<Symbol> newStack = as.getCurrentStack();
 		newStack.pop();
 		
 		return new AutomatonStatus(newState, newString, newStack);
 	}
+
+	/*
+	 * Getters and setters.
+	 */
+	
+    public TokenizedLines getTraceHist() {
+        return traceHist;
+    }
 }

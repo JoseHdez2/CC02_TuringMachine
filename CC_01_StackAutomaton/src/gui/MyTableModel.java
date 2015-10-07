@@ -20,7 +20,10 @@ public class MyTableModel extends AbstractTableModel{
     @Override
     public int getColumnCount() {
         // TODO: We assume that all rows have same number of elements, without checking.
-        return dataMatrix.get(0).size();
+        if (getRowCount() > 0)
+            return dataMatrix.get(0).size();
+        else
+            return 0;
     }
 
     @Override
