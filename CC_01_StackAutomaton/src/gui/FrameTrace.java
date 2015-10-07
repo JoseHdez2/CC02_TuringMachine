@@ -19,9 +19,10 @@ import main.AutomataReader;
 import structs.AutomatonData;
 import util.TokenizedLines;
 
-public class FrameTrace {
+public class FrameTrace extends JFrame {
 
     AutomatonData automatonData = null;
+    String inputString;
     
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
@@ -37,7 +38,6 @@ public class FrameTrace {
         "La cadena de entrada fue denegada."
 	};
 
-	private JFrame frameMain;
 	private JFrame frameTrace;
 	private JTable tableTrace;
 	private JScrollPane scrollPane;
@@ -56,8 +56,12 @@ public class FrameTrace {
 	/**
 	 * Create the application.
 	 */
-	public FrameTrace(AutomatonData automatonData) {
+	public FrameTrace(AutomatonData automatonData, String inputString) {
 	    this.automatonData = automatonData;
+	    this.inputString = inputString;
+	    setTitle(STR_WINDOW_TITLE[lang]);
+        setBounds(600, 150, 450, 300);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		initialize();
 	}
 
@@ -65,75 +69,25 @@ public class FrameTrace {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frameMain = new JFrame(STR_WINDOW_TITLE[lang]);
-		frameMain.setBounds(100, 100, 450, 300);
-		frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelNorth = new JPanel();
-		frameMain.getContentPane().add(panelNorth, BorderLayout.NORTH);
+		getContentPane().add(panelNorth, BorderLayout.NORTH);
 		
 		JPanel panelSouth = new JPanel();
-		frameMain.getContentPane().add(panelSouth, BorderLayout.SOUTH);
-		
-		JButton btnLoad = new JButton("Cargar");
-		panelNorth.add(btnLoad, BorderLayout.NORTH);
-
-		btnLoad.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FileDialog openFile = new FileDialog((JFrame)SwingUtilities.getWindowAncestor(btnLoad), 
-						"Cargar", FileDialog.LOAD);
-				openFile.setDirectory(System.getProperty("user.dir"));
-				openFile.setVisible(true);
-				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
-				
-				// Update table (load data from new file into table)
-				try {
-                    TokenizedLines tl = AutomataReader.prepareAutomatonData(chosenFileFullPath);
-                    System.out.println("Here goes ICHI:");
-                    System.out.println(tl.toString());
-                    automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
-                    TokenizedLines transitions = 
-                            AutomataReader.getTransitionsAsTokenizedLines(automatonData);
-                    MyTableModel tableTransModel = new MyTableModel(transitions);
-                    System.out.println("Here goes NI:");
-                    System.out.println(transitions.toString());
-                    tableTrace.setModel(tableTransModel);
-//                    tableTrans.setColumnModel(tableTransColumns[lang]);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-			}
-			
-		});
-		
-		JButton btnRun = new JButton("Correr");
-		panelSouth.add(btnRun);
-		
-		btnRun.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameTrace = new JFrame("Traza");
-                frameTrace.setSize(400, 400);
-                frameTrace.setVisible(true);
-            }
-            
-        });
+		getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
 		JLabel lblMaquina = new JLabel("asd");
 		panelNorth.add(lblMaquina);
 		
-		JPanel panelTrans = new JPanel();
-		frameMain.getContentPane().add(panelTrans, BorderLayout.CENTER);
+		JPanel panelTrace = new JPanel();
+		getContentPane().add(panelTrace, BorderLayout.CENTER);
 		
 		tableTrace = new JTable(tableTraceDummyData, tableTraceColumns[lang]);
 
 		tableTrace.setEnabled(false);
 		scrollPane = new JScrollPane(tableTrace);
 		
-		panelTrans.add(scrollPane, BorderLayout.SOUTH);
+		panelTrace.add(scrollPane, BorderLayout.SOUTH);
 		
 		JLabel lblTraza = new JLabel("hue");
 		panelSouth.add(lblTraza);
@@ -141,4 +95,7 @@ public class FrameTrace {
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
 	}
 
+	private void runTrace(){
+	    TokenizedLines traceLines = new TokenizedLines();
+	}
 }

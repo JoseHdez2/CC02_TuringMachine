@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import main.AutomataReader;
 import structs.AutomatonData;
-import util.StringProcessing;
 import util.TokenizedLines;
 
 public class FrameMain {
@@ -28,6 +28,7 @@ public class FrameMain {
 	int lang = englishGUI ? 0 : 1;
 	String chosenFileFullPath = null;
 	AutomatonData automatonData = null;
+	JTextField inputStringField = null;
 	
 	final String[] STR_WINDOW_TITLE = {"Pushdown Automaton", "Automata de Pila"};
 	final String[] STR_WINDOW_LOAD =
@@ -40,6 +41,7 @@ public class FrameMain {
 
 	private JFrame frameMain;
 	private FrameTrace frameTrace;
+	private JLabel labelFilename = new JLabel("---");
 	private JTable tableTrans;
 	private JScrollPane scrollPane;
 
@@ -114,13 +116,19 @@ public class FrameMain {
 						STR_WINDOW_LOAD[lang], FileDialog.LOAD);
 				openFile.setDirectory(System.getProperty("user.dir"));
 				openFile.setVisible(true);
-				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
-//				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
-				System.out.println(chosenFileFullPath);
-				updateLoadedAutomaton();
+				if(!(openFile.getFile() == null)){
+    				chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
+    //				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
+    				System.out.println(chosenFileFullPath);
+    				labelFilename.setText(openFile.getFile());
+    				updateLoadedAutomaton();
+				}
 			}
 			
 		});
+		
+		inputStringField = new JTextField(10);
+		panelSouth.add(inputStringField);
 		
 		JButton btnRun = new JButton(STR_RUN[lang]);
 		panelSouth.add(btnRun);
@@ -129,13 +137,14 @@ public class FrameMain {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frameTrace = new FrameTrace(automatonData);
+                String inputString = inputStringField.getText();
+                frameTrace = new FrameTrace(automatonData, inputString);
+                frameTrace.setVisible(true);
             }
             
         });
 		
-		JLabel lblMaquina = new JLabel(STR_TRANS[lang]);
-		panelNorth.add(lblMaquina);
+		panelNorth.add(labelFilename);
 		
 		JPanel panelTrans = new JPanel();
 		frameMain.getContentPane().add(panelTrans, BorderLayout.CENTER);
@@ -147,8 +156,8 @@ public class FrameMain {
 		
 		panelTrans.add(scrollPane, BorderLayout.SOUTH);
 		
-		JLabel lblTraza = new JLabel(STR_TRACE[lang]);
-		panelSouth.add(lblTraza);
+		JLabel lblTrans = new JLabel(STR_TRANS[lang]);
+        panelSouth.add(lblTrans);
 		
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
 	}
