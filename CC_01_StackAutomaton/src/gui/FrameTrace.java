@@ -1,28 +1,22 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.FileDialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
-import main.AutomataReader;
+import main.Automaton;
 import structs.AutomatonData;
 import util.TokenizedLines;
 
 public class FrameTrace extends JFrame {
 
     AutomatonData automatonData = null;
-    String inputString;
+    Automaton myAutomaton = null;
+    String inputString = null;
     
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
@@ -38,9 +32,9 @@ public class FrameTrace extends JFrame {
         "La cadena de entrada fue denegada."
 	};
 
-	private JFrame frameTrace;
 	private JTable tableTrace;
 	private JScrollPane scrollPane;
+	private JLabel labelResult = new JLabel("---");
 	
 	String[][] tableTraceDummyData =
 		{
@@ -89,13 +83,16 @@ public class FrameTrace extends JFrame {
 		
 		panelTrace.add(scrollPane, BorderLayout.SOUTH);
 		
-		JLabel lblTraza = new JLabel("hue");
-		panelSouth.add(lblTraza);
+		panelSouth.add(labelResult);
 		
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
+		
+		runTrace();
 	}
 
 	private void runTrace(){
-	    TokenizedLines traceLines = new TokenizedLines();
+	    TokenizedLines mouShindeiru = new TokenizedLines();
+	    myAutomaton = new Automaton(automatonData);
+	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	}
 }
