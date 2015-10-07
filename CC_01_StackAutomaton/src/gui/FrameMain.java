@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -123,6 +124,7 @@ public class FrameMain {
     //				chosenFileFullPath = openFile.getDirectory() + openFile.getFile();
     				System.out.println(chosenFileFullPath);
     				labelFilename.setText(openFile.getFile());
+    				labelFilename.setFont(labelFilename.getFont().deriveFont(Font.BOLD));
     				updateLoadedAutomaton();
     				lockTraceGUI(false);
 				}

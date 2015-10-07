@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +24,7 @@ public class FrameTrace extends JFrame {
 	String chosenFileFullPath = null;
 
 	final String[] STR_WINDOW_TITLE = {"Trace", "Traza"};
-	final String[] STR_TRACE_INTRO = {"Immediate descriptions", "Descripciones inmediatas"};
+	final String[] STR_INP_STR_INTRO = {"Input string: ", "Cadena de entrada: "};
 	final String[] STR_ACCEPT = {
         "The input string was accepted.",
         "La cadena de entrada fue aceptada."
@@ -71,8 +72,13 @@ public class FrameTrace extends JFrame {
 		JPanel panelSouth = new JPanel();
 		getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
-		JLabel lblMaquina = new JLabel(STR_TRACE_INTRO[lang]);
-		panelNorth.add(lblMaquina);
+		JLabel labelInputIntro = new JLabel(STR_INP_STR_INTRO[lang]);
+//		lblMaquina.setFont(lblMaquina.getFont().deriveFont(Font.BOLD));
+		panelNorth.add(labelInputIntro);
+		
+		JLabel labelInputString = new JLabel(inputString);
+        labelInputString.setFont(labelInputString.getFont().deriveFont(Font.BOLD));
+        panelNorth.add(labelInputString);
 		
 		JPanel panelTrace = new JPanel();
 		getContentPane().add(panelTrace, BorderLayout.CENTER);
@@ -84,6 +90,7 @@ public class FrameTrace extends JFrame {
 		
 		panelTrace.add(scrollPane, BorderLayout.SOUTH);
 		
+		labelResult.setFont(labelResult.getFont().deriveFont(Font.BOLD));
 		panelSouth.add(labelResult);
 		
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
@@ -92,7 +99,6 @@ public class FrameTrace extends JFrame {
 	}
 
 	private void runTrace(){
-	    TokenizedLines mouShindeiru = new TokenizedLines();
 	    myAutomaton = new Automaton(automatonData);
 	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	}
