@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import structs.AutomatonData;
+import structs.AutomatonStatus;
 import structs.State;
 import structs.Symbol;
 import structs.TransitionRule;
@@ -53,7 +54,7 @@ public abstract class AutomataReader {
     final static int TOK_LINE_ACCEPT_STATES = 5;
     final static int TOK_LINE_TRANS_FUNCT = 6; // Where the transition lines BEGIN.
     
-    // Tokens positions in each transition rule line, in the automaton file.
+    // Token positions in each transition rule line, in the automaton file.
     final static int POS_PREV_STATE = 0;
     final static int POS_NEXT_STATE = 3;
     final static int POS_REQ_INP_CHAR = 1;
@@ -106,7 +107,7 @@ public abstract class AutomataReader {
                 initialStackSymbol, transitionRules, acceptStates);
 	}
 	
-	// Tokens positions in each transition rule line, in the internal program representation.
+	// Token positions in each transition rule line, in the internal program representation.
     final static int REPOS_PREV_STATE = 0;
     final static int REPOS_NEXT_STATE = 3;
     final static int REPOS_REQ_INP_CHAR = 1;
@@ -136,4 +137,25 @@ public abstract class AutomataReader {
         
         return tl;
     }
+    
+    // Token positions in automata status output.
+    final static int POS_CUR_STATE = 0;
+    final static int POS_REMAIN_STR = 1;
+    final static int POS_STACK_STATUS = 2;
+    
+    public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
+        
+        ArrayList<String> tokenizedLine = new ArrayList<String>();
+        
+        for (int i = 0; i < 3; i++){
+            tokenizedLine.add("dummy");
+        }
+        
+        tokenizedLine.set(POS_CUR_STATE, as.getCurrentState().toString());
+        tokenizedLine.set(POS_REMAIN_STR, as.getRemainingInputString().toString());
+        tokenizedLine.set(POS_STACK_STATUS, as.getCurrentStack().toString());
+        
+        return tokenizedLine;
+    }
+   
 }

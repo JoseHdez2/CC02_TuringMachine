@@ -76,7 +76,7 @@ public class FrameTrace extends JFrame {
 //		lblMaquina.setFont(lblMaquina.getFont().deriveFont(Font.BOLD));
 		panelNorth.add(labelInputIntro);
 		
-		JLabel labelInputString = new JLabel(inputString);
+		JLabel labelInputString = new JLabel('"' + inputString + '"');
         labelInputString.setFont(labelInputString.getFont().deriveFont(Font.BOLD));
         panelNorth.add(labelInputString);
 		

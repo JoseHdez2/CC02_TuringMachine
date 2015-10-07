@@ -9,6 +9,7 @@ import structs.State;
 import structs.Symbol;
 import structs.TransitionRule;
 import util.Sys;
+import util.TokenizedLines;
 
 /**
  * @author jose
@@ -18,6 +19,7 @@ import util.Sys;
  */
 public class Automaton {
 	AutomatonData data;
+	TokenizedLines traceHist = new TokenizedLines();
 	
 	public Automaton(AutomatonData data){
 		this.data = data;
@@ -32,32 +34,40 @@ public class Automaton {
 	}
 	
 	/**
-	 * Evaluates an input string. The main purpose of a logical automata.
+	 * Evaluates an input string. The main purpose of a logical automaton.
 	 * @return	Boolean indicating acceptance of input string.
 	 */
 	public boolean evaluateString(String inputString){
-		ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
+		
+	    ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
+	    ArrayList<AutomatonStatus> newStatuses = new ArrayList<AutomatonStatus>();
+	    
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
 		possibleStatuses.add(new AutomatonStatus(data.getInitialState(), inputString, initialStack));
+		
 		// Iterate until all possibilities are exhausted.
-		// TODO not add and remove from a list you are iterating.
-		for (AutomatonStatus as : possibleStatuses){
-			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(as);
-			if (applicableTransitions.isEmpty()){
-				possibleStatuses.remove(as);
-				break;
-			}
-			for (TransitionRule tr : applicableTransitions){
-				AutomatonStatus newStatus = applyTransition(as, tr);
-				if (newStatus.getCurrentStack().isEmpty() &&
-						newStatus.getRemainingInputString().isEmpty())
-					return true;
-				// TODO not limit ourselves to yes or no; do the trace.
-				possibleStatuses.add(newStatus);
-			}
-			possibleStatuses.remove(as);
+		while (!possibleStatuses.isEmpty()){
+    		// For each possible automata status...
+		    for (AutomatonStatus as : possibleStatuses){
+    		    // Find all applicable transitions to this status...
+    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(as);
+    			// Apply each of them to create a new status, that will be evaluated next round.
+    			for (TransitionRule tr : applicableTransitions){
+    				AutomatonStatus newStatus = applyTransition(as, tr);
+    				traceHist.add(AutomataReader.getStatusAsTokenizedLine(newStatus));
+    				// If this new status has an empty stack AND input string... accept.
+    				if (newStatus.getCurrentStack().isEmpty() &&
+    						newStatus.getRemainingInputString().isEmpty())
+    					return true;
+    				// TODO not limit ourselves to yes or no; do the trace.
+    				newStatuses.add(newStatus);
+    			}
+    		}
+    		possibleStatuses.clear();
+    		possibleStatuses.addAll(newStatuses);
+    		newStatuses.clear();
 		}
 		// If all possibilities have been exhausted and the string
 		// hasn't been accepted, then the string must be rejected. 
