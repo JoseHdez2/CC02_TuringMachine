@@ -44,6 +44,8 @@ public class FrameMain {
 	private JLabel labelFilename = new JLabel("---");
 	private JTable tableTrans;
 	private JScrollPane scrollPane;
+	
+	private JButton buttonRun = null;
 
 	String[][] tableTransDummyData =
 		{
@@ -122,6 +124,7 @@ public class FrameMain {
     				System.out.println(chosenFileFullPath);
     				labelFilename.setText(openFile.getFile());
     				updateLoadedAutomaton();
+    				lockTraceGUI(false);
 				}
 			}
 			
@@ -130,10 +133,10 @@ public class FrameMain {
 		inputStringField = new JTextField(10);
 		panelSouth.add(inputStringField);
 		
-		JButton btnRun = new JButton(STR_RUN[lang]);
-		panelSouth.add(btnRun);
+		buttonRun = new JButton(STR_RUN[lang]);
+		panelSouth.add(buttonRun);
 		
-		btnRun.addActionListener(new ActionListener() {
+		buttonRun.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,13 +159,12 @@ public class FrameMain {
 		
 		panelTrans.add(scrollPane, BorderLayout.SOUTH);
 		
-		JLabel lblTrans = new JLabel(STR_TRANS[lang]);
-        panelSouth.add(lblTrans);
-		
 		panelNorth.setMinimumSize(panelNorth.getPreferredSize());
+		
+		lockTraceGUI(true);
 	}
 
-	public void updateLoadedAutomaton(){
+	private void updateLoadedAutomaton(){
         try {
             automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
         } catch (IOException e1) {
@@ -173,5 +175,15 @@ public class FrameMain {
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
+	}
+	
+	/**
+	 * Disable/Enable GUI elements that lead to the trace window.
+	 * @param lock Elements will be locked.
+	 */
+	private void lockTraceGUI(boolean lock){
+//	    tableTrans.setVisible(!lock);
+	    buttonRun.setEnabled(!lock);
+	    inputStringField.setEnabled(!lock);
 	}
 }

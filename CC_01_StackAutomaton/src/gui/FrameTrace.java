@@ -23,6 +23,7 @@ public class FrameTrace extends JFrame {
 	String chosenFileFullPath = null;
 
 	final String[] STR_WINDOW_TITLE = {"Trace", "Traza"};
+	final String[] STR_TRACE_INTRO = {"Immediate descriptions", "Descripciones inmediatas"};
 	final String[] STR_ACCEPT = {
         "The input string was accepted.",
         "La cadena de entrada fue aceptada."
@@ -46,7 +47,7 @@ public class FrameTrace extends JFrame {
 			{"Current State", "Remaining String", "Stack Content"},
 			{"Estado Actual", "Cadena Restante", "Contenido de Pila"},
 		};
-
+	
 	/**
 	 * Create the application.
 	 */
@@ -70,7 +71,7 @@ public class FrameTrace extends JFrame {
 		JPanel panelSouth = new JPanel();
 		getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
-		JLabel lblMaquina = new JLabel("asd");
+		JLabel lblMaquina = new JLabel(STR_TRACE_INTRO[lang]);
 		panelNorth.add(lblMaquina);
 		
 		JPanel panelTrace = new JPanel();
