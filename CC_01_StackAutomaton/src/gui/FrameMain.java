@@ -155,22 +155,14 @@ public class FrameMain {
 
 	public void updateLoadedAutomaton(){
         try {
-            TokenizedLines tl = AutomataReader.prepareAutomatonData(chosenFileFullPath);
-            System.out.println("Here goes ICHI:");
-            System.out.println(tl.toString());
             automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
-            TokenizedLines transitions = 
-                    AutomataReader.getTransitionsAsTokenizedLines(automatonData);
-            MyTableModel tableTransModel = new MyTableModel(transitions);
-            System.out.println("Here goes NI:");
-            System.out.println(transitions.toString());
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-//        TokenizedLines transitions = 
-//                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
+        TokenizedLines transitions = 
+                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
         
-//        tableTrans.setModel(new MyTableModel(transitions));
+        tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
 	}
 }
