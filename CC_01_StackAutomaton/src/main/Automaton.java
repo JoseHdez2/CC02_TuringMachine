@@ -45,7 +45,9 @@ public class Automaton {
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
-		possibleStatuses.add(new AutomatonStatus(data.getInitialState(), inputString, initialStack));
+		AutomatonStatus initialStatus = new AutomatonStatus(data.getInitialState(), inputString, initialStack);
+		possibleStatuses.add(initialStatus);
+		traceHist.add(AutomataReader.getStatusAsTokenizedLine(initialStatus));
 		
 		// Iterate until all possibilities are exhausted.
 		while (!possibleStatuses.isEmpty()){
@@ -56,7 +58,6 @@ public class Automaton {
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (TransitionRule tr : applicableTransitions){
     				AutomatonStatus newStatus = applyTransition(as, tr);
-    				System.out.println("heh....");
     				traceHist.add(AutomataReader.getStatusAsTokenizedLine(newStatus));
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
