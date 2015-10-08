@@ -52,14 +52,11 @@ public class Automaton {
 		TraceTrail initialTrail = new TraceTrail();
 		initialTrail.add(initialStatus);
 		possibleTrails.add(initialTrail);
-//		possibleStatuses.add(initialStatus);
 		
 		// Iterate until all possibilities are exhausted.
 		while (!possibleTrails.isEmpty()){
-//		while (!possibleStatuses.isEmpty()){
     		// For each possible automata status...
 		    for (TraceTrail tt : possibleTrails){
-//		    for (AutomatonStatus as : possibleStatuses){
     		    // Find all applicable transitions to this status...
     			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
@@ -110,7 +107,8 @@ public class Automaton {
  				tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
  				System.out.println("app");
  			    if (tr.getRequiredInputCharacter() == EPSILON_INPUT ||
- 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0)){
+ 			            (!as.getRemainingInputString().isEmpty() &&
+ 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))){
  			       System.out.println("supa app");
  			        applicableTransitions.add(tr);
  			    }
@@ -141,16 +139,20 @@ public class Automaton {
 	    
 	    State newState = tr.getNextState();
 		String newString = oldString.substring(1, oldString.length());
-		Stack<Symbol> newStack = as.getCurrentStack();
-		newStack.pop();   //Always pop the top.
 		
-//		newStack.push(tr.getStackSymbolsToPush().get(0));
-		/*
+		Stack<Symbol> newStack = new Stack<Symbol>();
+		
+        // 
+        for (int i = 0; i < as.getCurrentStack().size()-2; i++){
+		    newStack.push(as.getCurrentStack().get(i));
+		}
+
+        
 		if (!tr.getStackSymbolsToPush().get(0).getName().equals(EPSILON_SYMBOL.getName())){
 		    for (Symbol s : tr.getStackSymbolsToPush()){
 		        newStack.push(s);
 		    }
-		}*/
+		}
 		
 		return new AutomatonStatus(newState, newString, newStack);
 	}

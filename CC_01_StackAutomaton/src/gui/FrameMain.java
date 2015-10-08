@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -73,6 +74,13 @@ public class FrameMain {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+	    
+	    Stack<String> s = new Stack<String>();
+	    s.push("a");
+	    s.push("b");
+	    for (String str : s){
+	        System.out.println(str);
+	    }
 	    
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
