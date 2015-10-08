@@ -157,5 +157,16 @@ public abstract class AutomataReader {
         
         return tokenizedLine;
     }
+    
+    public static TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
+        
+        TokenizedLines tokenizedLines = new TokenizedLines();
+        
+        for (AutomatonStatus as : tt){
+            tokenizedLines.add(getStatusAsTokenizedLine(as));
+        }
+        
+        return tokenizedLines;
+    }
    
 }

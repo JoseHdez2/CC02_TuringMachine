@@ -39,62 +39,81 @@ public class Automaton {
 	 */
 	public boolean evaluateString(String inputString){
 		
-	    ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
-	    ArrayList<AutomatonStatus> newStatuses = new ArrayList<AutomatonStatus>();
+	    ArrayList<TraceTrail> possibleTrails = new ArrayList<TraceTrail>();
+	    ArrayList<TraceTrail> newTrails = new ArrayList<TraceTrail>();
+	    
+//	    ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
+//	    ArrayList<AutomatonStatus> newStatuses = new ArrayList<AutomatonStatus>();
 	    
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
 		AutomatonStatus initialStatus = new AutomatonStatus(data.getInitialState(), inputString, initialStack);
-		possibleStatuses.add(initialStatus);
-		traceHist.add(AutomataReader.getStatusAsTokenizedLine(initialStatus));
+		TraceTrail initialTrail = new TraceTrail();
+		initialTrail.add(initialStatus);
+		possibleTrails.add(initialTrail);
+//		possibleStatuses.add(initialStatus);
 		
 		// Iterate until all possibilities are exhausted.
-		while (!possibleStatuses.isEmpty()){
+		while (!possibleTrails.isEmpty()){
+//		while (!possibleStatuses.isEmpty()){
     		// For each possible automata status...
-		    for (AutomatonStatus as : possibleStatuses){
+		    for (TraceTrail tt : possibleTrails){
+//		    for (AutomatonStatus as : possibleStatuses){
     		    // Find all applicable transitions to this status...
-    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(as);
+    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (TransitionRule tr : applicableTransitions){
-    				AutomatonStatus newStatus = applyTransition(as, tr);
-    				traceHist.add(AutomataReader.getStatusAsTokenizedLine(newStatus));
+                    TraceTrail newTrail = new TraceTrail();
+                    newTrail.addAll(tt);
+    				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
+    				newTrail.add(newStatus);
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
-    						newStatus.getRemainingInputString().isEmpty())
+    						newStatus.getRemainingInputString().isEmpty()){
+    				    // TODO record winning trace into history.
+    				    traceHist = AutomataReader.traceTrailAsTokenizedLines(newTrail);
     					return true;
+    				}
     				// TODO not limit ourselves to yes or no; do the trace.
-    				newStatuses.add(newStatus);
+    				newTrails.add(newTrail);
     			}
     		}
-    		possibleStatuses.clear();
-    		possibleStatuses.addAll(newStatuses);
-    		newStatuses.clear();
+    		possibleTrails.clear();
+    		possibleTrails.addAll(newTrails);
+    		newTrails.clear();
 		}
 		// If all possibilities have been exhausted and the string
 		// hasn't been accepted, then the string must be rejected. 
 		return false;
 	}
 	
+	// Special input string character and stack symbol.
+	private final Character EPSILON_INPUT = '-';
+	private final Symbol EPSILON_SYMBOL = new Symbol("-");
+	
 	/**
 	 * @param as A frozen state of the automaton variables.
 	 * @return	All applicable transition rules for the given automaton status.
 	 */
 	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus as){
+	    
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
+		
+		// Special case
+		if (as.getCurrentStack().isEmpty()) return applicableTransitions;
+		
+		// Normal
  		for (TransitionRule tr : data.getTransitionRules()){
- 		    if (tr.getPrevState().getName().equals(as.getCurrentState().getName()))
- 		        System.out.println("prevState names are same!");
- 		    System.out.println(tr.getPrevState().getName());
- 		    System.out.println(as.getCurrentState().getName());
- 		    if (tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))
- 		       System.out.println("inputCharacter are same!");
- 		    if (tr.getRequiredStackSymbol().getName() == as.getCurrentStack().peek().getName())
- 		        System.out.println("requiredStack are same!");
+
  			if (tr.getPrevState().getName().equals(as.getCurrentState().getName()) &&
- 				tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0) &&
  				tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
- 				applicableTransitions.add(tr);
+ 				System.out.println("app");
+ 			    if (tr.getRequiredInputCharacter() == EPSILON_INPUT ||
+ 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0)){
+ 			       System.out.println("supa app");
+ 			        applicableTransitions.add(tr);
+ 			    }
  			}
  		}
  		return applicableTransitions;
@@ -111,11 +130,27 @@ public class Automaton {
 	 * @return	New automaton status.
 	 */
 	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
-		State newState = tr.getNextState();
-		String oldString = as.getRemainingInputString();
+		
+	 // Special case
+        if (as.getCurrentStack().isEmpty()){
+            System.err.println("Somehow, unapplicable transition was considered applicable.");
+            System.exit(1);
+        }
+	    
+        String oldString = as.getRemainingInputString();
+	    
+	    State newState = tr.getNextState();
 		String newString = oldString.substring(1, oldString.length());
 		Stack<Symbol> newStack = as.getCurrentStack();
-		newStack.pop();
+		newStack.pop();   //Always pop the top.
+		
+//		newStack.push(tr.getStackSymbolsToPush().get(0));
+		/*
+		if (!tr.getStackSymbolsToPush().get(0).getName().equals(EPSILON_SYMBOL.getName())){
+		    for (Symbol s : tr.getStackSymbolsToPush()){
+		        newStack.push(s);
+		    }
+		}*/
 		
 		return new AutomatonStatus(newState, newString, newStack);
 	}
