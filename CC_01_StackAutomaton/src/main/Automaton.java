@@ -31,7 +31,7 @@ public class Automaton {
 		// Make sure all acceptStates are in stateSet.
 		for (State s : data.getAcceptStates()){
 			if(!data.getStateSet().contains(s))
-				Sys.abort("Algun estado de aceptacion no se encuentra entre los estados definidos.");
+				Sys.abort("An acceptance state is not in the defined state set.");
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class Automaton {
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
     				    // Record winning trace into history.
-    				    traceHist = AutomataReader.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = AutomataIO.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
     				newTrails.add(newTrail);
@@ -98,8 +98,8 @@ public class Automaton {
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + AutomataReader.getStatusAsTokenizedLine(as));
-	    System.out.println("Finding applicable transitions for " + AutomataReader.getStatusAsTokenizedLine(as));
+	    debugStr.concat("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(as));
+	    System.out.println("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(as));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
@@ -111,8 +111,8 @@ public class Automaton {
 		// Normal
  		for (TransitionRule tr : data.getTransitionRules()){
 
-//            String deny = strNo + AutomataReader.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
- 		   String deny = strNo + AutomataReader.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+//            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
+ 		   String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
  			if (tr.getPrevState().getName().equals(as.getCurrentState().getName())){
  			    // todo bien
@@ -140,8 +140,8 @@ public class Automaton {
 		        continue;
  			}
 		    
-		    debugStr.concat("Applicable transition " + AutomataReader.getTransitionAsTokenizedLine(tr));
-		    System.out.println("Applicable transition " + AutomataReader.getTransitionAsTokenizedLine(tr));
+		    debugStr.concat("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
             applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
@@ -188,8 +188,8 @@ public class Automaton {
 		
 		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
 		
-		System.out.print(AutomataReader.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(AutomataReader.getStatusAsTokenizedLine(newStatus));
+		System.out.print(AutomataIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(AutomataIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

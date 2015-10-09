@@ -20,7 +20,7 @@ import util.TokenizedLines;
  *         It contains the only functions that work with the low-level structure
  *         of the automata files.
  */
-public abstract class AutomataReader {
+public abstract class AutomataIO extends IOConst{
 	
 	/**
 	 * @param fileName Path to an automaton file (arbitrary file structure)
@@ -43,67 +43,55 @@ public abstract class AutomataReader {
 		
 		return tokenizedLines;
 	}
-	
-    // Arbitrary automaton file structure constants.
-    // Tokenized lines where each of the datums are located.
-    final static int TOK_LINE_STATE_SET = 0;
-    final static int TOK_LINE_INPUT_ALPH = 1;
-    final static int TOK_LINE_STACK_ALPH = 2;
-    final static int TOK_LINE_INIT_STATE = 3;
-    final static int TOK_LINE_INIT_STACK = 4;
-    final static int TOK_LINE_ACCEPT_STATES = 5;
-    final static int TOK_LINE_TRANS_FUNCT = 6; // Where the transition lines BEGIN.
     
-    // Token positions in each transition rule line, in the automaton file.
-    final static int POS_PREV_STATE = 0;
-    final static int POS_NEXT_STATE = 3;
-    final static int POS_REQ_INP_CHAR = 1;
-    final static int POS_REQ_STACK_SYM = 2;
-    final static int POS_STACK_SYM_TO_PUSH = 4;
-    // TODO: should we allow to push many symbols in same transition?
-    
+	/**
+	 * Reads automaton data from a given file.
+	 * @param fileName Path to automaton file.
+	 * @return AutomatonData representing the automaton.
+	 * @throws IOException
+	 */
 	public static AutomatonData readAutomatonData(String fileName) throws IOException {
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
         HashSet<State> stateSet = new HashSet<State>();
-        for (String token : tokLines.get(TOK_LINE_STATE_SET)) {
+        for (String token : tokLines.get(IN_STATE_SET)) {
             stateSet.add(new State(token));
         }
 
         HashSet<Character> inputAlphabet = new HashSet<Character>();
-        for (String token : tokLines.get(TOK_LINE_INPUT_ALPH)) {
+        for (String token : tokLines.get(IN_INPUT_ALPH)) {
             inputAlphabet.add(token.charAt(0));
         }
 
         HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
-        for (String token : tokLines.get(TOK_LINE_STACK_ALPH)) {
+        for (String token : tokLines.get(IN_STACK_ALPH)) {
             stackAlphabet.add(new Symbol(token));
         }
 
-        State initialState = new State(tokLines.get(TOK_LINE_INIT_STATE).get(0));
+        State initialState = new State(tokLines.get(IN_INIT_STATE).get(0));
 
-        Symbol initialStackSymbol = new Symbol(tokLines.get(TOK_LINE_INIT_STACK).get(0));
+        Symbol initialStackSymbol = new Symbol(tokLines.get(IN_INIT_STACK).get(0));
 
         HashSet<State> acceptStates = new HashSet<State>();
-        for (String str : tokLines.get(TOK_LINE_ACCEPT_STATES)) {
+        for (String str : tokLines.get(IN_ACCEPT_STATES)) {
             stateSet.add(new State(str));
         }
         
         HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
         
-        for (ArrayList<String> tl : tokLines.subList(TOK_LINE_TRANS_FUNCT, tokLines.size())){
+        for (ArrayList<String> tl : tokLines.subList(IN_TRANS_FUNCT, tokLines.size())){
             
-            State prevState = new State(tl.get(POS_PREV_STATE));
+            State prevState = new State(tl.get(IN_PREV_STATE));
             
-            State nextState = new State(tl.get(POS_NEXT_STATE));
+            State nextState = new State(tl.get(IN_NEXT_STATE));
             
-            Character requiredInputCharacter = tl.get(POS_REQ_INP_CHAR).charAt(0);
+            Character requiredInputCharacter = tl.get(IN_REQ_INP_CHAR).charAt(0);
             
-            Symbol requiredStackSymbol = new Symbol(tl.get(POS_REQ_STACK_SYM));
+            Symbol requiredStackSymbol = new Symbol(tl.get(IN_REQ_STACK_SYM));
             
             ArrayList<Symbol> stackSymbolsToPush = new ArrayList<Symbol>();
             
-            String[] stackCharsToPush = tl.get(POS_STACK_SYM_TO_PUSH).split(",");
+            String[] stackCharsToPush = tl.get(IN_STACK_SYM_TO_PUSH).split(",");
             for (String str : stackCharsToPush){
                 stackSymbolsToPush.add(new Symbol(str));
             }
@@ -116,27 +104,26 @@ public abstract class AutomataReader {
         return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
                 initialStackSymbol, transitionRules, acceptStates);
 	}
-	
-	// Token positions in each transition rule line, in the internal program representation.
-    final static int REPOS_PREV_STATE = 0;
-    final static int REPOS_NEXT_STATE = 3;
-    final static int REPOS_REQ_INP_CHAR = 1;
-    final static int REPOS_REQ_STACK_SYM = 2;
-    final static int REPOS_STACK_SYM_TO_PUSH = 4;
     
+    /**
+     * @param tr
+     * @return
+     */
     public static ArrayList<String> getTransitionAsTokenizedLine(TransitionRule tr){
-        
+
 //      ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
+
+//      TODO: Try to one-line this?
       ArrayList<String> transitionRuleLine = new ArrayList<String>();
       for (int i = 0; i < 5; i++){
           transitionRuleLine.add("dummy");
       }
       
-      transitionRuleLine.set(REPOS_PREV_STATE, tr.getPrevState().toString());
-      transitionRuleLine.set(REPOS_NEXT_STATE, tr.getNextState().toString());
-      transitionRuleLine.set(REPOS_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
-      transitionRuleLine.set(REPOS_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
-      transitionRuleLine.set(REPOS_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
+      transitionRuleLine.set(OUT_LN_PREV_STATE, tr.getPrevState().toString());
+      transitionRuleLine.set(OUT_LN_NEXT_STATE, tr.getNextState().toString());
+      transitionRuleLine.set(OUT_LN_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
+      transitionRuleLine.set(OUT_LN_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
+      transitionRuleLine.set(OUT_LN_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
       
       return transitionRuleLine;
     }
@@ -152,11 +139,6 @@ public abstract class AutomataReader {
         return tl;
     }
     
-    // Token positions in automata status output.
-    final static int POS_CUR_STATE = 0;
-    final static int POS_REMAIN_STR = 1;
-    final static int POS_STACK_STATUS = 2;
-    
     public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
         
         ArrayList<String> tokenizedLine = new ArrayList<String>();
@@ -165,9 +147,9 @@ public abstract class AutomataReader {
             tokenizedLine.add("dummy");
         }
         
-        tokenizedLine.set(POS_CUR_STATE, as.getCurrentState().toString());
-        tokenizedLine.set(POS_REMAIN_STR, as.getRemainingInputString().toString());
-        tokenizedLine.set(POS_STACK_STATUS, as.getCurrentStack().toString());
+        tokenizedLine.set(OUT_POS_CUR_STATE, as.getCurrentState().toString());
+        tokenizedLine.set(OUT_POS_REMAIN_STR, as.getRemainingInputString().toString());
+        tokenizedLine.set(OUT_POS_STACK_STATUS, as.getCurrentStack().toString());
         
         return tokenizedLine;
     }

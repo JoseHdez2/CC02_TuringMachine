@@ -8,7 +8,8 @@ S A # stack alphabet
 p # initial state
 S # initial stack symbol
 - # acceptance state set
-p a S p A # transition functions d(q1,a1,A1)=(q2,A2)
+# transition functions d(q1,a1,A1)=(q2,A2)
+p a S p A
 p a A p A,A
-p b S q -
+p b A q -
 q b A q - 

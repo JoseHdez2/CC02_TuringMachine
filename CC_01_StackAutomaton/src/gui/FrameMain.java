@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import main.AutomataReader;
+import main.AutomataIO;
 import structs.AutomatonData;
 import util.TokenizedLines;
 
@@ -171,12 +171,12 @@ public class FrameMain {
 
 	private void updateLoadedAutomaton(){
         try {
-            automatonData = AutomataReader.readAutomatonData(chosenFileFullPath);
+            automatonData = AutomataIO.readAutomatonData(chosenFileFullPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         TokenizedLines transitions = 
-                AutomataReader.getTransitionsAsTokenizedLines(automatonData);
+                AutomataIO.getTransitionsAsTokenizedLines(automatonData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
