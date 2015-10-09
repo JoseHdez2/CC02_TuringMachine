@@ -39,8 +39,10 @@ public class FrameMain {
     
     final int FIELD_INPUT_STR_SIZE = 10;
     
+    // change to true if you want an English interface.
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
+	
 	String chosenFileFullPath = null;
 	AutomatonData automatonData = null;
 	JTextField inputStringField = null;
@@ -146,7 +148,7 @@ public class FrameMain {
 			
 		});
 		
-		inputStringField = new JTextField(10);
+		inputStringField = new JTextField(FIELD_INPUT_STR_SIZE);
 		panelSouth.add(inputStringField);
 		
 		buttonRun = new JButton(STR_RUN[lang]);
@@ -195,7 +197,7 @@ public class FrameMain {
 	
 	/**
 	 * Disable/Enable GUI elements that lead to the trace window.
-	 * @param lock Elements will be locked.
+	 * @param lock If true, elements will be locked.
 	 */
 	private void lockTraceGUI(boolean lock){
 //	    tableTrans.setVisible(!lock);
