@@ -1,13 +1,13 @@
-package main;
+package pushdown;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-import structs.AutomatonData;
-import structs.AutomatonStatus;
-import structs.State;
-import structs.Symbol;
-import structs.TransitionRule;
+import pushdown.structs.AutomatonData;
+import pushdown.structs.AutomatonStatus;
+import pushdown.structs.State;
+import pushdown.structs.Symbol;
+import pushdown.structs.TransitionRule;
 import util.Sys;
 import util.TokenizedLines;
 

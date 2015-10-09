@@ -1,15 +1,20 @@
-package structs;
+package pushdown.structs;
 
-public class State {
+/**
+ * @author jose
+ *
+ *  Represents an automaton symbol.
+ */
+public class Symbol {
 	String name;
 
-	public State(String name){
+	public Symbol(String name){
 		this.name = name;
 	}
 	
 	public String toString(){
-	    return name;
-	}
+        return name;
+    }
 	
 	/*
 	 * Equals and hashCode.
@@ -18,7 +23,7 @@ public class State {
 	public boolean equals(Object ob){
 		if (ob == null) return false;
 		if (ob.getClass() != getClass()) return false;
-		State other = (State)ob;
+		Symbol other = (Symbol)ob;
 		if (!name.equals(other.name)) return false;
 		return true;
 	}

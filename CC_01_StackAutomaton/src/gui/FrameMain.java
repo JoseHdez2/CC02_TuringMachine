@@ -20,8 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import main.AutomataIO;
-import structs.AutomatonData;
+import pushdown.AutomataIO;
+import pushdown.structs.AutomatonData;
 import util.TokenizedLines;
 
 public class FrameMain {

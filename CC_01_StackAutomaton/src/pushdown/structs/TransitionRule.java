@@ -1,11 +1,11 @@
-package structs;
+package pushdown.structs;
 
 import java.util.ArrayList;
 
 /**
  * @author jose
  * 
- *	Class that defines a transition rule, 
+ *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
 public class TransitionRule {
@@ -39,7 +39,7 @@ public class TransitionRule {
 		if (!requiredInputCharacter.equals(other.requiredInputCharacter)) return false;
 		if (!requiredStackSymbol.equals(other.requiredStackSymbol)) return false;
 		if (!stackSymbolsToPush.equals(other.stackSymbolsToPush)) return false;
-		// TODO rest of them
+
 		return true;
 	}
 	

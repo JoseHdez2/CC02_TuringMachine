@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import main.Automaton;
-import structs.AutomatonData;
+import pushdown.Automaton;
+import pushdown.structs.AutomatonData;
 import util.TokenizedLines;
 
 public class FrameTrace extends JFrame {

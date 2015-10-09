@@ -1,13 +1,13 @@
-package structs;
+package pushdown.structs;
 
 import java.util.Stack;
 
 /**
  * @author jose
- *	A tuple that represents the status of a given automaton
+ *  Temporal data structure used during a trace.
+ *  
+ *	Represents the status of a given automaton
  *  as a frozen frame during the evaluation of a string.
- *	It holds the current state, the remaining string to be evaluated
- *	and the status of the stack. 
  */
 public class AutomatonStatus {
 	State currentState;

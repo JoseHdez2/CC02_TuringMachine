@@ -1,4 +1,4 @@
-package structs;
+package pushdown.structs;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +8,11 @@ import util.TokenizedLines;
 /**
  * @author jose
  *
- *  Represents the literal data of an automata, extracted by AutomataCreator.
+ *  Semantically represents the data 
+ *  of an automaton definition.
+ *  
+ *  Extracted and given semantic meaning 
+ *  by the AutomataIO class.
  */
 public class AutomatonData extends TokenizedLines {
 
