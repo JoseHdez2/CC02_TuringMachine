@@ -102,5 +102,7 @@ public class FrameTrace extends JFrame {
 	    myAutomaton = new Automaton(automatonData);
 	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	    tableTrace.setModel(new MyTableModel(myAutomaton.getTraceHist()));
+//	    System.out.println("hey heres the trace, good job");
+	    System.out.print(myAutomaton.getDebugStr());
 	}
 }

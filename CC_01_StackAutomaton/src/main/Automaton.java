@@ -18,6 +18,8 @@ import util.TokenizedLines;
  *  the AutomatonData it contains (e.g. apply transitions).
  */
 public class Automaton {
+    String debugStr = "";
+    
 	AutomatonData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
@@ -94,6 +96,13 @@ public class Automaton {
 	 */
 	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus as){
 	    
+//	    debugStr = "";
+	    
+	    debugStr.concat("Finding applicable transitions for " + AutomataReader.getStatusAsTokenizedLine(as));
+	    System.out.println("Finding applicable transitions for " + AutomataReader.getStatusAsTokenizedLine(as));
+	    
+	    String strNo = "Unapplicable transition ";
+	    
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
 		
 		// Special case
@@ -102,16 +111,38 @@ public class Automaton {
 		// Normal
  		for (TransitionRule tr : data.getTransitionRules()){
 
- 			if (tr.getPrevState().getName().equals(as.getCurrentState().getName()) &&
- 				tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
- 				System.out.println("app");
- 			    if (tr.getRequiredInputCharacter() == EPSILON_INPUT ||
- 			            (!as.getRemainingInputString().isEmpty() &&
- 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))){
- 			       System.out.println("supa app");
- 			        applicableTransitions.add(tr);
- 			    }
+//            String deny = strNo + AutomataReader.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
+ 		   String deny = strNo + AutomataReader.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+ 		    
+ 			if (tr.getPrevState().getName().equals(as.getCurrentState().getName())){
+ 			    // todo bien
+ 			} else {
+ 			    debugStr.concat(deny + "Different required state.");
+ 			    System.out.println(deny + "Different required state.");
+ 			    continue;
  			}
+		    
+ 			if (tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
+ 				// tudo bem
+ 			} else {
+ 			   debugStr.concat(deny + "Different required stack symbol.");
+ 			   System.out.println(deny + "Different required stack symbol.");
+ 			   continue;
+ 			}
+ 			
+		    if (tr.getRequiredInputCharacter() == EPSILON_INPUT ||
+		            (!as.getRemainingInputString().isEmpty() &&
+ 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))){
+		        // daijoubu
+		    } else {
+		        debugStr.concat(deny + "Different required input character.");
+		        System.out.println(deny + "Different required input character.");
+		        continue;
+ 			}
+		    
+		    debugStr.concat("Applicable transition " + AutomataReader.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + AutomataReader.getTransitionAsTokenizedLine(tr));
+            applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
 	}
@@ -142,10 +173,11 @@ public class Automaton {
 		
 		Stack<Symbol> newStack = new Stack<Symbol>();
 		
-        // 
-        for (int i = 0; i < as.getCurrentStack().size()-2; i++){
-		    newStack.push(as.getCurrentStack().get(i));
+        for (Symbol s : as.getCurrentStack()){
+		    newStack.push(s);
 		}
+        
+        newStack.pop();
 
         
 		if (!tr.getStackSymbolsToPush().get(0).getName().equals(EPSILON_SYMBOL.getName())){
@@ -154,7 +186,11 @@ public class Automaton {
 		    }
 		}
 		
-		return new AutomatonStatus(newState, newString, newStack);
+		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
+		
+		System.out.print(AutomataReader.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(AutomataReader.getStatusAsTokenizedLine(newStatus));
+		return newStatus;
 	}
 
 	/*
@@ -163,5 +199,9 @@ public class Automaton {
 	
     public TokenizedLines getTraceHist() {
         return traceHist;
+    }
+
+    public String getDebugStr() {
+        return debugStr;
     }
 }

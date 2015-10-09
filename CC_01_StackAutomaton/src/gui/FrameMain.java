@@ -25,8 +25,8 @@ import structs.AutomatonData;
 import util.TokenizedLines;
 
 public class FrameMain {
-//    TODO: be able to push more than one symbol in the stack, per transition
 //    TODO: be able to consider acceptance states to accept string
+//    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
@@ -76,13 +76,6 @@ public class FrameMain {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-	    
-	    Stack<String> s = new Stack<String>();
-	    s.push("a");
-	    s.push("b");
-	    for (String str : s){
-	        System.out.println(str);
-	    }
 	    
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

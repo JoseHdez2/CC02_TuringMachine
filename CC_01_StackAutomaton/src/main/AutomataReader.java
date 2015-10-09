@@ -124,25 +124,29 @@ public abstract class AutomataReader {
     final static int REPOS_REQ_STACK_SYM = 2;
     final static int REPOS_STACK_SYM_TO_PUSH = 4;
     
+    public static ArrayList<String> getTransitionAsTokenizedLine(TransitionRule tr){
+        
+//      ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
+      ArrayList<String> transitionRuleLine = new ArrayList<String>();
+      for (int i = 0; i < 5; i++){
+          transitionRuleLine.add("dummy");
+      }
+      
+      transitionRuleLine.set(REPOS_PREV_STATE, tr.getPrevState().toString());
+      transitionRuleLine.set(REPOS_NEXT_STATE, tr.getNextState().toString());
+      transitionRuleLine.set(REPOS_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
+      transitionRuleLine.set(REPOS_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
+      transitionRuleLine.set(REPOS_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
+      
+      return transitionRuleLine;
+    }
+    
     public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (TransitionRule tr : ad.getTransitionRules()){
-            
-//            ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
-            ArrayList<String> transitionRuleLine = new ArrayList<String>();
-            for (int i = 0; i < 5; i++){
-                transitionRuleLine.add("dummy");
-            }
-            
-            transitionRuleLine.set(REPOS_PREV_STATE, tr.getPrevState().toString());
-            transitionRuleLine.set(REPOS_NEXT_STATE, tr.getNextState().toString());
-            transitionRuleLine.set(REPOS_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
-            transitionRuleLine.set(REPOS_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
-            transitionRuleLine.set(REPOS_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
-            
-            tl.add(transitionRuleLine);
+        for (TransitionRule tr : ad.getTransitionRules()){            
+            tl.add(getTransitionAsTokenizedLine(tr));
         }
         
         return tl;
