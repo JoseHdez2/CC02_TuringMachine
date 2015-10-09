@@ -9,6 +9,6 @@ p # initial state
 S # initial stack symbol
 - # acceptance state set
 p a S p A # transition functions d(q1,a1,A1)=(q2,A2)
-p a A p AA
+p a A p A,A
 p b S q -
 q b A q - 

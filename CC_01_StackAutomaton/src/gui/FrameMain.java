@@ -25,7 +25,9 @@ import structs.AutomatonData;
 import util.TokenizedLines;
 
 public class FrameMain {
-
+//    TODO: be able to push more than one symbol in the stack, per transition
+//    TODO: be able to consider acceptance states to accept string
+    
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
 	String chosenFileFullPath = null;

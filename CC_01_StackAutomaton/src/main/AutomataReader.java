@@ -92,12 +92,22 @@ public abstract class AutomataReader {
         HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
         
         for (ArrayList<String> tl : tokLines.subList(TOK_LINE_TRANS_FUNCT, tokLines.size())){
+            
             State prevState = new State(tl.get(POS_PREV_STATE));
+            
             State nextState = new State(tl.get(POS_NEXT_STATE));
+            
             Character requiredInputCharacter = tl.get(POS_REQ_INP_CHAR).charAt(0);
+            
             Symbol requiredStackSymbol = new Symbol(tl.get(POS_REQ_STACK_SYM));
+            
             ArrayList<Symbol> stackSymbolsToPush = new ArrayList<Symbol>();
-            stackSymbolsToPush.add(new Symbol(String.valueOf(tl.get(POS_STACK_SYM_TO_PUSH).charAt(0))));
+            
+            String[] stackCharsToPush = tl.get(POS_STACK_SYM_TO_PUSH).split(",");
+            for (String str : stackCharsToPush){
+                stackSymbolsToPush.add(new Symbol(str));
+            }
+            
             // TODO: allow for more than one stack symbol. currently a fix to let one.
             transitionRules.add(new TransitionRule(prevState, nextState, 
                     requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));

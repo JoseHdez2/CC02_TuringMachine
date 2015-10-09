@@ -68,11 +68,10 @@ public class Automaton {
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
-    				    // TODO record winning trace into history.
+    				    // Record winning trace into history.
     				    traceHist = AutomataReader.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
-    				// TODO not limit ourselves to yes or no; do the trace.
     				newTrails.add(newTrail);
     			}
     		}
@@ -130,6 +129,7 @@ public class Automaton {
 	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
 		
 	 // Special case
+	    // TODO: Remove this because it should never happen?
         if (as.getCurrentStack().isEmpty()){
             System.err.println("Somehow, unapplicable transition was considered applicable.");
             System.exit(1);
