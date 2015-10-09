@@ -6,6 +6,7 @@ import pushdown.structs.AutomatonStatus;
 
 /**
  * @author jose
+ * 
  *  Temporal data structure used during a trace.
  *  
  *  Keeps the history of a given "trace trail" 

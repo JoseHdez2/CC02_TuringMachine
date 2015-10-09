@@ -2,6 +2,7 @@ package pushdown;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import pushdown.structs.AutomatonData;
@@ -36,6 +37,7 @@ public abstract class AutomataIO extends IOConst{
 	 * @throws IOException
 	 */
 	public static AutomatonData readAutomatonData(String fileName) throws IOException {
+	    
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
         HashSet<State> stateSet = new HashSet<State>();
@@ -62,10 +64,10 @@ public abstract class AutomataIO extends IOConst{
             stateSet.add(new State(str));
         }
         
-        HashSet<TransitionRule> transitionRules = 
-                readTransitionRules((TokenizedLines)tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
+        TokenizedLines transitionLines = 
+                new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
         
-        
+        HashSet<TransitionRule> transitionRules = readTransitionRules(transitionLines);
         
         return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
                 initialStackSymbol, transitionRules, acceptStates);
@@ -107,22 +109,18 @@ public abstract class AutomataIO extends IOConst{
 	/**
      * Standardizes input file, preparing it for automaton data extraction.
      * @param fileName Path to an automaton file (arbitrary file structure)
-     * @return
+     * @return Standardized (expected) lines for reading automaton data.
      * @throws IOException
      */
     private static TokenizedLines prepareAutomatonData(String fileName) throws IOException {
         
-        // Read the file lines.
         ArrayList<String> lines = StringProcessing.readFileLines(fileName);
         
-        // Remove comments.
-        lines = StringProcessing.stripComments(lines);
+        lines = StringProcessing.stripComments(lines, "#");
         
-        // Remove all empty lines.
         lines = StringProcessing.removeAllEmptyLines(lines);
 
-        // Tokenize the remaining, valid lines.
-        TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines);
+        TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines, "\\s+");
         
         return tokenizedLines;
     }
@@ -130,6 +128,8 @@ public abstract class AutomataIO extends IOConst{
     /*
      * Output functions.
      */
+    
+    private static final String DUMMY_STRING = "dummy";
     
     /**
      * Produce the representation of a transition, according to the internal IO convention.
@@ -143,7 +143,7 @@ public abstract class AutomataIO extends IOConst{
 //      TODO: Try to one-line this?
       ArrayList<String> transitionRuleLine = new ArrayList<String>();
       for (int i = 0; i < 5; i++){
-          transitionRuleLine.add("dummy");
+          transitionRuleLine.add(DUMMY_STRING);
       }
       
       transitionRuleLine.set(OUT_TRAN_PREV_STATE, tr.getPrevState().toString());
@@ -180,8 +180,9 @@ public abstract class AutomataIO extends IOConst{
         
         ArrayList<String> tokenizedLine = new ArrayList<String>();
         
+//      TODO: Try to one-line this?
         for (int i = 0; i < 3; i++){
-            tokenizedLine.add("dummy");
+            tokenizedLine.add(DUMMY_STRING);
         }
         
         tokenizedLine.set(OUT_STAT_CUR_STATE, as.getCurrentState().toString());

@@ -73,7 +73,6 @@ public class FrameTrace extends JFrame {
 		getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
 		JLabel labelInputIntro = new JLabel(STR_INP_STR_INTRO[lang]);
-//		lblMaquina.setFont(lblMaquina.getFont().deriveFont(Font.BOLD));
 		panelNorth.add(labelInputIntro);
 		
 		JLabel labelInputString = new JLabel('"' + inputString + '"');
@@ -102,7 +101,6 @@ public class FrameTrace extends JFrame {
 	    myAutomaton = new Automaton(automatonData);
 	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	    tableTrace.setModel(new MyTableModel(myAutomaton.getTraceHist()));
-//	    System.out.println("hey heres the trace, good job");
 	    System.out.print(myAutomaton.getDebugStr());
 	}
 }

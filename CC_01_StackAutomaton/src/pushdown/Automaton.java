@@ -8,7 +8,6 @@ import pushdown.structs.AutomatonStatus;
 import pushdown.structs.State;
 import pushdown.structs.Symbol;
 import pushdown.structs.TransitionRule;
-import util.Sys;
 import util.TokenizedLines;
 
 /**
@@ -31,7 +30,7 @@ public class Automaton {
 		// Make sure all acceptStates are in stateSet.
 		for (State s : data.getAcceptStates()){
 			if(!data.getStateSet().contains(s))
-				Sys.abort("An acceptance state is not in the defined state set.");
+				System.err.println("An acceptance state is not in the defined state set.");
 		}
 	}
 	
@@ -44,9 +43,6 @@ public class Automaton {
 	    ArrayList<TraceTrail> possibleTrails = new ArrayList<TraceTrail>();
 	    ArrayList<TraceTrail> newTrails = new ArrayList<TraceTrail>();
 	    
-//	    ArrayList<AutomatonStatus> possibleStatuses = new ArrayList<AutomatonStatus>();
-//	    ArrayList<AutomatonStatus> newStatuses = new ArrayList<AutomatonStatus>();
-	    
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
@@ -57,9 +53,9 @@ public class Automaton {
 		
 		// Iterate until all possibilities are exhausted.
 		while (!possibleTrails.isEmpty()){
-    		// For each possible automata status...
+
 		    for (TraceTrail tt : possibleTrails){
-    		    // Find all applicable transitions to this status...
+
     			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (TransitionRule tr : applicableTransitions){
@@ -82,7 +78,7 @@ public class Automaton {
     		newTrails.clear();
 		}
 		// If all possibilities have been exhausted and the string
-		// hasn't been accepted, then the string must be rejected. 
+		// hasn't been accepted, then the string is rejected. 
 		return false;
 	}
 	

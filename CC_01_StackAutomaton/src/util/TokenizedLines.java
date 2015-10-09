@@ -2,23 +2,20 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jose
  *
- *	Dumb typedef to not write ArrayList<ArrayList<String>> ever.
+ *	ArrayList<ArrayList<String>> class renaming.
  */
 public class TokenizedLines extends ArrayList<ArrayList<String>>{
+
+    public TokenizedLines(){
+        super();
+    }
     
-    /**
-     * Useful for using the calling object as JTable data.
-     * @return  Itself as a matrix of literals.
-     */
-    public String[][] intoStringLiteralMatrix(){
-        ArrayList<String[]> literalStrList = new ArrayList<String[]>();
-        for (ArrayList<String> al : this){
-            literalStrList.add((String[]) al.toArray());
-        }
-        return (String[][])literalStrList.toArray();
+    public TokenizedLines(List<ArrayList<String>> subList) {
+        super(subList);
     }
 }

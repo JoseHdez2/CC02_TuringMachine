@@ -10,11 +10,17 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * @author jose
+ * 
+ *  Collection of functions that help
+ *  with string processing.
+ */
 public abstract class StringProcessing {
 	final static Charset ENCODING = StandardCharsets.UTF_8;
 
 	/**
-	 * Reads the lines of a file and returns them as an ArrayList
+	 * Reads the lines of a file and returns them as an ArrayList.
 	 * @param fileName
 	 * @return An ArrayList<String> where each of the elements is a line.
 	 * @throws IOException
@@ -35,15 +41,16 @@ public abstract class StringProcessing {
 	}
 	
 	/**
-	 * For each string in stringList, only keep the left part of the leftmost '#' if there is any.
-	 * @param stringList
+	 * For each string in 'lines', only keep the left part 
+	 * from the leftmost given separator (if there is any).
+	 * @param lines
 	 * @return	stringList with all of its comments stripped.
 	 */
-	public static ArrayList<String> stripComments(ArrayList<String> stringList) {
+	public static ArrayList<String> stripComments(ArrayList<String> lines, String delimiter) {
 		ArrayList<String> strippedStringList = new ArrayList<String>();
 	    
-		for (String str : stringList) {
-			strippedStringList.add(str.split("#")[0]);
+		for (String str : lines) {
+			strippedStringList.add(str.split(delimiter)[0]);
 		}
 		
 		return strippedStringList;
@@ -51,33 +58,43 @@ public abstract class StringProcessing {
 	
 	/**
 	 * Removes all empty and whitespace lines from an ArrayList<String>.
-	 * @param stringList
+	 * @param lines
 	 * @return A copy of stringList, with all empty (and whitespace) lines removed.
 	 */
-	public static ArrayList<String> removeAllEmptyLines(ArrayList<String> stringList) {
-		final String EMPTY_LINE = "\\s*";
+	public static ArrayList<String> removeAllEmptyLines(ArrayList<String> lines) {
 
-		ArrayList<String> emptyLines = new ArrayList<String>();
-		
-		for (String str : stringList) {
-			if (Pattern.matches(EMPTY_LINE, str))
-				emptyLines.add(str);
-		}
-		stringList.removeAll(emptyLines);
-		
-		return stringList;
+		return removeAllLinesMatching(lines, "\\s*");
 	}
 	
 	/**
-	 * Tokenizes each of the strings in stringList. Separator is whitespace.
-	 * @param stringList
+	 * Removes all Strings from 'lines' that match 'match'.
+	 * @param lines List of strings to be compared (and possibly removed).
+	 * @param match String that will be compared with each line/string.
+	 * @return List without the strings that matched 'match'.
+	 */
+	public static ArrayList<String> removeAllLinesMatching(ArrayList<String> lines, String match){
+	    
+	    ArrayList<String> emptyLines = new ArrayList<String>();
+        
+        for (String str : lines) {
+            if (Pattern.matches(match, str))
+                emptyLines.add(str);
+        }
+        lines.removeAll(emptyLines);
+        
+        return lines;
+	}
+	
+	/**
+	 * Tokenizes each of the strings in 'lines'. Separator is whitespace.
+	 * @param lines
 	 * @return
 	 */
-	public static TokenizedLines tokenizeLines(ArrayList<String> stringList) {
+	public static TokenizedLines tokenizeLines(ArrayList<String> lines, String delimiter) {
 		TokenizedLines tokenizedLines = new TokenizedLines();
 		
-		for (String str : stringList) {
-			ArrayList<String> tokens = new ArrayList<String>(Arrays.asList(str.split("\\s+")));
+		for (String str : lines) {
+			ArrayList<String> tokens = new ArrayList<String>(Arrays.asList(str.split(delimiter)));
 			tokenizedLines.add(tokens);
 		}
 		

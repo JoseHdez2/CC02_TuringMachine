@@ -28,6 +28,17 @@ public class FrameMain {
 //    TODO: be able to consider acceptance states to accept string
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
+    /*
+     * GUI constants.
+     */
+    
+    final int FRAME_X = 100;
+    final int FRAME_Y = 100;
+    final int FRAME_WIDTH = 450;
+    final int FRAME_HEIGHT = 300;
+    
+    final int FIELD_INPUT_STR_SIZE = 10;
+    
 	boolean englishGUI = false;
 	int lang = englishGUI ? 0 : 1;
 	String chosenFileFullPath = null;
@@ -102,7 +113,7 @@ public class FrameMain {
 	 */
 	private void initialize() {
 		frameMain = new JFrame(STR_WINDOW_TITLE[lang]);
-		frameMain.setBounds(100, 100, 450, 300);
+		frameMain.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelNorth = new JPanel();
