@@ -32,7 +32,7 @@ public abstract class AutomataIO extends IOConst{
 	/**
 	 * Reads automaton data from a given file.
 	 * @param fileName Path to automaton file.
-	 * @return AutomatonData representing the automaton.
+	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
 	public static AutomatonData readAutomatonData(String fileName) throws IOException {
@@ -62,9 +62,25 @@ public abstract class AutomataIO extends IOConst{
             stateSet.add(new State(str));
         }
         
-        HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+        HashSet<TransitionRule> transitionRules = 
+                readTransitionRules((TokenizedLines)tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
         
-        for (ArrayList<String> tl : tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size())){
+        
+        
+        return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
+                initialStackSymbol, transitionRules, acceptStates);
+	}
+    
+	/**
+	 * Reads transition rules from an array of string arrays.
+	 * @param transitionLines  Array of string arrays containing
+	 * @return Data structure that semantically represents a set of transition rules.
+	 */
+	private static HashSet<TransitionRule> readTransitionRules(TokenizedLines transitionLines){
+	    
+	    HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+        
+        for (ArrayList<String> tl : transitionLines){
             
             State prevState = new State(tl.get(IN_TRAN_PREV_STATE));
             
@@ -74,22 +90,20 @@ public abstract class AutomataIO extends IOConst{
             
             Symbol requiredStackSymbol = new Symbol(tl.get(IN_TRAN_REQ_STACK_SYM));
             
+            // Read each of the symbols to push.
             ArrayList<Symbol> stackSymbolsToPush = new ArrayList<Symbol>();
-            
             String[] stackCharsToPush = tl.get(IN_TRAN_STACK_SYM_TO_PUSH).split(",");
             for (String str : stackCharsToPush){
                 stackSymbolsToPush.add(new Symbol(str));
             }
             
-            // TODO: allow for more than one stack symbol. currently a fix to let one.
             transitionRules.add(new TransitionRule(prevState, nextState, 
                     requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
         }
         
-        return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
-                initialStackSymbol, transitionRules, acceptStates);
+        return transitionRules;
 	}
-    
+	
 	/**
      * Standardizes input file, preparing it for automaton data extraction.
      * @param fileName Path to an automaton file (arbitrary file structure)
