@@ -1,11 +1,10 @@
-package pushdown.structs;
+package turing.structs;
 
 import java.util.HashSet;
 
 import util.TokenizedLines;
 
 import common.structs.State;
-import common.structs.Symbol;
 
 /**
  * @author jose
@@ -16,32 +15,32 @@ import common.structs.Symbol;
  *  Extracted and given semantic meaning 
  *  by the AutomataIO class.
  */
-public class AutomatonData extends TokenizedLines {
+public class TuringData extends TokenizedLines {
 
     HashSet<State> stateSet;
     HashSet<Character> inputAlphabet;
-    HashSet<Symbol> stackAlphabet;
+    HashSet<Character> outputAlphabet;
     State initialState;
-    Symbol initialStackSymbol;
-    HashSet<TransitionRule> transitionRules;
+    Character blankCharacter;
     HashSet<State> acceptStates;
+    HashSet<TransitionRule> transitionRules;
     
-    public AutomatonData(HashSet<State> stateSet, 
+    public TuringData(HashSet<State> stateSet, 
                 HashSet<Character> inputAlphabet,
-                HashSet<Symbol> stackAlphabet,
+                HashSet<Character> outputAlphabet,
                 State initialState,
-                Symbol initialStackSymbol,
+                Character blankCharacter,
                 HashSet<TransitionRule> transitionRules,
                 HashSet<State> acceptStates){
         this.stateSet = stateSet;
         this.inputAlphabet = inputAlphabet;
-        this.stackAlphabet = stackAlphabet;
+        this.outputAlphabet = outputAlphabet;
         this.initialState = initialState;
-        this.initialStackSymbol = initialStackSymbol;
+        this.blankCharacter = blankCharacter;
         this.transitionRules = transitionRules;
         this.acceptStates = acceptStates;
     }
-    
+
     /*
      * Getters and setters.
      */
@@ -49,45 +48,57 @@ public class AutomatonData extends TokenizedLines {
     public HashSet<State> getStateSet() {
         return stateSet;
     }
+
     public void setStateSet(HashSet<State> stateSet) {
         this.stateSet = stateSet;
     }
+
     public HashSet<Character> getInputAlphabet() {
         return inputAlphabet;
     }
+
     public void setInputAlphabet(HashSet<Character> inputAlphabet) {
         this.inputAlphabet = inputAlphabet;
     }
-    public HashSet<Symbol> getStackAlphabet() {
-        return stackAlphabet;
+
+    public HashSet<Character> getOutputAlphabet() {
+        return outputAlphabet;
     }
-    public void setStackAlphabet(HashSet<Symbol> stackAlphabet) {
-        this.stackAlphabet = stackAlphabet;
+
+    public void setOutputAlphabet(HashSet<Character> outputAlphabet) {
+        this.outputAlphabet = outputAlphabet;
     }
+
     public State getInitialState() {
         return initialState;
     }
+
     public void setInitialState(State initialState) {
         this.initialState = initialState;
     }
-    public Symbol getInitialStackSymbol() {
-        return initialStackSymbol;
+
+    public Character getBlankCharacter() {
+        return blankCharacter;
     }
-    public void setInitialStackSymbol(Symbol initialStackSymbol) {
-        this.initialStackSymbol = initialStackSymbol;
+
+    public void setBlankCharacter(Character blankCharacter) {
+        this.blankCharacter = blankCharacter;
     }
-    public HashSet<TransitionRule> getTransitionRules() {
-        return transitionRules;
-    }
-    public void setTransitionRules(HashSet<TransitionRule> transitionRules) {
-        this.transitionRules = transitionRules;
-    }
+
     public HashSet<State> getAcceptStates() {
         return acceptStates;
     }
+
     public void setAcceptStates(HashSet<State> acceptStates) {
         this.acceptStates = acceptStates;
     }
-    
+
+    public HashSet<TransitionRule> getTransitionRules() {
+        return transitionRules;
+    }
+
+    public void setTransitionRules(HashSet<TransitionRule> transitionRules) {
+        this.transitionRules = transitionRules;
+    }
     
 }

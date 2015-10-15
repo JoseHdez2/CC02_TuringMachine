@@ -1,4 +1,4 @@
-package pushdown;
+package turing;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,10 @@ import java.util.HashSet;
 
 import pushdown.structs.AutomatonData;
 import pushdown.structs.AutomatonStatus;
-import pushdown.structs.TransitionRule;
+import turing.structs.Movement;
+import turing.structs.TraceTrail;
+import turing.structs.TransitionRule;
+import turing.structs.TuringData;
 import util.StringProcessing;
 import util.TokenizedLines;
 
@@ -17,28 +20,28 @@ import common.structs.Symbol;
  * @author jose
  * 
  * Extracts and gives semantic meaning
- * to Automaton data stored as raw text.
+ * to Turing Machine data stored as raw text.
  * 
  * Also used to represent data in raw strings.
  * 
  * Only class that knows the input/output
  * convention (data format) used.
  */
-public abstract class AutomataIO extends IOConst{
+public abstract class TuringIO extends IOConst{
     
     /*
      * Input functions.
      */
     
 	/**
-	 * Reads automaton data from a given file.
-	 * @param fileName Path to automaton file.
+	 * Reads Turing machine data from a given file.
+	 * @param fileName Path to Turing machine file.
 	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
-	public static AutomatonData readAutomatonData(String fileName) throws IOException {
+	public static TuringData readAutomatonData(String fileName) throws IOException {
 	    
-	    TokenizedLines tokLines = prepareAutomatonData(fileName);
+	    TokenizedLines tokLines = prepareTuringData(fileName);
 
         HashSet<State> stateSet = new HashSet<State>();
         for (String token : tokLines.get(IN_FILE_STATE_SET)) {
@@ -50,14 +53,14 @@ public abstract class AutomataIO extends IOConst{
             inputAlphabet.add(token.charAt(0));
         }
 
-        HashSet<Symbol> stackAlphabet = new HashSet<Symbol>();
-        for (String token : tokLines.get(IN_FILE_STACK_ALPH)) {
-            stackAlphabet.add(new Symbol(token));
+        HashSet<Character> outputAlphabet = new HashSet<Character>();
+        for (String token : tokLines.get(IN_FILE_OUTPUT_ALPH)) {
+            outputAlphabet.add(token.charAt(0));
         }
 
         State initialState = new State(tokLines.get(IN_FILE_INIT_STATE).get(0));
 
-        Symbol initialStackSymbol = new Symbol(tokLines.get(IN_FILE_INIT_STACK).get(0));
+        Character blankCharacter = tokLines.get(IN_FILE_BLANK_CHAR).get(0).charAt(0);
 
         HashSet<State> acceptStates = new HashSet<State>();
         for (String str : tokLines.get(IN_FILE_ACCEPT_STATES)) {
@@ -69,8 +72,8 @@ public abstract class AutomataIO extends IOConst{
         
         HashSet<TransitionRule> transitionRules = readTransitionRules(transitionLines);
         
-        return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
-                initialStackSymbol, transitionRules, acceptStates);
+        return new TuringData(stateSet, inputAlphabet, outputAlphabet, initialState,
+                blankCharacter, transitionRules, acceptStates);
 	}
     
 	/**
@@ -88,31 +91,43 @@ public abstract class AutomataIO extends IOConst{
             
             State nextState = new State(tl.get(IN_TRAN_NEXT_STATE));
             
-            Character requiredInputCharacter = tl.get(IN_TRAN_REQ_INP_CHAR).charAt(0);
+            Character inputCharacter = tl.get(IN_TRAN_INPUT_CHAR).charAt(0);
             
-            Symbol requiredStackSymbol = new Symbol(tl.get(IN_TRAN_REQ_STACK_SYM));
+            Character outputCharacter = tl.get(IN_TRAN_OUTPUT_CHAR).charAt(0);
             
-            // Read each of the symbols to push.
-            ArrayList<Symbol> stackSymbolsToPush = new ArrayList<Symbol>();
-            String[] stackCharsToPush = tl.get(IN_TRAN_STACK_SYM_TO_PUSH).split(",");
-            for (String str : stackCharsToPush){
-                stackSymbolsToPush.add(new Symbol(str));
+            Character movementChar = tl.get(IN_TRAN_MOVEMENT).charAt(0);
+            
+            Movement movement;
+            // TODO how to transform char into uppercase.
+            switch(movementChar){
+            case 'L':
+                movement = Movement.LEFT;
+                break;
+            case 'R':
+                movement = Movement.RIGHT;
+                break;
+            case 'S':
+                movement = Movement.STOP;
+                break;
+            default:
+                // TODO which is the best exception type to throw? IOException? RuntimeException?
+                throw new RuntimeException("Unrecognized movement character.");
             }
             
             transitionRules.add(new TransitionRule(prevState, nextState, 
-                    requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
+                    inputCharacter, outputCharacter, movement));
         }
         
         return transitionRules;
 	}
 	
 	/**
-     * Standardizes input file, preparing it for automaton data extraction.
+     * Standardizes input file, preparing it for Turing machine data extraction.
      * @param fileName Path to an automaton file (arbitrary file structure)
      * @return Standardized (expected) lines for reading automaton data.
      * @throws IOException
      */
-    private static TokenizedLines prepareAutomatonData(String fileName) throws IOException {
+    private static TokenizedLines prepareTuringData(String fileName) throws IOException {
         
         ArrayList<String> lines = StringProcessing.readFileLines(fileName);
         

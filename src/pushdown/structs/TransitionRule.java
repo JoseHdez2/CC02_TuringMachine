@@ -2,6 +2,9 @@ package pushdown.structs;
 
 import java.util.ArrayList;
 
+import common.structs.State;
+import common.structs.Symbol;
+
 /**
  * @author jose
  * 

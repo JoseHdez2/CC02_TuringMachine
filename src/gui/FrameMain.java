@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,10 +21,11 @@ import javax.swing.UIManager;
 
 import pushdown.AutomataIO;
 import pushdown.structs.AutomatonData;
+import turing.TuringIO;
 import util.TokenizedLines;
 
 public class FrameMain {
-//    TODO: be able to consider acceptance states to accept string
+//    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
     /*
@@ -189,7 +189,7 @@ public class FrameMain {
             e1.printStackTrace();
         }
         TokenizedLines transitions = 
-                AutomataIO.getTransitionsAsTokenizedLines(automatonData);
+                TuringIO.getTransitionsAsTokenizedLines(automatonData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);

@@ -5,10 +5,12 @@ import java.util.Stack;
 
 import pushdown.structs.AutomatonData;
 import pushdown.structs.AutomatonStatus;
-import pushdown.structs.State;
-import pushdown.structs.Symbol;
 import pushdown.structs.TransitionRule;
+import turing.TuringIO;
 import util.TokenizedLines;
+
+import common.structs.State;
+import common.structs.Symbol;
 
 /**
  * @author jose
@@ -94,8 +96,8 @@ public class Automaton {
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(as));
-	    System.out.println("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(as));
+	    debugStr.concat("Finding applicable transitions for " + TuringIO.getStatusAsTokenizedLine(as));
+	    System.out.println("Finding applicable transitions for " + TuringIO.getStatusAsTokenizedLine(as));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
@@ -184,8 +186,8 @@ public class Automaton {
 		
 		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
 		
-		System.out.print(AutomataIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(AutomataIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(TuringIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(TuringIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

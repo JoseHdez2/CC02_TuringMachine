@@ -2,6 +2,9 @@ package pushdown.structs;
 
 import java.util.Stack;
 
+import common.structs.State;
+import common.structs.Symbol;
+
 /**
  * @author jose
  *  Temporal data structure used during a trace.
@@ -33,7 +36,7 @@ public class AutomatonStatus {
 		if (!currentState.equals(other.currentState)) return false;
 		if (!remainingInputString.equals(other.remainingInputString)) return false;
 		if (!currentStack.equals(other.currentStack)) return false;
-		// TODO rest of them
+
 		return true;
 	}
 	
@@ -44,30 +47,20 @@ public class AutomatonStatus {
 	}
 	
 	/*
-	 *  Getters and setters.
+	 *  Getters.
+	 *  Setters do not exist, as objects of this class 
+	 *  are meant to be static representations.
 	 */
 
 	public State getCurrentState() {
 		return currentState;
 	}
 
-	public void setCurrentState(State currentState) {
-		this.currentState = currentState;
-	}
-
 	public String getRemainingInputString() {
 		return remainingInputString;
 	}
 
-	public void setRemainingInputString(String remainingInputString) {
-		this.remainingInputString = remainingInputString;
-	}
-
 	public Stack<Symbol> getCurrentStack() {
 		return currentStack;
-	}
-
-	public void setCurrentStack(Stack<Symbol> currentStack) {
-		this.currentStack = currentStack;
 	}
 }
