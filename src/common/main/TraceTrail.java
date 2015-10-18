@@ -13,8 +13,8 @@ import java.util.ArrayList;
  *  Used for presenting the trace of a successful possibility.
  */
 @SuppressWarnings("serial")
-public class TraceTrail extends ArrayList<MachineStatus>{
-    public MachineStatus getLast(){
+public class TraceTrail extends ArrayList<AutomatonStatus>{
+    public AutomatonStatus getLast(){
         return this.get(this.size()-1);
     }
 }

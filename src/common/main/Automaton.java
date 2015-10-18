@@ -12,13 +12,13 @@ import util.TokenizedLines;
  *  The automaton itself. The only class that knows how to work with
  *  the MachineData it contains (e.g. apply transitions).
  */
-public abstract class Machine {
+public abstract class Automaton {
     String debugStr = "";
     
 	PushdownData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
-	public Machine(PushdownData data){
+	public Automaton(PushdownData data){
 	    if (!correctMachineDefinition(data))
 	        
 		this.data = data;
@@ -34,11 +34,11 @@ public abstract class Machine {
 	    return true;
 	}
 	
-	protected abstract MachineStatus createInitialStatus();
+	protected abstract AutomatonStatus createInitialStatus();
 	
-	protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(MachineStatus ms);
+	protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
 	
-	protected abstract boolean acceptanceStatus(MachineStatus ms);
+	protected abstract boolean acceptanceStatus(AutomatonStatus ms);
 	
 	/**
 	 * Evaluates an input string, non-deterministically. The main purpose of a logical automaton.
@@ -65,12 +65,12 @@ public abstract class Machine {
     			for (PushdownTransition tr : applicableTransitions){
                     TraceTrail newTrail = new TraceTrail();
                     newTrail.addAll(tt);
-    				MachineStatus newStatus = applyTransition(tt.getLast(), tr);
+    				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
     				newTrail.add(newStatus);
 
     				if (acceptanceStatus(newStatus)){
     				    // Record winning trace into history.
-                        traceHist = MachineIO.traceTrailAsTokenizedLines(newTrail);
+                        traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
     				    return true;
     				}
 
@@ -96,7 +96,7 @@ public abstract class Machine {
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
-	public abstract MachineStatus applyTransition(MachineStatus as, PushdownTransition tr);
+	public abstract AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr);
 
 	/*
 	 * Getters and setters.

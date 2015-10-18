@@ -7,7 +7,7 @@ package common.main;
  *	Represents the status of a given machine
  *  as a frozen frame during the evaluation of a string.
  */
-public abstract class MachineStatus {
+public abstract class AutomatonStatus {
     
 	/*
 	 * Equals and hashCode.

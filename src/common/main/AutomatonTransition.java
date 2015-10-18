@@ -6,7 +6,7 @@ package common.main;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public abstract class MachineTransition {
+public abstract class AutomatonTransition {
 	
 	/*
 	 * Equals and hashCode.

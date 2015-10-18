@@ -10,7 +10,7 @@ package common.main;
  *  
  *  These will only be used by the TuringIO class.
  */
-public abstract class IOConst {
+public abstract class AutomatonIOConst {
     
     /*
      * Input constants.

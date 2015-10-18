@@ -67,7 +67,7 @@ public abstract class TuringAutomaton {
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
     				    // Record winning trace into history.
-    				    traceHist = MachineIO.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
     				newTrails.add(newTrail);
@@ -94,8 +94,8 @@ public abstract class TuringAutomaton {
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + MachineIO.getStatusAsTokenizedLine(ts));
-	    System.out.println("Finding applicable transitions for " + MachineIO.getStatusAsTokenizedLine(ts));
+	    debugStr.concat("Finding applicable transitions for " + AutomatonIO.getStatusAsTokenizedLine(ts));
+	    System.out.println("Finding applicable transitions for " + AutomatonIO.getStatusAsTokenizedLine(ts));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
@@ -108,7 +108,7 @@ public abstract class TuringAutomaton {
  		for (PushdownTransition tr : data.getTransitionRules()){
 
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
- 		   String deny = strNo + MachineIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+ 		   String deny = strNo + AutomatonIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
  			if (tr.getPrevState().getName().equals(ts.getCurrentState().getName())){
  			    // todo bien
@@ -136,8 +136,8 @@ public abstract class TuringAutomaton {
 		        continue;
  			}
 		    
-		    debugStr.concat("Applicable transition " + MachineIO.getTransitionAsTokenizedLine(tr));
-		    System.out.println("Applicable transition " + MachineIO.getTransitionAsTokenizedLine(tr));
+		    debugStr.concat("Applicable transition " + AutomatonIO.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + AutomatonIO.getTransitionAsTokenizedLine(tr));
             applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
@@ -184,8 +184,8 @@ public abstract class TuringAutomaton {
 		
 		PushdownStatus newStatus = new PushdownStatus(newState, newString, newStack);
 		
-		System.out.print(MachineIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(MachineIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(AutomatonIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(AutomatonIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

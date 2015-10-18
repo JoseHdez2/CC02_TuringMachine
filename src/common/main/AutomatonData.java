@@ -14,14 +14,14 @@ import util.TokenizedLines;
  *  by the MachineIO class.
  */
 @SuppressWarnings("serial")
-public abstract class MachineData extends TokenizedLines {
-    HashSet<MachineTransition> transitionRules;
+public abstract class AutomatonData extends TokenizedLines {
+    HashSet<AutomatonTransition> transitionRules;
     
     /*
      * Getters and setters.
      */
 
-    public HashSet<MachineTransition> getTransitionRules() {
+    public HashSet<AutomatonTransition> getTransitionRules() {
         return transitionRules;
     }
 }

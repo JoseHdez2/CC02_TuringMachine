@@ -18,7 +18,7 @@ import util.TokenizedLines;
  * Only class that knows the input/output
  * convention (data format) used.
  */
-public abstract class MachineIO extends IOConst{
+public abstract class AutomatonIO extends AutomatonIOConst{
     
     /*
      * Input functions.
@@ -30,7 +30,7 @@ public abstract class MachineIO extends IOConst{
 	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
-	public MachineData readMachineData(String fileName) throws IOException {
+	public AutomatonData readMachineData(String fileName) throws IOException {
 	    
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
@@ -43,14 +43,14 @@ public abstract class MachineIO extends IOConst{
      * @return Data structure that semantically represents the automaton definition.
      * @throws IOException
      */
-	protected abstract MachineData readPreparedMachineData(TokenizedLines tokLines);
+	protected abstract AutomatonData readPreparedMachineData(TokenizedLines tokLines);
     
 	/**
 	 * Reads transition rules from an array of string arrays.
 	 * @param transitionLines  Lines with transition tokens.
 	 * @return Data structure that semantically represents a set of transition rules.
 	 */
-	protected abstract HashSet<MachineTransition> readTransitionRules(TokenizedLines transitionLines);
+	protected abstract HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines);
 	
 	/**
      * Standardizes input file, preparing it for automaton data extraction.
@@ -85,11 +85,11 @@ public abstract class MachineIO extends IOConst{
      * @param ad Automaton definition data.
      * @return Array of string arrays representing all the transition rules.
      */
-    public TokenizedLines getTransitionsAsTokenizedLines(MachineData ad){
+    public TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (MachineTransition tr : ad.getTransitionRules()){            
+        for (AutomatonTransition tr : ad.getTransitionRules()){            
             tl.add(getTransitionAsTokenizedLine(tr));
         }
         
@@ -101,7 +101,7 @@ public abstract class MachineIO extends IOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    protected abstract ArrayList<String> getTransitionAsTokenizedLine(MachineTransition at);
+    protected abstract ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at);
     
     // TODO further modularize tokenLine output.
     
@@ -114,7 +114,7 @@ public abstract class MachineIO extends IOConst{
      * @param as Automaton status to be represented.
      * @return Array of strings representing the given automaton status.
      */
-    public static ArrayList<String> getStatusAsTokenizedLine(MachineStatus as){
+    public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
         
         ArrayList<String> tokenizedLine = dummyTokensLine(STATUS_OUTPUT_SIZE);
         
@@ -123,7 +123,7 @@ public abstract class MachineIO extends IOConst{
         return tokenizedLine;
     }
     
-    protected static ArrayList<String> setOutputTokens(ArrayList<String> tokenizedLine, MachineStatus as) {
+    protected static ArrayList<String> setOutputTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
         // TODO Java doesn't allow for abstract static methods (language shortcoming).
         return null;
     }
@@ -141,7 +141,7 @@ public abstract class MachineIO extends IOConst{
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         
-        for (MachineStatus as : tt){
+        for (AutomatonStatus as : tt){
             tokenizedLines.add(getStatusAsTokenizedLine(as));
         }
         
