@@ -1,6 +1,8 @@
-package common.main;
+package automaton.main;
 
 import java.util.ArrayList;
+
+import automaton.structs.AutomatonStatus;
 
 /**
  * @author jose

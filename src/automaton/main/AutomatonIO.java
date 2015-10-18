@@ -1,9 +1,12 @@
-package common.main;
+package automaton.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import automaton.structs.AutomatonData;
+import automaton.structs.AutomatonStatus;
+import automaton.structs.AutomatonTransition;
 import util.StringProcessing;
 import util.TokenizedLines;
 

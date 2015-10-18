@@ -1,4 +1,4 @@
-package common.main;
+package automaton.main;
 
 /**
  * @author jose

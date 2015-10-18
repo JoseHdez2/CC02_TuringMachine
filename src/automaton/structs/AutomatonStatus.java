@@ -1,4 +1,4 @@
-package common.main;
+package automaton.structs;
 
 /**
  * @author jose
