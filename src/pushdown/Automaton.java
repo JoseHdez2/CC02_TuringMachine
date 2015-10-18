@@ -89,22 +89,22 @@ public class Automaton {
 	private final Symbol EPSILON_SYMBOL = new Symbol("-");
 	
 	/**
-	 * @param as A frozen state of the automaton variables.
+	 * @param ts A frozen state of the automaton variables.
 	 * @return	All applicable transition rules for the given automaton status.
 	 */
-	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus as){
+	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus ts){
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + TuringIO.getStatusAsTokenizedLine(as));
-	    System.out.println("Finding applicable transitions for " + TuringIO.getStatusAsTokenizedLine(as));
+	    debugStr.concat("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
+	    System.out.println("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
 		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
 		
 		// Special case
-		if (as.getCurrentStack().isEmpty()) return applicableTransitions;
+		if (ts.getCurrentStack().isEmpty()) return applicableTransitions;
 		
 		// Normal
  		for (TransitionRule tr : data.getTransitionRules()){
@@ -112,7 +112,7 @@ public class Automaton {
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
  		   String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
- 			if (tr.getPrevState().getName().equals(as.getCurrentState().getName())){
+ 			if (tr.getPrevState().getName().equals(ts.getCurrentState().getName())){
  			    // todo bien
  			} else {
  			    debugStr.concat(deny + "Different required state.");
@@ -120,7 +120,7 @@ public class Automaton {
  			    continue;
  			}
 		    
- 			if (tr.getRequiredStackSymbol().getName().equals(as.getCurrentStack().peek().getName())){
+ 			if (tr.getRequiredStackSymbol().getName().equals(ts.getCurrentStack().peek().getName())){
  				// tudo bem
  			} else {
  			   debugStr.concat(deny + "Different required stack symbol.");
@@ -129,8 +129,8 @@ public class Automaton {
  			}
  			
 		    if (tr.getRequiredInputCharacter() == EPSILON_INPUT ||
-		            (!as.getRemainingInputString().isEmpty() &&
- 			            tr.getRequiredInputCharacter() == as.getRemainingInputString().charAt(0))){
+		            (!ts.getRemainingInputString().isEmpty() &&
+ 			            tr.getRequiredInputCharacter() == ts.getRemainingInputString().charAt(0))){
 		        // daijoubu
 		    } else {
 		        debugStr.concat(deny + "Different required input character.");
@@ -151,7 +151,7 @@ public class Automaton {
 	 * 
 	 * Note: The transition rule should have previously been deemed applicable
 	 * for the given automaton status (no checks are made).
-	 * @param as	Automaton status.
+	 * @param as	Machine status.
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
@@ -186,8 +186,8 @@ public class Automaton {
 		
 		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
 		
-		System.out.print(TuringIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(TuringIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(AutomataIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(AutomataIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

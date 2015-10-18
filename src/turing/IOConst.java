@@ -40,7 +40,7 @@ public abstract class IOConst {
     final static int OUT_TRAN_PREV_STATE = 0;
     final static int OUT_TRAN_NEXT_STATE = 2;
     final static int OUT_TRAN_INPUT_CHAR = 1;
-    final static int OUT_TRAN_OUTPUT_SYM = 3;
+    final static int OUT_TRAN_OUTPUT_CHAR = 3;
     final static int OUT_TRAN_MOVEMENT = 4;
     
     // Token positions in each Turing machine status to output.

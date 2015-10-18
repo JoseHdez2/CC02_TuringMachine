@@ -156,9 +156,10 @@ public abstract class AutomataIO extends IOConst{
     }
     
     /**
-     * Produce the representation of a transition, according to the internal IO convention.
-     * @param ad AutomatonData to be represented.
-     * @return Array of string arrays representing the given transition rule.
+     * Produce the representation of all of the transitions in 
+     * the machine definition, according to the internal IO convention.
+     * @param ad Machine representation.
+     * @return Array of string arrays representing all the transition rules.
      */
     public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
         

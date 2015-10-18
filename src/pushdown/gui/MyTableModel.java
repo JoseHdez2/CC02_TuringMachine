@@ -1,4 +1,4 @@
-package gui;
+package pushdown.gui;
 
 import javax.swing.table.AbstractTableModel;
 

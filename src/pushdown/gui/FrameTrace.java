@@ -1,4 +1,4 @@
-package gui;
+package pushdown.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

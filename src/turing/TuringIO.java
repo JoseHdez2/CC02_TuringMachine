@@ -4,17 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import pushdown.structs.AutomatonData;
-import pushdown.structs.AutomatonStatus;
+import common.structs.State;
 import turing.structs.Movement;
 import turing.structs.TraceTrail;
 import turing.structs.TransitionRule;
 import turing.structs.TuringData;
+import turing.structs.TuringStatus;
 import util.StringProcessing;
 import util.TokenizedLines;
-
-import common.structs.State;
-import common.structs.Symbol;
 
 /**
  * @author jose
@@ -163,23 +160,24 @@ public abstract class TuringIO extends IOConst{
       
       transitionRuleLine.set(OUT_TRAN_PREV_STATE, tr.getPrevState().toString());
       transitionRuleLine.set(OUT_TRAN_NEXT_STATE, tr.getNextState().toString());
-      transitionRuleLine.set(OUT_TRAN_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
-      transitionRuleLine.set(OUT_TRAN_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
-      transitionRuleLine.set(OUT_TRAN_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
+      transitionRuleLine.set(OUT_TRAN_INPUT_CHAR, tr.getInputCharacter().toString());
+      transitionRuleLine.set(OUT_TRAN_OUTPUT_CHAR, tr.getOutputCharacter().toString());
+      transitionRuleLine.set(OUT_TRAN_MOVEMENT, tr.getMovement().toString());
       
       return transitionRuleLine;
     }
     
     /**
-     * Produce the representation of a transition, according to the internal IO convention.
-     * @param ad AutomatonData to be represented.
-     * @return Array of string arrays representing the given transition rule.
+     * Produce the representation of all of the transitions in 
+     * the machine definition, according to the internal IO convention.
+     * @param td Machine representation.
+     * @return Array of string arrays representing all the transition rules.
      */
-    public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
+    public static TokenizedLines getTransitionsAsTokenizedLines(TuringData td){
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (TransitionRule tr : ad.getTransitionRules()){            
+        for (TransitionRule tr : td.getTransitionRules()){            
             tl.add(getTransitionAsTokenizedLine(tr));
         }
         
@@ -188,10 +186,10 @@ public abstract class TuringIO extends IOConst{
     
     /**
      * Produce the representation of an automaton status, according to the internal IO convention.
-     * @param as Automaton status to be represented.
+     * @param ts Automaton status to be represented.
      * @return Array of strings representing the given automaton status.
      */
-    public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
+    public static ArrayList<String> getStatusAsTokenizedLine(TuringStatus ts){
         
         ArrayList<String> tokenizedLine = new ArrayList<String>();
         
@@ -200,9 +198,9 @@ public abstract class TuringIO extends IOConst{
             tokenizedLine.add(DUMMY_STRING);
         }
         
-        tokenizedLine.set(OUT_STAT_CUR_STATE, as.getCurrentState().toString());
-        tokenizedLine.set(OUT_STAT_REMAIN_STR, as.getRemainingInputString().toString());
-        tokenizedLine.set(OUT_STAT_STACK_STATUS, as.getCurrentStack().toString());
+        tokenizedLine.set(OUT_STAT_CUR_STATE, ts.getCurrentState().toString());
+        tokenizedLine.set(OUT_STAT_TAPE, ts.getTape().toString());
+        tokenizedLine.set(OUT_STAT_HEAD_POS, ts.getHeadPos().toString());
         
         return tokenizedLine;
     }
@@ -216,8 +214,8 @@ public abstract class TuringIO extends IOConst{
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         
-        for (AutomatonStatus as : tt){
-            tokenizedLines.add(getStatusAsTokenizedLine(as));
+        for (TuringStatus ts : tt){
+            tokenizedLines.add(getStatusAsTokenizedLine(ts));
         }
         
         return tokenizedLines;

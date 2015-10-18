@@ -1,4 +1,4 @@
-package gui;
+package pushdown.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -189,7 +189,7 @@ public class FrameMain {
             e1.printStackTrace();
         }
         TokenizedLines transitions = 
-                TuringIO.getTransitionsAsTokenizedLines(automatonData);
+                AutomataIO.getTransitionsAsTokenizedLines(automatonData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
