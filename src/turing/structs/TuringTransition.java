@@ -8,14 +8,14 @@ import common.structs.State;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class TransitionRule {
+public class TuringTransition {
 	State prevState;
 	State nextState;
 	Character inputCharacter;
 	Character outputCharacter;
 	Movement movement;
 	
-	public TransitionRule(State prevState, State nextState,
+	public TuringTransition(State prevState, State nextState,
 			Character inputCharacter,
 			Character outputCharacter,
 			Movement movement){
@@ -33,7 +33,7 @@ public class TransitionRule {
 	public boolean equals(Object ob){
 		if (ob == null) return false;
 		if (ob.getClass() != getClass()) return false;
-		TransitionRule other = (TransitionRule)ob;
+		TuringTransition other = (TuringTransition)ob;
 		if (!prevState.equals(other.prevState)) return false;
 		if (!nextState.equals(other.nextState)) return false;
 		if (!inputCharacter.equals(other.inputCharacter)) return false;

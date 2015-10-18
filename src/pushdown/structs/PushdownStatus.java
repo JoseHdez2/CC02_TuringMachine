@@ -12,12 +12,12 @@ import common.structs.Symbol;
  *	Represents the status of a given automaton
  *  as a frozen frame during the evaluation of a string.
  */
-public class AutomatonStatus {
+public class PushdownStatus {
 	State currentState;
 	String remainingInputString;
 	Stack<Symbol> currentStack;
 	
-	public AutomatonStatus(State currentState,
+	public PushdownStatus(State currentState,
 			String remainingInputString, 
 			Stack<Symbol> currentStack){
 		this.currentState = currentState;
@@ -32,7 +32,7 @@ public class AutomatonStatus {
 	public boolean equals(Object ob){
 		if (ob == null) return false;
 		if (ob.getClass() != getClass()) return false;
-		AutomatonStatus other = (AutomatonStatus)ob;
+		PushdownStatus other = (PushdownStatus)ob;
 		if (!currentState.equals(other.currentState)) return false;
 		if (!remainingInputString.equals(other.remainingInputString)) return false;
 		if (!currentStack.equals(other.currentStack)) return false;

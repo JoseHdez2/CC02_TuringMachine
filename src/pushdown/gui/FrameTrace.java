@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import pushdown.main.Automaton;
+import pushdown.main.PushdownAutomaton;
 import pushdown.structs.PushdownData;
 
 @SuppressWarnings("serial")
 public class FrameTrace extends JFrame {
 
     PushdownData pushdownData = null;
-    Automaton myAutomaton = null;
+    PushdownAutomaton myAutomaton = null;
     String inputString = null;
     
 	boolean englishGUI = false;
@@ -98,7 +98,7 @@ public class FrameTrace extends JFrame {
 	}
 
 	private void runTrace(){
-	    myAutomaton = new Automaton(pushdownData);
+	    myAutomaton = new PushdownAutomaton(pushdownData);
 	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	    tableTrace.setModel(new MyTableModel(myAutomaton.getTraceHist()));
 	    System.out.print(myAutomaton.getDebugStr());

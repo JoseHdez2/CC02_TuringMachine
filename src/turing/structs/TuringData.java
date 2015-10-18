@@ -25,21 +25,21 @@ public class TuringData extends TokenizedLines {
     State initialState;
     Character blankCharacter;
     HashSet<State> acceptStates;
-    HashSet<TransitionRule> transitionRules;
+    HashSet<TuringTransition> turingTransitions;
     
     public TuringData(HashSet<State> stateSet, 
                 HashSet<Character> inputAlphabet,
                 HashSet<Character> outputAlphabet,
                 State initialState,
                 Character blankCharacter,
-                HashSet<TransitionRule> transitionRules,
+                HashSet<TuringTransition> turingTransitions,
                 HashSet<State> acceptStates){
         this.stateSet = stateSet;
         this.inputAlphabet = inputAlphabet;
         this.outputAlphabet = outputAlphabet;
         this.initialState = initialState;
         this.blankCharacter = blankCharacter;
-        this.transitionRules = transitionRules;
+        this.turingTransitions = turingTransitions;
         this.acceptStates = acceptStates;
     }
 
@@ -95,12 +95,12 @@ public class TuringData extends TokenizedLines {
         this.acceptStates = acceptStates;
     }
 
-    public HashSet<TransitionRule> getTransitionRules() {
-        return transitionRules;
+    public HashSet<TuringTransition> getTransitionRules() {
+        return turingTransitions;
     }
 
-    public void setTransitionRules(HashSet<TransitionRule> transitionRules) {
-        this.transitionRules = transitionRules;
+    public void setTransitionRules(HashSet<TuringTransition> turingTransitions) {
+        this.turingTransitions = turingTransitions;
     }
     
 }

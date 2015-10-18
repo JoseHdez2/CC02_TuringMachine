@@ -6,8 +6,8 @@ import java.util.Stack;
 import common.structs.State;
 import common.structs.Symbol;
 import pushdown.structs.PushdownData;
-import pushdown.structs.AutomatonStatus;
-import pushdown.structs.TransitionRule;
+import pushdown.structs.PushdownStatus;
+import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
 /**
@@ -16,13 +16,13 @@ import util.TokenizedLines;
  *  The machine itself. The only class that knows how to work with
  *  the MachineData it contains (e.g. apply transitions).
  */
-public abstract class Turing {
+public abstract class TuringAutomaton {
     String debugStr = "";
     
 	PushdownData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
-	public Turing(PushdownData data){
+	public TuringAutomaton(PushdownData data){
 		this.data = data;
 		
 		// TODO make sure all arguments are correct.
@@ -46,7 +46,7 @@ public abstract class Turing {
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
-		AutomatonStatus initialStatus = new AutomatonStatus(data.getInitialState(), inputString, initialStack);
+		PushdownStatus initialStatus = new PushdownStatus(data.getInitialState(), inputString, initialStack);
 		TraceTrail initialTrail = new TraceTrail();
 		initialTrail.add(initialStatus);
 		possibleTrails.add(initialTrail);
@@ -56,12 +56,12 @@ public abstract class Turing {
 
 		    for (TraceTrail tt : possibleTrails){
 
-    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
+    			ArrayList<PushdownTransition> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
-    			for (TransitionRule tr : applicableTransitions){
+    			for (PushdownTransition tr : applicableTransitions){
                     TraceTrail newTrail = new TraceTrail();
                     newTrail.addAll(tt);
-    				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
+    				PushdownStatus newStatus = applyTransition(tt.getLast(), tr);
     				newTrail.add(newStatus);
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
@@ -90,7 +90,7 @@ public abstract class Turing {
 	 * @param ts A frozen state of the automaton variables.
 	 * @return	All applicable transition rules for the given automaton status.
 	 */
-	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus ts){
+	public ArrayList<PushdownTransition> findApplicableTransitionRules(PushdownStatus ts){
 	    
 //	    debugStr = "";
 	    
@@ -99,13 +99,13 @@ public abstract class Turing {
 	    
 	    String strNo = "Unapplicable transition ";
 	    
-		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
+		ArrayList<PushdownTransition> applicableTransitions = new ArrayList<PushdownTransition>();
 		
 		// Special case
 		if (ts.getCurrentStack().isEmpty()) return applicableTransitions;
 		
 		// Normal
- 		for (TransitionRule tr : data.getTransitionRules()){
+ 		for (PushdownTransition tr : data.getTransitionRules()){
 
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
  		   String deny = strNo + MachineIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
@@ -153,7 +153,7 @@ public abstract class Turing {
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
-	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
+	public PushdownStatus applyTransition(PushdownStatus as, PushdownTransition tr){
 		
 	 // Special case
 	    // TODO: Remove this because it should never happen?
@@ -182,7 +182,7 @@ public abstract class Turing {
 		    }
 		}
 		
-		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
+		PushdownStatus newStatus = new PushdownStatus(newState, newString, newStack);
 		
 		System.out.print(MachineIO.getStatusAsTokenizedLine(as) + "->");
 		System.out.println(MachineIO.getStatusAsTokenizedLine(newStatus));

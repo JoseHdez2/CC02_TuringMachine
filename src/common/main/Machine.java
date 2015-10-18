@@ -3,7 +3,7 @@ package common.main;
 import java.util.ArrayList;
 
 import pushdown.structs.PushdownData;
-import pushdown.structs.TransitionRule;
+import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
 /**
@@ -36,7 +36,7 @@ public abstract class Machine {
 	
 	protected abstract MachineStatus createInitialStatus();
 	
-	protected abstract ArrayList<TransitionRule> findApplicableTransitionRules(MachineStatus ms);
+	protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(MachineStatus ms);
 	
 	protected abstract boolean acceptanceStatus(MachineStatus ms);
 	
@@ -60,9 +60,9 @@ public abstract class Machine {
 
 		    for (TraceTrail tt : possibleTrails){
 
-    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
+    			ArrayList<PushdownTransition> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
-    			for (TransitionRule tr : applicableTransitions){
+    			for (PushdownTransition tr : applicableTransitions){
                     TraceTrail newTrail = new TraceTrail();
                     newTrail.addAll(tt);
     				MachineStatus newStatus = applyTransition(tt.getLast(), tr);
@@ -96,7 +96,7 @@ public abstract class Machine {
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
-	public abstract MachineStatus applyTransition(MachineStatus as, TransitionRule tr);
+	public abstract MachineStatus applyTransition(MachineStatus as, PushdownTransition tr);
 
 	/*
 	 * Getters and setters.

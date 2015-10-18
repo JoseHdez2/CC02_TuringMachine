@@ -11,14 +11,14 @@ import common.structs.Symbol;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class TransitionRule {
+public class PushdownTransition {
 	State prevState;
 	State nextState;
 	Character requiredInputCharacter; // Must be first character in rest of input string.
 	Symbol requiredStackSymbol;	// Must be in top of stack.
 	ArrayList<Symbol> stackSymbolsToPush;
 	
-	public TransitionRule(State prevState, State nextState,
+	public PushdownTransition(State prevState, State nextState,
 			Character requiredInputCharacter,
 			Symbol requiredStackSymbol,
 			ArrayList<Symbol> stackSymbolsToPush){
@@ -36,7 +36,7 @@ public class TransitionRule {
 	public boolean equals(Object ob){
 		if (ob == null) return false;
 		if (ob.getClass() != getClass()) return false;
-		TransitionRule other = (TransitionRule)ob;
+		PushdownTransition other = (PushdownTransition)ob;
 		if (!prevState.equals(other.prevState)) return false;
 		if (!nextState.equals(other.nextState)) return false;
 		if (!requiredInputCharacter.equals(other.requiredInputCharacter)) return false;

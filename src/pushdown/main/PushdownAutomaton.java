@@ -6,8 +6,8 @@ import java.util.Stack;
 import common.structs.State;
 import common.structs.Symbol;
 import pushdown.structs.PushdownData;
-import pushdown.structs.AutomatonStatus;
-import pushdown.structs.TransitionRule;
+import pushdown.structs.PushdownStatus;
+import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
 /**
@@ -16,13 +16,13 @@ import util.TokenizedLines;
  *  The automaton itself. The only class that knows how to work with
  *  the AutomatonData it contains (e.g. apply transitions).
  */
-public class Automaton {
+public class PushdownAutomaton {
     String debugStr = "";
     
 	PushdownData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
-	public Automaton(PushdownData data){
+	public PushdownAutomaton(PushdownData data){
 		this.data = data;
 		
 		// TODO make sure all arguments are correct.
@@ -46,7 +46,7 @@ public class Automaton {
 		// Add the initial configuration into the statuses array.
 		Stack<Symbol> initialStack = new Stack<Symbol>();
 		initialStack.push(data.getInitialStackSymbol());
-		AutomatonStatus initialStatus = new AutomatonStatus(data.getInitialState(), inputString, initialStack);
+		PushdownStatus initialStatus = new PushdownStatus(data.getInitialState(), inputString, initialStack);
 		TraceTrail initialTrail = new TraceTrail();
 		initialTrail.add(initialStatus);
 		possibleTrails.add(initialTrail);
@@ -56,18 +56,18 @@ public class Automaton {
 
 		    for (TraceTrail tt : possibleTrails){
 
-    			ArrayList<TransitionRule> applicableTransitions = findApplicableTransitionRules(tt.getLast());
+    			ArrayList<PushdownTransition> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
-    			for (TransitionRule tr : applicableTransitions){
+    			for (PushdownTransition tr : applicableTransitions){
                     TraceTrail newTrail = new TraceTrail();
                     newTrail.addAll(tt);
-    				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
+    				PushdownStatus newStatus = applyTransition(tt.getLast(), tr);
     				newTrail.add(newStatus);
     				// If this new status has an empty stack AND input string... accept.
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
     				    // Record winning trace into history.
-    				    traceHist = AutomataIO.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = PushdownIO.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
     				newTrails.add(newTrail);
@@ -90,25 +90,25 @@ public class Automaton {
 	 * @param ts A frozen state of the automaton variables.
 	 * @return	All applicable transition rules for the given automaton status.
 	 */
-	public ArrayList<TransitionRule> findApplicableTransitionRules(AutomatonStatus ts){
+	public ArrayList<PushdownTransition> findApplicableTransitionRules(PushdownStatus ts){
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
-	    System.out.println("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
+	    debugStr.concat("Finding applicable transitions for " + PushdownIO.getStatusAsTokenizedLine(ts));
+	    System.out.println("Finding applicable transitions for " + PushdownIO.getStatusAsTokenizedLine(ts));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
-		ArrayList<TransitionRule> applicableTransitions = new ArrayList<TransitionRule>();
+		ArrayList<PushdownTransition> applicableTransitions = new ArrayList<PushdownTransition>();
 		
 		// Special case
 		if (ts.getCurrentStack().isEmpty()) return applicableTransitions;
 		
 		// Normal
- 		for (TransitionRule tr : data.getTransitionRules()){
+ 		for (PushdownTransition tr : data.getTransitionRules()){
 
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
- 		   String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+ 		   String deny = strNo + PushdownIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
  			if (tr.getPrevState().getName().equals(ts.getCurrentState().getName())){
  			    // todo bien
@@ -136,8 +136,8 @@ public class Automaton {
 		        continue;
  			}
 		    
-		    debugStr.concat("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
-		    System.out.println("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
+		    debugStr.concat("Applicable transition " + PushdownIO.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + PushdownIO.getTransitionAsTokenizedLine(tr));
             applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
@@ -153,7 +153,7 @@ public class Automaton {
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
-	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
+	public PushdownStatus applyTransition(PushdownStatus as, PushdownTransition tr){
 		
 	 // Special case
 	    // TODO: Remove this because it should never happen?
@@ -182,10 +182,10 @@ public class Automaton {
 		    }
 		}
 		
-		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
+		PushdownStatus newStatus = new PushdownStatus(newState, newString, newStack);
 		
-		System.out.print(AutomataIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(AutomataIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(PushdownIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(PushdownIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

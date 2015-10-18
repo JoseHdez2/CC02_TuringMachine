@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import pushdown.structs.PushdownData;
-import pushdown.structs.AutomatonStatus;
-import pushdown.structs.TransitionRule;
+import pushdown.structs.PushdownStatus;
+import pushdown.structs.PushdownTransition;
 import util.StringProcessing;
 import util.TokenizedLines;
 
@@ -24,7 +24,7 @@ import common.structs.Symbol;
  * Only class that knows the input/output
  * convention (data format) used.
  */
-public abstract class AutomataIO extends IOConst{
+public abstract class PushdownIO extends PushdownIOConst{
     
     /*
      * Input functions.
@@ -67,10 +67,10 @@ public abstract class AutomataIO extends IOConst{
         TokenizedLines transitionLines = 
                 new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
         
-        HashSet<TransitionRule> transitionRules = readTransitionRules(transitionLines);
+        HashSet<PushdownTransition> pushdownTransitions = readTransitionRules(transitionLines);
         
         return new PushdownData(stateSet, inputAlphabet, stackAlphabet, initialState,
-                initialStackSymbol, transitionRules, acceptStates);
+                initialStackSymbol, pushdownTransitions, acceptStates);
 	}
     
 	/**
@@ -78,9 +78,9 @@ public abstract class AutomataIO extends IOConst{
 	 * @param transitionLines  Array of string arrays containing
 	 * @return Data structure that semantically represents a set of transition rules.
 	 */
-	private static HashSet<TransitionRule> readTransitionRules(TokenizedLines transitionLines){
+	private static HashSet<PushdownTransition> readTransitionRules(TokenizedLines transitionLines){
 	    
-	    HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+	    HashSet<PushdownTransition> pushdownTransitions = new HashSet<PushdownTransition>();
         
         for (ArrayList<String> tl : transitionLines){
             
@@ -99,11 +99,11 @@ public abstract class AutomataIO extends IOConst{
                 stackSymbolsToPush.add(new Symbol(str));
             }
             
-            transitionRules.add(new TransitionRule(prevState, nextState, 
+            pushdownTransitions.add(new PushdownTransition(prevState, nextState, 
                     requiredInputCharacter, requiredStackSymbol, stackSymbolsToPush));
         }
         
-        return transitionRules;
+        return pushdownTransitions;
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public abstract class AutomataIO extends IOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    public static ArrayList<String> getTransitionAsTokenizedLine(TransitionRule tr){
+    public static ArrayList<String> getTransitionAsTokenizedLine(PushdownTransition tr){
 
 //      ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
 
@@ -165,7 +165,7 @@ public abstract class AutomataIO extends IOConst{
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (TransitionRule tr : ad.getTransitionRules()){            
+        for (PushdownTransition tr : ad.getTransitionRules()){            
             tl.add(getTransitionAsTokenizedLine(tr));
         }
         
@@ -177,7 +177,7 @@ public abstract class AutomataIO extends IOConst{
      * @param as Automaton status to be represented.
      * @return Array of strings representing the given automaton status.
      */
-    public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
+    public static ArrayList<String> getStatusAsTokenizedLine(PushdownStatus as){
         
         ArrayList<String> tokenizedLine = new ArrayList<String>();
         
@@ -202,7 +202,7 @@ public abstract class AutomataIO extends IOConst{
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         
-        for (AutomatonStatus as : tt){
+        for (PushdownStatus as : tt){
             tokenizedLines.add(getStatusAsTokenizedLine(as));
         }
         

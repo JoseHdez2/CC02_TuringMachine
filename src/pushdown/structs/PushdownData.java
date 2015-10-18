@@ -24,7 +24,7 @@ public class PushdownData extends TokenizedLines {
     HashSet<Symbol> stackAlphabet;
     State initialState;
     Symbol initialStackSymbol;
-    HashSet<TransitionRule> transitionRules;
+    HashSet<PushdownTransition> pushdownTransitions;
     HashSet<State> acceptStates;
     
     public PushdownData(HashSet<State> stateSet, 
@@ -32,14 +32,14 @@ public class PushdownData extends TokenizedLines {
                 HashSet<Symbol> stackAlphabet,
                 State initialState,
                 Symbol initialStackSymbol,
-                HashSet<TransitionRule> transitionRules,
+                HashSet<PushdownTransition> pushdownTransitions,
                 HashSet<State> acceptStates){
         this.stateSet = stateSet;
         this.inputAlphabet = inputAlphabet;
         this.stackAlphabet = stackAlphabet;
         this.initialState = initialState;
         this.initialStackSymbol = initialStackSymbol;
-        this.transitionRules = transitionRules;
+        this.pushdownTransitions = pushdownTransitions;
         this.acceptStates = acceptStates;
     }
     
@@ -77,11 +77,11 @@ public class PushdownData extends TokenizedLines {
     public void setInitialStackSymbol(Symbol initialStackSymbol) {
         this.initialStackSymbol = initialStackSymbol;
     }
-    public HashSet<TransitionRule> getTransitionRules() {
-        return transitionRules;
+    public HashSet<PushdownTransition> getTransitionRules() {
+        return pushdownTransitions;
     }
-    public void setTransitionRules(HashSet<TransitionRule> transitionRules) {
-        this.transitionRules = transitionRules;
+    public void setTransitionRules(HashSet<PushdownTransition> pushdownTransitions) {
+        this.pushdownTransitions = pushdownTransitions;
     }
     public HashSet<State> getAcceptStates() {
         return acceptStates;

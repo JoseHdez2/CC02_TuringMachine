@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import common.structs.State;
 import turing.structs.Movement;
-import turing.structs.TransitionRule;
+import turing.structs.TuringTransition;
 import turing.structs.TuringData;
 import turing.structs.TuringStatus;
 import util.StringProcessing;
@@ -23,7 +23,7 @@ import util.TokenizedLines;
  * Only class that knows the input/output
  * convention (data format) used.
  */
-public abstract class TuringIO extends IOConst{
+public abstract class TuringIO extends TuringIOConst{
     
     /*
      * Input functions.
@@ -66,10 +66,10 @@ public abstract class TuringIO extends IOConst{
         TokenizedLines transitionLines = 
                 new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
         
-        HashSet<TransitionRule> transitionRules = readTransitionRules(transitionLines);
+        HashSet<TuringTransition> turingTransitions = readTransitionRules(transitionLines);
         
         return new TuringData(stateSet, inputAlphabet, outputAlphabet, initialState,
-                blankCharacter, transitionRules, acceptStates);
+                blankCharacter, turingTransitions, acceptStates);
 	}
     
 	/**
@@ -77,9 +77,9 @@ public abstract class TuringIO extends IOConst{
 	 * @param transitionLines  Array of string arrays containing
 	 * @return Data structure that semantically represents a set of transition rules.
 	 */
-	private static HashSet<TransitionRule> readTransitionRules(TokenizedLines transitionLines){
+	private static HashSet<TuringTransition> readTransitionRules(TokenizedLines transitionLines){
 	    
-	    HashSet<TransitionRule> transitionRules = new HashSet<TransitionRule>();
+	    HashSet<TuringTransition> turingTransitions = new HashSet<TuringTransition>();
         
         for (ArrayList<String> tl : transitionLines){
             
@@ -110,11 +110,11 @@ public abstract class TuringIO extends IOConst{
                 throw new RuntimeException("Unrecognized movement character.");
             }
             
-            transitionRules.add(new TransitionRule(prevState, nextState, 
+            turingTransitions.add(new TuringTransition(prevState, nextState, 
                     inputCharacter, outputCharacter, movement));
         }
         
-        return transitionRules;
+        return turingTransitions;
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public abstract class TuringIO extends IOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    public static ArrayList<String> getTransitionAsTokenizedLine(TransitionRule tr){
+    public static ArrayList<String> getTransitionAsTokenizedLine(TuringTransition tr){
 
 //      ArrayList<String> transitionRuleLine = new ArrayList<String>(5);
 
@@ -176,7 +176,7 @@ public abstract class TuringIO extends IOConst{
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (TransitionRule tr : td.getTransitionRules()){            
+        for (TuringTransition tr : td.getTransitionRules()){            
             tl.add(getTransitionAsTokenizedLine(tr));
         }
         

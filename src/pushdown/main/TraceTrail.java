@@ -2,7 +2,7 @@ package pushdown.main;
 
 import java.util.ArrayList;
 
-import pushdown.structs.AutomatonStatus;
+import pushdown.structs.PushdownStatus;
 
 /**
  * @author jose
@@ -15,8 +15,8 @@ import pushdown.structs.AutomatonStatus;
  *  Used for presenting the trace of a winning possibility.
  */
 @SuppressWarnings("serial")
-public class TraceTrail extends ArrayList<AutomatonStatus>{
-    public AutomatonStatus getLast(){
+public class TraceTrail extends ArrayList<PushdownStatus>{
+    public PushdownStatus getLast(){
         return this.get(this.size()-1);
     }
 }
