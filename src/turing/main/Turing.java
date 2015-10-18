@@ -1,30 +1,28 @@
-package pushdown;
+package turing.main;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-import pushdown.structs.AutomatonData;
-import pushdown.structs.AutomatonStatus;
-import pushdown.structs.TransitionRule;
-import turing.TuringIO;
-import util.TokenizedLines;
-
 import common.structs.State;
 import common.structs.Symbol;
+import pushdown.structs.PushdownData;
+import pushdown.structs.AutomatonStatus;
+import pushdown.structs.TransitionRule;
+import util.TokenizedLines;
 
 /**
  * @author jose
  *
- *  The automaton itself. The only class that knows how to work with
- *  the AutomatonData it contains (e.g. apply transitions).
+ *  The machine itself. The only class that knows how to work with
+ *  the MachineData it contains (e.g. apply transitions).
  */
-public class Automaton {
+public abstract class Turing {
     String debugStr = "";
     
-	AutomatonData data;
+	PushdownData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
-	public Automaton(AutomatonData data){
+	public Turing(PushdownData data){
 		this.data = data;
 		
 		// TODO make sure all arguments are correct.
@@ -69,7 +67,7 @@ public class Automaton {
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
     				    // Record winning trace into history.
-    				    traceHist = AutomataIO.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = MachineIO.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
     				newTrails.add(newTrail);
@@ -96,8 +94,8 @@ public class Automaton {
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
-	    System.out.println("Finding applicable transitions for " + AutomataIO.getStatusAsTokenizedLine(ts));
+	    debugStr.concat("Finding applicable transitions for " + MachineIO.getStatusAsTokenizedLine(ts));
+	    System.out.println("Finding applicable transitions for " + MachineIO.getStatusAsTokenizedLine(ts));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
@@ -110,7 +108,7 @@ public class Automaton {
  		for (TransitionRule tr : data.getTransitionRules()){
 
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
- 		   String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+ 		   String deny = strNo + MachineIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
  			if (tr.getPrevState().getName().equals(ts.getCurrentState().getName())){
  			    // todo bien
@@ -138,8 +136,8 @@ public class Automaton {
 		        continue;
  			}
 		    
-		    debugStr.concat("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
-		    System.out.println("Applicable transition " + AutomataIO.getTransitionAsTokenizedLine(tr));
+		    debugStr.concat("Applicable transition " + MachineIO.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + MachineIO.getTransitionAsTokenizedLine(tr));
             applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
@@ -186,8 +184,8 @@ public class Automaton {
 		
 		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
 		
-		System.out.print(AutomataIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(AutomataIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(MachineIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(MachineIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

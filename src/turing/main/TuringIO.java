@@ -1,4 +1,4 @@
-package turing;
+package turing.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import common.structs.State;
 import turing.structs.Movement;
-import turing.structs.TraceTrail;
 import turing.structs.TransitionRule;
 import turing.structs.TuringData;
 import turing.structs.TuringStatus;

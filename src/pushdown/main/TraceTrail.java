@@ -1,6 +1,8 @@
-package turing.structs;
+package pushdown.main;
 
 import java.util.ArrayList;
+
+import pushdown.structs.AutomatonStatus;
 
 /**
  * @author jose
@@ -12,8 +14,9 @@ import java.util.ArrayList;
  *  
  *  Used for presenting the trace of a winning possibility.
  */
-public class TraceTrail extends ArrayList<TuringStatus>{
-    public TuringStatus getLast(){
+@SuppressWarnings("serial")
+public class TraceTrail extends ArrayList<AutomatonStatus>{
+    public AutomatonStatus getLast(){
         return this.get(this.size()-1);
     }
 }

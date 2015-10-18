@@ -16,7 +16,8 @@ import common.structs.Symbol;
  *  Extracted and given semantic meaning 
  *  by the AutomataIO class.
  */
-public class AutomatonData extends TokenizedLines {
+@SuppressWarnings("serial")
+public class PushdownData extends TokenizedLines {
 
     HashSet<State> stateSet;
     HashSet<Character> inputAlphabet;
@@ -26,7 +27,7 @@ public class AutomatonData extends TokenizedLines {
     HashSet<TransitionRule> transitionRules;
     HashSet<State> acceptStates;
     
-    public AutomatonData(HashSet<State> stateSet, 
+    public PushdownData(HashSet<State> stateSet, 
                 HashSet<Character> inputAlphabet,
                 HashSet<Symbol> stackAlphabet,
                 State initialState,

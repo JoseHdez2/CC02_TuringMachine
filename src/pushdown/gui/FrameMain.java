@@ -19,9 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import pushdown.AutomataIO;
-import pushdown.structs.AutomatonData;
-import turing.TuringIO;
+import pushdown.main.AutomataIO;
+import pushdown.structs.PushdownData;
 import util.TokenizedLines;
 
 public class FrameMain {
@@ -44,7 +43,7 @@ public class FrameMain {
 	int lang = englishGUI ? 0 : 1;
 	
 	String chosenFileFullPath = null;
-	AutomatonData automatonData = null;
+	PushdownData pushdownData = null;
 	JTextField inputStringField = null;
 	
 	final String[] STR_WINDOW_TITLE = {"Pushdown Automaton", "Automata de Pila"};
@@ -159,7 +158,7 @@ public class FrameMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String inputString = inputStringField.getText();
-                frameTrace = new FrameTrace(automatonData, inputString);
+                frameTrace = new FrameTrace(pushdownData, inputString);
                 frameTrace.setVisible(true);
             }
             
@@ -184,12 +183,12 @@ public class FrameMain {
 
 	private void updateLoadedAutomaton(){
         try {
-            automatonData = AutomataIO.readAutomatonData(chosenFileFullPath);
+            pushdownData = AutomataIO.readAutomatonData(chosenFileFullPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         TokenizedLines transitions = 
-                AutomataIO.getTransitionsAsTokenizedLines(automatonData);
+                AutomataIO.getTransitionsAsTokenizedLines(pushdownData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);

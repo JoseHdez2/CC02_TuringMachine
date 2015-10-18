@@ -1,10 +1,10 @@
-package pushdown;
+package pushdown.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import pushdown.structs.AutomatonData;
+import pushdown.structs.PushdownData;
 import pushdown.structs.AutomatonStatus;
 import pushdown.structs.TransitionRule;
 import util.StringProcessing;
@@ -36,7 +36,7 @@ public abstract class AutomataIO extends IOConst{
 	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
-	public static AutomatonData readAutomatonData(String fileName) throws IOException {
+	public static PushdownData readAutomatonData(String fileName) throws IOException {
 	    
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
@@ -69,7 +69,7 @@ public abstract class AutomataIO extends IOConst{
         
         HashSet<TransitionRule> transitionRules = readTransitionRules(transitionLines);
         
-        return new AutomatonData(stateSet, inputAlphabet, stackAlphabet, initialState,
+        return new PushdownData(stateSet, inputAlphabet, stackAlphabet, initialState,
                 initialStackSymbol, transitionRules, acceptStates);
 	}
     
@@ -161,7 +161,7 @@ public abstract class AutomataIO extends IOConst{
      * @param ad Machine representation.
      * @return Array of string arrays representing all the transition rules.
      */
-    public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
+    public static TokenizedLines getTransitionsAsTokenizedLines(PushdownData ad){
         
         TokenizedLines tl = new TokenizedLines();
         

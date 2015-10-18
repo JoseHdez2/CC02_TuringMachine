@@ -1,8 +1,6 @@
-package pushdown;
+package common.main;
 
 import java.util.ArrayList;
-
-import pushdown.structs.AutomatonStatus;
 
 /**
  * @author jose
@@ -12,10 +10,11 @@ import pushdown.structs.AutomatonStatus;
  *  Keeps the history of a given "trace trail" 
  *  (a possible path in a non-deterministic trace).
  *  
- *  Used for presenting the trace of a winning possibility.
+ *  Used for presenting the trace of a successful possibility.
  */
-public class TraceTrail extends ArrayList<AutomatonStatus>{
-    public AutomatonStatus getLast(){
+@SuppressWarnings("serial")
+public class TraceTrail extends ArrayList<MachineStatus>{
+    public MachineStatus getLast(){
         return this.get(this.size()-1);
     }
 }

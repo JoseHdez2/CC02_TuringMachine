@@ -1,7 +1,5 @@
 package turing.structs;
 
-import java.util.ArrayList;
-
 import common.structs.State;
 
 /**

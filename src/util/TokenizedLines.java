@@ -1,7 +1,6 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,6 +8,8 @@ import java.util.List;
  *
  *	ArrayList<ArrayList<String>> class renaming.
  */
+
+@SuppressWarnings("serial")
 public class TokenizedLines extends ArrayList<ArrayList<String>>{
 
     public TokenizedLines(){

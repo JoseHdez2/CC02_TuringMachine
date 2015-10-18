@@ -4,6 +4,7 @@ import javax.swing.table.AbstractTableModel;
 
 import util.TokenizedLines;
 
+@SuppressWarnings("serial")
 public class MyTableModel extends AbstractTableModel{
     
     TokenizedLines dataMatrix = null;

@@ -15,6 +15,8 @@ import common.structs.State;
  *  Extracted and given semantic meaning 
  *  by the AutomataIO class.
  */
+
+@SuppressWarnings("serial")
 public class TuringData extends TokenizedLines {
 
     HashSet<State> stateSet;
