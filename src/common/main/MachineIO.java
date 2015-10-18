@@ -114,7 +114,7 @@ public abstract class MachineIO extends IOConst{
      * @param as Automaton status to be represented.
      * @return Array of strings representing the given automaton status.
      */
-    public ArrayList<String> getStatusAsTokenizedLine(MachineStatus as){
+    public static ArrayList<String> getStatusAsTokenizedLine(MachineStatus as){
         
         ArrayList<String> tokenizedLine = dummyTokensLine(STATUS_OUTPUT_SIZE);
         
@@ -123,7 +123,10 @@ public abstract class MachineIO extends IOConst{
         return tokenizedLine;
     }
     
-    protected abstract ArrayList<String> setOutputTokens(ArrayList<String> tokenizedLine, MachineStatus as);
+    protected static ArrayList<String> setOutputTokens(ArrayList<String> tokenizedLine, MachineStatus as) {
+        // TODO Java doesn't allow for abstract static methods (language shortcoming).
+        return null;
+    }
     
     /* ------------------------------------------------
      * Output trace.
@@ -134,7 +137,7 @@ public abstract class MachineIO extends IOConst{
      * @param tt Trace trail to be represented.
      * @return  Array of string arrays representing the given trace trail.
      */
-    public TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
+    public static TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         

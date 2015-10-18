@@ -1,7 +1,5 @@
 package common.main;
 
-import common.structs.State;
-
 /**
  * @author jose
  * 

@@ -1,12 +1,8 @@
 package common.main;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
-import common.structs.State;
-import common.structs.Symbol;
 import pushdown.structs.PushdownData;
-import pushdown.structs.AutomatonStatus;
 import pushdown.structs.TransitionRule;
 import util.TokenizedLines;
 
@@ -41,8 +37,6 @@ public abstract class Machine {
 	protected abstract MachineStatus createInitialStatus();
 	
 	protected abstract ArrayList<TransitionRule> findApplicableTransitionRules(MachineStatus ms);
-	
-	protected abstract MachineStatus applyTransition(MachineStatus ms, TransitionRule tr);
 	
 	protected abstract boolean acceptanceStatus(MachineStatus ms);
 	
@@ -92,55 +86,17 @@ public abstract class Machine {
 		return false;
 	}
 	
-	// Special input string character and stack symbol.
-	private final Character EPSILON_INPUT = '-';
-	private final Symbol EPSILON_SYMBOL = new Symbol("-");
-	
 	/**
 	 * Given an automaton status and applicable transition rule,
 	 * compute and return the resulting automaton status.
 	 * 
 	 * Note: The transition rule should have previously been deemed applicable
-	 * for the given automaton status (no checks are made).
+	 * for the given automaton status (no checks are made here).
 	 * @param as	Machine status.
 	 * @param tr	Transition rule to be applied to the status.
 	 * @return	New automaton status.
 	 */
-	public AutomatonStatus applyTransition(AutomatonStatus as, TransitionRule tr){
-		
-	 // Special case
-	    // TODO: Remove this because it should never happen?
-        if (as.getCurrentStack().isEmpty()){
-            System.err.println("Somehow, unapplicable transition was considered applicable.");
-            System.exit(1);
-        }
-	    
-        String oldString = as.getRemainingInputString();
-	    
-	    State newState = tr.getNextState();
-		String newString = oldString.substring(1, oldString.length());
-		
-		Stack<Symbol> newStack = new Stack<Symbol>();
-		
-        for (Symbol s : as.getCurrentStack()){
-		    newStack.push(s);
-		}
-        
-        newStack.pop();
-
-        
-		if (!tr.getStackSymbolsToPush().get(0).getName().equals(EPSILON_SYMBOL.getName())){
-		    for (Symbol s : tr.getStackSymbolsToPush()){
-		        newStack.push(s);
-		    }
-		}
-		
-		AutomatonStatus newStatus = new AutomatonStatus(newState, newString, newStack);
-		
-		System.out.print(MachineIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(MachineIO.getStatusAsTokenizedLine(newStatus));
-		return newStatus;
-	}
+	public abstract MachineStatus applyTransition(MachineStatus as, TransitionRule tr);
 
 	/*
 	 * Getters and setters.
