@@ -1,18 +1,17 @@
-package pushdown.main;
+package old.pushdown.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import automaton.structs.AutomatonTransition;
-import common.structs.State;
-import common.structs.Symbol;
 import pushdown.structs.PushdownData;
 import pushdown.structs.PushdownStatus;
 import pushdown.structs.PushdownTransition;
-import pushdown.structs.PushdownTransitionSet;
 import util.StringProcessing;
 import util.TokenizedLines;
+
+import common.structs.State;
+import common.structs.Symbol;
 
 /**
  * @author jose
@@ -68,7 +67,7 @@ public abstract class PushdownIO extends PushdownIOConst{
         TokenizedLines transitionLines = 
                 new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
         
-        PushdownTransitionSet pushdownTransitions = readTransitionRules(transitionLines);
+        HashSet<PushdownTransition> pushdownTransitions = readTransitionRules(transitionLines);
         
         return new PushdownData(stateSet, inputAlphabet, stackAlphabet, initialState,
                 initialStackSymbol, pushdownTransitions, acceptStates);
@@ -79,9 +78,9 @@ public abstract class PushdownIO extends PushdownIOConst{
 	 * @param transitionLines  Array of string arrays containing
 	 * @return Data structure that semantically represents a set of transition rules.
 	 */
-	private static PushdownTransitionSet readTransitionRules(TokenizedLines transitionLines){
+	private static HashSet<PushdownTransition> readTransitionRules(TokenizedLines transitionLines){
 	    
-	    PushdownTransitionSet pushdownTransitions = new PushdownTransitionSet();
+	    HashSet<PushdownTransition> pushdownTransitions = new HashSet<PushdownTransition>();
         
         for (ArrayList<String> tl : transitionLines){
             
@@ -166,10 +165,8 @@ public abstract class PushdownIO extends PushdownIOConst{
         
         TokenizedLines tl = new TokenizedLines();
         
-        for (AutomatonTransition tr : ad.getTransitionRules()){
-            // TODO: Dirty cast to preserve inheritance.
-            PushdownTransition trans = (PushdownTransition)tr;
-            tl.add(getTransitionAsTokenizedLine(trans));
+        for (PushdownTransition tr : ad.getTransitionRules()){            
+            tl.add(getTransitionAsTokenizedLine(tr));
         }
         
         return tl;

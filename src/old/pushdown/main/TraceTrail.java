@@ -1,8 +1,8 @@
-package turing.main;
+package old.pushdown.main;
 
 import java.util.ArrayList;
 
-import turing.structs.TuringStatus;
+import pushdown.structs.PushdownStatus;
 
 /**
  * @author jose
@@ -14,10 +14,9 @@ import turing.structs.TuringStatus;
  *  
  *  Used for presenting the trace of a winning possibility.
  */
-
 @SuppressWarnings("serial")
-public class TraceTrail extends ArrayList<TuringStatus>{
-    public TuringStatus getLast(){
+public class TraceTrail extends ArrayList<PushdownStatus>{
+    public PushdownStatus getLast(){
         return this.get(this.size()-1);
     }
 }

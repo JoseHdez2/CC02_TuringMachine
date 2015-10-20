@@ -2,8 +2,7 @@ package pushdown.structs;
 
 import java.util.HashSet;
 
-import util.TokenizedLines;
-
+import automaton.structs.AutomatonData;
 import common.structs.State;
 import common.structs.Symbol;
 
@@ -17,14 +16,14 @@ import common.structs.Symbol;
  *  by the AutomataIO class.
  */
 @SuppressWarnings("serial")
-public class PushdownData extends TokenizedLines {
+public class PushdownData extends AutomatonData {
 
     HashSet<State> stateSet;
     HashSet<Character> inputAlphabet;
     HashSet<Symbol> stackAlphabet;
     State initialState;
     Symbol initialStackSymbol;
-    HashSet<PushdownTransition> pushdownTransitions;
+    PushdownTransitionSet pushdownTransitions;
     HashSet<State> acceptStates;
     
     public PushdownData(HashSet<State> stateSet, 
@@ -32,7 +31,7 @@ public class PushdownData extends TokenizedLines {
                 HashSet<Symbol> stackAlphabet,
                 State initialState,
                 Symbol initialStackSymbol,
-                HashSet<PushdownTransition> pushdownTransitions,
+                PushdownTransitionSet pushdownTransitions,
                 HashSet<State> acceptStates){
         this.stateSet = stateSet;
         this.inputAlphabet = inputAlphabet;
@@ -77,10 +76,10 @@ public class PushdownData extends TokenizedLines {
     public void setInitialStackSymbol(Symbol initialStackSymbol) {
         this.initialStackSymbol = initialStackSymbol;
     }
-    public HashSet<PushdownTransition> getTransitionRules() {
+    public PushdownTransitionSet getTransitionRules() {
         return pushdownTransitions;
     }
-    public void setTransitionRules(HashSet<PushdownTransition> pushdownTransitions) {
+    public void setTransitionRules(PushdownTransitionSet pushdownTransitions) {
         this.pushdownTransitions = pushdownTransitions;
     }
     public HashSet<State> getAcceptStates() {

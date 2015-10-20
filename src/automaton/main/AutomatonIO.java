@@ -33,7 +33,7 @@ public abstract class AutomatonIO extends AutomatonIOConst{
 	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
-	public AutomatonData readMachineData(String fileName) throws IOException {
+	public static AutomatonData readAutomatonData(String fileName) throws IOException {
 	    
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
@@ -46,7 +46,10 @@ public abstract class AutomatonIO extends AutomatonIOConst{
      * @return Data structure that semantically represents the automaton definition.
      * @throws IOException
      */
-	protected abstract AutomatonData readPreparedMachineData(TokenizedLines tokLines);
+	protected static AutomatonData readPreparedMachineData(TokenizedLines tokLines) {
+	    // TODO Java doesn't allow for abstract static methods (language shortcoming).
+        return null;
+    }
     
 	/**
 	 * Reads transition rules from an array of string arrays.
@@ -88,7 +91,7 @@ public abstract class AutomatonIO extends AutomatonIOConst{
      * @param ad Automaton definition data.
      * @return Array of string arrays representing all the transition rules.
      */
-    public TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
+    public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
         
         TokenizedLines tl = new TokenizedLines();
         
@@ -104,7 +107,10 @@ public abstract class AutomatonIO extends AutomatonIOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    protected abstract ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at);
+    protected static ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at) {
+        // TODO Java doesn't allow for abstract static methods (language shortcoming).
+        return null;
+    }
     
     // TODO further modularize tokenLine output.
     

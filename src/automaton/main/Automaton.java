@@ -20,26 +20,12 @@ public abstract class Automaton {
 	TokenizedLines traceHist = new TokenizedLines();
 	
 	public Automaton(PushdownData data){
-	    if (!correctMachineDefinition(data))
-	        
+	    if (!correctMachineDefinition(data)){
+	        System.err.println("Incoherent automaton definition!");
+	        // TODO: Figure out what to throw
+	    }
 		this.data = data;
 	}
-	
-	/**
-	 * Check the provided machine definition data is correct (self-coherent).
-	 * @param data Machine definition data.
-	 * @return Whether the provided machine data is correct.
-	 */
-	protected boolean correctMachineDefinition(PushdownData data){
-	    //TODO: Implement method.
-	    return true;
-	}
-	
-	protected abstract AutomatonStatus createInitialStatus();
-	
-	protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
-	
-	protected abstract boolean acceptanceStatus(AutomatonStatus ms);
 	
 	/**
 	 * Evaluates an input string, non-deterministically. The main purpose of a logical automaton.
@@ -86,6 +72,21 @@ public abstract class Automaton {
 		// hasn't been accepted, then the string is rejected. 
 		return false;
 	}
+	
+	/**
+     * Check the provided machine definition data is correct (self-coherent).
+     * @param data Machine definition data.
+     * @return Whether the provided machine data is correct.
+     */
+    protected abstract boolean correctMachineDefinition(PushdownData data);
+    
+    // TODO: Write descriptions for these.
+    
+    protected abstract AutomatonStatus createInitialStatus();
+    
+    protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
+    
+    protected abstract boolean acceptanceStatus(AutomatonStatus ms);
 	
 	/**
 	 * Given an automaton status and applicable transition rule,

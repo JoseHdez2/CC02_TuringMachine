@@ -2,6 +2,7 @@ package pushdown.structs;
 
 import java.util.ArrayList;
 
+import automaton.structs.AutomatonTransition;
 import common.structs.State;
 import common.structs.Symbol;
 
@@ -11,7 +12,7 @@ import common.structs.Symbol;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class PushdownTransition {
+public class PushdownTransition extends AutomatonTransition {
 	State prevState;
 	State nextState;
 	Character requiredInputCharacter; // Must be first character in rest of input string.

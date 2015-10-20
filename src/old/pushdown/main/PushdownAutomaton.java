@@ -1,4 +1,4 @@
-package turing.main;
+package old.pushdown.main;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -13,16 +13,16 @@ import util.TokenizedLines;
 /**
  * @author jose
  *
- *  The machine itself. The only class that knows how to work with
- *  the MachineData it contains (e.g. apply transitions).
+ *  The automaton itself. The only class that knows how to work with
+ *  the AutomatonData it contains (e.g. apply transitions).
  */
-public abstract class TuringAutomaton {
+public class PushdownAutomaton {
     String debugStr = "";
     
 	PushdownData data;
 	TokenizedLines traceHist = new TokenizedLines();
 	
-	public TuringAutomaton(PushdownData data){
+	public PushdownAutomaton(PushdownData data){
 		this.data = data;
 		
 		// TODO make sure all arguments are correct.
@@ -67,7 +67,7 @@ public abstract class TuringAutomaton {
     				if (newStatus.getCurrentStack().isEmpty() &&
     						newStatus.getRemainingInputString().isEmpty()){
     				    // Record winning trace into history.
-    				    traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = PushdownIO.traceTrailAsTokenizedLines(newTrail);
     					return true;
     				}
     				newTrails.add(newTrail);
@@ -94,8 +94,8 @@ public abstract class TuringAutomaton {
 	    
 //	    debugStr = "";
 	    
-	    debugStr.concat("Finding applicable transitions for " + AutomatonIO.getStatusAsTokenizedLine(ts));
-	    System.out.println("Finding applicable transitions for " + AutomatonIO.getStatusAsTokenizedLine(ts));
+	    debugStr.concat("Finding applicable transitions for " + PushdownIO.getStatusAsTokenizedLine(ts));
+	    System.out.println("Finding applicable transitions for " + PushdownIO.getStatusAsTokenizedLine(ts));
 	    
 	    String strNo = "Unapplicable transition ";
 	    
@@ -108,7 +108,7 @@ public abstract class TuringAutomaton {
  		for (PushdownTransition tr : data.getTransitionRules()){
 
 //            String deny = strNo + AutomataIO.getTransitionAsTokenizedLine(tr) + "\n Reason: ";
- 		   String deny = strNo + AutomatonIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
+ 		   String deny = strNo + PushdownIO.getTransitionAsTokenizedLine(tr) + "  Reason: ";
  		    
  			if (tr.getPrevState().getName().equals(ts.getCurrentState().getName())){
  			    // todo bien
@@ -136,8 +136,8 @@ public abstract class TuringAutomaton {
 		        continue;
  			}
 		    
-		    debugStr.concat("Applicable transition " + AutomatonIO.getTransitionAsTokenizedLine(tr));
-		    System.out.println("Applicable transition " + AutomatonIO.getTransitionAsTokenizedLine(tr));
+		    debugStr.concat("Applicable transition " + PushdownIO.getTransitionAsTokenizedLine(tr));
+		    System.out.println("Applicable transition " + PushdownIO.getTransitionAsTokenizedLine(tr));
             applicableTransitions.add(tr);
  		}
  		return applicableTransitions;
@@ -184,8 +184,8 @@ public abstract class TuringAutomaton {
 		
 		PushdownStatus newStatus = new PushdownStatus(newState, newString, newStack);
 		
-		System.out.print(AutomatonIO.getStatusAsTokenizedLine(as) + "->");
-		System.out.println(AutomatonIO.getStatusAsTokenizedLine(newStatus));
+		System.out.print(PushdownIO.getStatusAsTokenizedLine(as) + "->");
+		System.out.println(PushdownIO.getStatusAsTokenizedLine(newStatus));
 		return newStatus;
 	}
 

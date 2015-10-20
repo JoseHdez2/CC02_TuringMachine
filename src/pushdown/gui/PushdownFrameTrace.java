@@ -9,11 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import automaton.gui.AutomatonFrameTrace;
 import pushdown.main.PushdownAutomaton;
 import pushdown.structs.PushdownData;
+import util.MyTableModel;
 
 @SuppressWarnings("serial")
-public class FrameTrace extends JFrame {
+public class PushdownFrameTrace extends AutomatonFrameTrace {
 
     PushdownData pushdownData = null;
     PushdownAutomaton myAutomaton = null;
@@ -52,7 +54,8 @@ public class FrameTrace extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public FrameTrace(PushdownData pushdownData, String inputString) {
+	public PushdownFrameTrace(PushdownData pushdownData, String inputString) {
+	    super(pushdownData, inputString);
 	    this.pushdownData = pushdownData;
 	    this.inputString = inputString;
 	    setTitle(STR_WINDOW_TITLE[lang]);
@@ -97,10 +100,16 @@ public class FrameTrace extends JFrame {
 		runTrace();
 	}
 
-	private void runTrace(){
+	protected void runTrace(){
 	    myAutomaton = new PushdownAutomaton(pushdownData);
 	    labelResult.setText(String.valueOf(myAutomaton.evaluateString(inputString)));
 	    tableTrace.setModel(new MyTableModel(myAutomaton.getTraceHist()));
 	    System.out.print(myAutomaton.getDebugStr());
 	}
+
+    @Override
+    protected void updateAutomatonWithGUIData() {
+        // TODO Auto-generated method stub
+        
+    }
 }
