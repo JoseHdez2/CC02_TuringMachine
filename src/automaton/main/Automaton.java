@@ -57,7 +57,8 @@ public abstract class Automaton {
 
     				if (acceptanceStatus(newStatus)){
     				    // Record (first) successful trace into history.
-                        traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
+    				    AutomatonIO automatonIO = new AutomatonIO();    // TODO: abstract AND static functions.
+                        traceHist = automatonIO.traceTrailAsTokenizedLines(newTrail);
     				    return true;
     				}
 
@@ -72,14 +73,20 @@ public abstract class Automaton {
 		// hasn't been accepted, then the string is rejected. 
 		return false;
 	}
-	
-	/**
+
+    /*
+     * ABSTRACT METHODS
+     * 
+     * To be implemented by inheriting classes.
+     */
+	   
+    /**
      * Check the provided machine definition data is correct (self-coherent).
      * @param data Machine definition data.
      * @return Whether the provided machine data is correct.
      */
     protected abstract boolean correctMachineDefinition(PushdownData data);
-    
+	
     // TODO: Write descriptions for these.
     
     protected abstract AutomatonStatus createInitialStatus();
@@ -87,19 +94,19 @@ public abstract class Automaton {
     protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
     
     protected abstract boolean acceptanceStatus(AutomatonStatus ms);
+    
+    /**
+     * Given an automaton status and applicable transition rule,
+     * compute and return the resulting automaton status.
+     * 
+     * Note: The transition rule should have previously been deemed applicable
+     * for the given automaton status (no checks are made here).
+     * @param as    Machine status.
+     * @param tr    Transition rule to be applied to the status.
+     * @return  New automaton status.
+     */
+    public abstract AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr);
 	
-	/**
-	 * Given an automaton status and applicable transition rule,
-	 * compute and return the resulting automaton status.
-	 * 
-	 * Note: The transition rule should have previously been deemed applicable
-	 * for the given automaton status (no checks are made here).
-	 * @param as	Machine status.
-	 * @param tr	Transition rule to be applied to the status.
-	 * @return	New automaton status.
-	 */
-	public abstract AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr);
-
 	/*
 	 * Getters and setters.
 	 */

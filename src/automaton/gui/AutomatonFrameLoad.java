@@ -204,13 +204,14 @@ public abstract class AutomatonFrameLoad {
 	// automatonFrameTrace = new AutomatonFrameTrace(automatonData, inputString);
 
 	protected void updateLoadedAutomaton(){
+	    AutomatonIO automatonIO = new AutomatonIO();    // TODO: abstract AND static functions.
         try {
-            automatonData = AutomatonIO.readAutomatonData(chosenFileFullPath);
+            automatonData = automatonIO.readAutomatonData(chosenFileFullPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         TokenizedLines transitions = 
-                AutomatonIO.getTransitionsAsTokenizedLines(automatonData);
+                automatonIO.getTransitionsAsTokenizedLines(automatonData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
