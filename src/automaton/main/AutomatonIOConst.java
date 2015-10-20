@@ -10,7 +10,7 @@ package automaton.main;
  *  
  *  These will only be used by the TuringIO class.
  */
-public abstract class AutomatonIOConst {
+public interface AutomatonIOConst {
     
     /*
      * Input constants.

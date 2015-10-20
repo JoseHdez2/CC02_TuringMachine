@@ -57,8 +57,7 @@ public abstract class Automaton {
 
     				if (acceptanceStatus(newStatus)){
     				    // Record (first) successful trace into history.
-    				    AutomatonIO automatonIO = new AutomatonIO();    // TODO: abstract AND static functions.
-                        traceHist = automatonIO.traceTrailAsTokenizedLines(newTrail);
+                        traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
     				    return true;
     				}
 
