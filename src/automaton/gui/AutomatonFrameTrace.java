@@ -16,13 +16,15 @@ import util.MyTableModel;
 @SuppressWarnings("serial")
 public abstract class AutomatonFrameTrace extends JFrame {
 
-    AutomatonData automatonData = null;
-    Automaton myAutomaton = null;
-    String inputString = null;
+    protected AutomatonData automatonData = null;
+    protected Automaton myAutomaton = null;
+    protected String inputString = null;
     
-	boolean englishGUI = false;
-	int lang = englishGUI ? 0 : 1;
-	String chosenFileFullPath = null;
+    // TODO: Not used.
+	protected boolean englishGUI = false;
+	protected int lang = englishGUI ? 0 : 1;
+	
+	protected String chosenFileFullPath = null;
 
 	final String[] STR_WINDOW_TITLE = {"Trace", "Traza"};
 	final String[] STR_INP_STR_INTRO = {"Input string: ", "Cadena de entrada: "};

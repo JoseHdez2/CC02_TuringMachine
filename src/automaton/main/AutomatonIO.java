@@ -132,6 +132,8 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * To be implemented by inheriting classes.
      */
     
+    // TODO: Not really abstract, since Java can't do static AND abstract methods.
+    
     /*
      * Abstract input methods.
      */

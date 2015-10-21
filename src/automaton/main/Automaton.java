@@ -2,6 +2,7 @@ package automaton.main;
 
 import java.util.ArrayList;
 
+import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import pushdown.structs.PushdownData;
 import pushdown.structs.PushdownTransition;
@@ -14,12 +15,12 @@ import util.TokenizedLines;
  *  the MachineData it contains (e.g. apply transitions).
  */
 public abstract class Automaton {
-    String debugStr = "";
+    protected String debugStr = "";
     
-	PushdownData data;
-	TokenizedLines traceHist = new TokenizedLines();
+	protected AutomatonData data;
+	protected TokenizedLines traceHist = new TokenizedLines();
 	
-	public Automaton(PushdownData data){
+	public Automaton(AutomatonData data){
 	    if (!correctMachineDefinition(data)){
 	        System.err.println("Incoherent automaton definition!");
 	        // TODO: Figure out what to throw
@@ -84,7 +85,7 @@ public abstract class Automaton {
      * @param data Machine definition data.
      * @return Whether the provided machine data is correct.
      */
-    protected abstract boolean correctMachineDefinition(PushdownData data);
+    protected abstract boolean correctMachineDefinition(AutomatonData data);
 	
     // TODO: Write descriptions for these.
     

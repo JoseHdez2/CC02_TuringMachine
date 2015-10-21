@@ -31,63 +31,18 @@ public class PushdownData extends AutomatonData {
                 HashSet<Symbol> stackAlphabet,
                 State initialState,
                 Symbol initialStackSymbol,
-                PushdownTransitionSet pushdownTransitions,
+                PushdownTransitionSet transitionRules,
                 HashSet<State> acceptStates){
-        this.stateSet = stateSet;
-        this.inputAlphabet = inputAlphabet;
+        super(stateSet, inputAlphabet, initialState, acceptStates, transitionRules);
+
         this.stackAlphabet = stackAlphabet;
-        this.initialState = initialState;
         this.initialStackSymbol = initialStackSymbol;
-        this.pushdownTransitions = pushdownTransitions;
-        this.acceptStates = acceptStates;
     }
     
     /*
-     * Getters and setters.
+     * Getters.
+     * No setters since this is considered a static object.
      */
-    
-    public HashSet<State> getStateSet() {
-        return stateSet;
-    }
-    public void setStateSet(HashSet<State> stateSet) {
-        this.stateSet = stateSet;
-    }
-    public HashSet<Character> getInputAlphabet() {
-        return inputAlphabet;
-    }
-    public void setInputAlphabet(HashSet<Character> inputAlphabet) {
-        this.inputAlphabet = inputAlphabet;
-    }
-    public HashSet<Symbol> getStackAlphabet() {
-        return stackAlphabet;
-    }
-    public void setStackAlphabet(HashSet<Symbol> stackAlphabet) {
-        this.stackAlphabet = stackAlphabet;
-    }
-    public State getInitialState() {
-        return initialState;
-    }
-    public void setInitialState(State initialState) {
-        this.initialState = initialState;
-    }
-    public Symbol getInitialStackSymbol() {
-        return initialStackSymbol;
-    }
-    public void setInitialStackSymbol(Symbol initialStackSymbol) {
-        this.initialStackSymbol = initialStackSymbol;
-    }
-    public PushdownTransitionSet getTransitionRules() {
-        return pushdownTransitions;
-    }
-    public void setTransitionRules(PushdownTransitionSet pushdownTransitions) {
-        this.pushdownTransitions = pushdownTransitions;
-    }
-    public HashSet<State> getAcceptStates() {
-        return acceptStates;
-    }
-    public void setAcceptStates(HashSet<State> acceptStates) {
-        this.acceptStates = acceptStates;
-    }
     
     
 }

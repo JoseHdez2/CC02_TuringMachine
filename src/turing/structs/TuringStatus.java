@@ -1,5 +1,6 @@
 package turing.structs;
 
+import automaton.structs.AutomatonStatus;
 import common.structs.State;
 
 /**
@@ -9,7 +10,7 @@ import common.structs.State;
  *	Represents the status of a given Turing machine
  *  as a frozen frame during the evaluation of a string.
  */
-public class TuringStatus {
+public class TuringStatus extends AutomatonStatus{
 	State currentState;
 	String tape;
 	Integer headPos;

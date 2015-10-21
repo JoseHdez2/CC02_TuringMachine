@@ -1,5 +1,6 @@
 package turing.structs;
 
+import automaton.structs.AutomatonTransition;
 import common.structs.State;
 
 /**
@@ -8,10 +9,8 @@ import common.structs.State;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class TuringTransition {
-	State prevState;
-	State nextState;
-	Character inputCharacter;
+public class TuringTransition extends AutomatonTransition {
+
 	Character outputCharacter;
 	Movement movement;
 	
@@ -19,9 +18,7 @@ public class TuringTransition {
 			Character inputCharacter,
 			Character outputCharacter,
 			Movement movement){
-		this.prevState = prevState;
-		this.nextState = nextState;
-		this.inputCharacter = inputCharacter;
+	    super(prevState, nextState, inputCharacter);
 		this.outputCharacter = outputCharacter;
 		this.movement = movement;
 	}
@@ -31,12 +28,9 @@ public class TuringTransition {
 	 */
 	
 	public boolean equals(Object ob){
-		if (ob == null) return false;
-		if (ob.getClass() != getClass()) return false;
-		TuringTransition other = (TuringTransition)ob;
-		if (!prevState.equals(other.prevState)) return false;
-		if (!nextState.equals(other.nextState)) return false;
-		if (!inputCharacter.equals(other.inputCharacter)) return false;
+	    if (!super.equals(ob)) return false;
+	    
+	    TuringTransition other = (TuringTransition)ob;
 		if (!outputCharacter.equals(other.outputCharacter)) return false;
 		if (!(movement == other.movement)) return false;
 
@@ -44,42 +38,19 @@ public class TuringTransition {
 	}
 	
 	public int hashCode() {
-		return prevState.hashCode() ^ nextState.hashCode() ^ 
-				inputCharacter.hashCode() ^ outputCharacter.hashCode() ^
+		return super.hashCode() ^ outputCharacter.hashCode() ^
 				movement.hashCode();
 	}
 
-    /**
-     * @return the prevState
+    /*
+     * Getters.
+     * No setters since this is considered a static object.
      */
-    public State getPrevState() {
-        return prevState;
-    }
 
-    /**
-     * @return the nextState
-     */
-    public State getNextState() {
-        return nextState;
-    }
-
-    /**
-     * @return the inputCharacter
-     */
-    public Character getInputCharacter() {
-        return inputCharacter;
-    }
-
-    /**
-     * @return the outputCharacter
-     */
     public Character getOutputCharacter() {
         return outputCharacter;
     }
 
-    /**
-     * @return the movement
-     */
     public Movement getMovement() {
         return movement;
     }

@@ -149,7 +149,7 @@ public abstract class PushdownIO extends PushdownIOConst{
       
       transitionRuleLine.set(OUT_TRAN_PREV_STATE, tr.getPrevState().toString());
       transitionRuleLine.set(OUT_TRAN_NEXT_STATE, tr.getNextState().toString());
-      transitionRuleLine.set(OUT_TRAN_REQ_INP_CHAR, tr.getRequiredInputCharacter().toString());
+      transitionRuleLine.set(OUT_TRAN_REQ_INP_CHAR, tr.getInputCharacter().toString());
       transitionRuleLine.set(OUT_TRAN_REQ_STACK_SYM, tr.getRequiredStackSymbol().toString());
       transitionRuleLine.set(OUT_TRAN_STACK_SYM_TO_PUSH, tr.getStackSymbolsToPush().toString());
       

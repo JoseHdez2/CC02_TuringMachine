@@ -1,18 +1,58 @@
 package automaton.structs;
 
+import common.structs.State;
+
 /**
  * @author jose
  * 
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public abstract class AutomatonTransition {
-	
-	/*
-	 * Equals and hashCode.
-	 */
-	
-	public abstract boolean equals(Object ob);
-	
-	public abstract int hashCode();
+public class AutomatonTransition {
+    State prevState;
+    State nextState;
+    Character inputCharacter;
+    
+    public AutomatonTransition(State prevState, State nextState, Character inputCharacter){
+        this.prevState = prevState;
+        this.nextState = nextState;
+        this.inputCharacter = inputCharacter;
+    }
+    
+    /*
+     * Equals and hashCode.
+     */
+    
+    public boolean equals(Object ob){
+        if (ob == null) return false;
+        if (ob.getClass() != getClass()) return false;
+        AutomatonTransition other = (AutomatonTransition)ob;
+        if (!prevState.equals(other.prevState)) return false;
+        if (!nextState.equals(other.nextState)) return false;
+        if (!inputCharacter.equals(other.inputCharacter)) return false;
+
+        return true;
+    }
+    
+    public int hashCode() {
+        return prevState.hashCode() ^ nextState.hashCode() ^ 
+                inputCharacter.hashCode();
+    }
+
+    /*
+     * Getters.
+     * No setters since this is considered a static object.
+     */
+    
+    public State getPrevState() {
+        return prevState;
+    }
+
+    public State getNextState() {
+        return nextState;
+    }
+
+    public Character getInputCharacter() {
+        return inputCharacter;
+    }
 }
