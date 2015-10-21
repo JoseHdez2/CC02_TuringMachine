@@ -19,10 +19,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import automaton.structs.AutomatonData;
+import i18n.GUIStr;
+import i18n.I18n;
 import util.MyTableModel;
 import util.TokenizedLines;
 
-public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
+public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIConst {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
@@ -30,26 +32,27 @@ public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
     protected AutomatonData automatonData = null;
     protected JTextField inputStringField = null;
     
-    protected JFrame frameMain;
+    protected JFrame frameMain = new JFrame();
     protected AutomatonFrameTrace automatonFrameTrace;
     protected JLabel labelFilename = new JLabel("---");
-    protected JTable tableTrans;
-    protected JScrollPane scrollPane;
+    protected JTable tableTrans = new JTable();
+    protected JScrollPane scrollPane = new JScrollPane();
     
-    protected JButton buttonRun = null;
+    protected JButton buttonRun = new JButton(I18n.getString(GUIStr.RUN));
 	
 	/**
 	 * Create the application.
 	 */
 	public AutomatonFrameLoad() {
+	  super();
+
+      frameMain.setVisible(true);
+      initialize();
       EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     AutomatonFrameLoad window = createAutomatonFrameLoad();
 //                    if(window != null){
-                        window.frameMain.setVisible(true);
-                        window.initialize();
 //                    }
                 } catch (Exception e) {
                     e.printStackTrace();
