@@ -26,66 +26,23 @@ import i18n.I18n;
 import util.MyTableModel;
 import util.TokenizedLines;
 
-public abstract class AutomatonFrameLoad {
+public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
-    /*
-     * GUI constants.
-     */
+    AutomatonIO io = initializeIOModule();
     
-    final int FRAME_X = 100;
-    final int FRAME_Y = 100;
-    final int FRAME_WIDTH = 450;
-    final int FRAME_HEIGHT = 300;
+    protected String chosenFileFullPath = null;
+    protected AutomatonData automatonData = null;
+    protected JTextField inputStringField = null;
     
-    final int FIELD_INPUT_STR_SIZE = 10;
+    protected JFrame frameMain;
+    protected AutomatonFrameTrace automatonFrameTrace;
+    protected JLabel labelFilename = new JLabel("---");
+    protected JTable tableTrans;
+    protected JScrollPane scrollPane;
     
-    // TODO this doesn't work
-    // change to true if you want an English interface.
-	boolean englishGUI = false;
-	int lang = englishGUI ? 0 : 1;
-	
-	String chosenFileFullPath = null;
-	AutomatonData automatonData = null;
-	JTextField inputStringField = null;
-	
-	final String STR_WINDOW_TITLE = I18n.getString(GUIStr.PUSHDOWN_WINDOW_TITLE);
-	final String STR_WINDOW_LOAD = I18n.getString(GUIStr.PUSHDOWN_WINDOW_LOAD);
-	
-	final String STR_LOAD = I18n.getString(GUIStr.LOAD);
-	final String STR_RUN = I18n.getString(GUIStr.RUN);
-	final String STR_TRACE = I18n.getString(GUIStr.TRACE);
-	final String STR_TRANS = I18n.getString(GUIStr.TRANSITIONS);
-	
-	protected JFrame frameMain;
-	protected AutomatonFrameTrace automatonFrameTrace;
-	protected JLabel labelFilename = new JLabel("---");
-	protected JTable tableTrans;
-	protected JScrollPane scrollPane;
-	
-	protected JButton buttonRun = null;
-
-	String[][] tableTransDummyData =
-		{
-			{"q1", "q2", "a1", "A1", "A2"},
-		};
-	String[][] tableTransColumns = 
-		{
-			{"State 1", "State 2", "Input", "Stack Pop", "Stack Push"},
-			{"Estado 1", "Estado 2", "Entrada", "De pila", "A pila"},
-		};
-	
-	String[][] tableTraceDummyData =
-		{
-			{"q1", "a1", "A1"},
-		};
-	
-	String[][] tableTraceColumns = 
-		{
-			{"Current State", "Remaining String", "Stack Content"},
-			{"Estado Actual", "Cadena Restante", "Contenido de Pila"},
-		};
+    protected JButton buttonRun = null;
 	
 	/**
 	 * Create the application.
@@ -199,18 +156,14 @@ public abstract class AutomatonFrameLoad {
 	    
 	    return runPanel;
 	}
-	
-	protected abstract AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString);
-	// automatonFrameTrace = new AutomatonFrameTrace(automatonData, inputString);
 
 	protected void updateLoadedAutomaton(){
         try {
-            automatonData = AutomatonIO.readAutomatonData(chosenFileFullPath);
+            automatonData = io.readAutomatonData(chosenFileFullPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        TokenizedLines transitions = 
-                AutomatonIO.getTransitionsAsTokenizedLines(automatonData);
+        TokenizedLines transitions = io.getTransitionsAsTokenizedLines(automatonData);
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
@@ -225,4 +178,17 @@ public abstract class AutomatonFrameLoad {
 	    buttonRun.setEnabled(!lock);
 	    inputStringField.setEnabled(!lock);
 	}
+	
+	/*
+	 * ABSTRACT FUNCTIONS
+	 * To be implemented by inheriting classes.
+	 */
+	
+    protected abstract AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString);
+    // automatonFrameTrace = new AutomatonFrameTrace(automatonData, inputString);
+    
+    /**
+     * @return The corresponding (inheriting, non-abstract) AutomatonIO object.
+     */
+    protected abstract AutomatonIO initializeIOModule();
 }

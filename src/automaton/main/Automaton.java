@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
-import pushdown.structs.PushdownData;
 import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
@@ -58,7 +57,8 @@ public abstract class Automaton {
 
     				if (acceptanceStatus(newStatus)){
     				    // Record (first) successful trace into history.
-                        traceHist = AutomatonIO.traceTrailAsTokenizedLines(newTrail);
+    				    // TODO: Think about giving each class their own bit of IO functionality.
+                        traceHist = io.traceTrailAsTokenizedLines(newTrail);
     				    return true;
     				}
 

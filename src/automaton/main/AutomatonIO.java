@@ -23,9 +23,9 @@ import util.TokenizedLines;
  */
 public abstract class AutomatonIO implements AutomatonIOConst{
     
-    /*
-     * Input functions.
-     */
+    //
+    // Input functions.
+    //
     
 	/**
 	 * Reads automaton data from a given file.
@@ -33,38 +33,16 @@ public abstract class AutomatonIO implements AutomatonIOConst{
 	 * @return Data structure that semantically represents the automaton definition.
 	 * @throws IOException
 	 */
-	public static AutomatonData readAutomatonData(String fileName) throws IOException {
+	public AutomatonData readAutomatonData(String fileName) throws IOException {
 	    
 	    TokenizedLines tokLines = prepareAutomatonData(fileName);
 
 	    return readPreparedMachineData(tokLines);
 	}
 	
-	/**
-     * Standardizes input file, preparing it for automaton data extraction.
-     * @param fileName Path to an automaton file (arbitrary file structure)
-     * @return Standardized (expected) lines for reading automaton data.
-     * @throws IOException
-     */
-    protected static TokenizedLines prepareAutomatonData(String fileName) throws IOException {
-        
-        ArrayList<String> lines = StringProcessing.readFileLines(fileName);
-        
-        lines = StringProcessing.stripComments(lines, "#");
-        
-        lines = StringProcessing.removeAllEmptyLines(lines);
-
-        TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines, "\\s+");
-        
-        return tokenizedLines;
-    }
-	
     //
     // Output functions.
     //
-    
-    protected abstract Integer getTransOutputSize();
-    protected abstract Integer getStatusOutputSize();
     
     /**
      * Produce the representation of all of the transitions in 
@@ -72,7 +50,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param ad Automaton definition data.
      * @return Array of string arrays representing all the transition rules.
      */
-    public static TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
+    public TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
         
         TokenizedLines tl = new TokenizedLines();
         
@@ -88,7 +66,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param as Automaton status to be represented.
      * @return Array of strings representing the given automaton status.
      */
-    public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
+    public ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
         
         ArrayList<String> tokenizedLine = dummyTokensLine(getStatusOutputSize());
         
@@ -102,13 +80,37 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param tt Trace trail to be represented.
      * @return  Array of string arrays representing the given trace trail.
      */
-    public static TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
+    public TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         
         for (AutomatonStatus as : tt){
             tokenizedLines.add(getStatusAsTokenizedLine(as));
         }
+        
+        return tokenizedLines;
+    }
+    
+    /*
+     * PROTECTED METHODS
+     * Low-level methods that are only called internally.
+     */
+    
+    /**
+     * Standardizes input file, preparing it for automaton data extraction.
+     * @param fileName Path to an automaton file (arbitrary file structure)
+     * @return Standardized (expected) lines for reading automaton data.
+     * @throws IOException
+     */
+    protected static TokenizedLines prepareAutomatonData(String fileName) throws IOException {
+        
+        ArrayList<String> lines = StringProcessing.readFileLines(fileName);
+        
+        lines = StringProcessing.stripComments(lines, "#");
+        
+        lines = StringProcessing.removeAllEmptyLines(lines);
+
+        TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines, "\\s+");
         
         return tokenizedLines;
     }
@@ -128,11 +130,8 @@ public abstract class AutomatonIO implements AutomatonIOConst{
    
     /*
      * ABSTRACT METHODS
-     * 
      * To be implemented by inheriting classes.
      */
-    
-    // TODO: Not really abstract, since Java can't do static AND abstract methods.
     
     /*
      * Abstract input methods.
@@ -144,18 +143,14 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @return Data structure that semantically represents the automaton definition.
      * @throws IOException
      */
-    static protected AutomatonData readPreparedMachineData(TokenizedLines tokLines) {
-        return null;
-    }
+    protected abstract AutomatonData readPreparedMachineData(TokenizedLines tokLines);
     
     /**
      * Reads transition rules from an array of string arrays.
      * @param transitionLines  Lines with transition tokens.
      * @return Data structure that semantically represents a set of transition rules.
      */
-    static protected HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines) {
-        return null;
-    }
+    protected abstract HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines);
     
     /*
      * Abstract output methods.
@@ -166,9 +161,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    static protected ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at) {
-        return null;
-    }
+    protected abstract ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at);
     
     /**
      * Given a tokenized line with the correct number of (dummy) tokens, 
@@ -177,7 +170,15 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param as AutomatonStatus to be represented.
      * @return Line with meaningful tokens representing the given automaton status.
      */
-    static protected ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
-        return null;
-    }
+    protected abstract ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as);
+    
+    /**
+     * @return Number of tokens a representation of a transition has.
+     */
+    protected abstract Integer getTransOutputSize();
+    
+    /**
+     * @return Number of tokens a representation of a status has.
+     */
+    protected abstract Integer getStatusOutputSize();
 }
