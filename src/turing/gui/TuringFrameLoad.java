@@ -2,8 +2,8 @@ package turing.gui;
 
 import automaton.gui.AutomatonFrameLoad;
 import automaton.gui.AutomatonFrameTrace;
-import automaton.main.AutomatonIO;
 import automaton.structs.AutomatonData;
+import turing.structs.TuringData;
 
 public class TuringFrameLoad extends AutomatonFrameLoad{
 
@@ -20,9 +20,9 @@ public class TuringFrameLoad extends AutomatonFrameLoad{
     }
 
     @Override
-    protected AutomatonIO initializeIOModule() {
+    protected AutomatonData readDataFromFile(String fullFilePath) {
         // TODO Auto-generated method stub
-        return null;
+        return new TuringData(fullFilePath);
     }
 
 }

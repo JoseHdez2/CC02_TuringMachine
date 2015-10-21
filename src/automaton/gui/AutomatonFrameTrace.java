@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import automaton.main.Automaton;
+import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import util.MyTableModel;
 

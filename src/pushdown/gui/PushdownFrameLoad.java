@@ -2,7 +2,6 @@ package pushdown.gui;
 
 import automaton.gui.AutomatonFrameLoad;
 import automaton.gui.AutomatonFrameTrace;
-import automaton.main.AutomatonIO;
 import automaton.structs.AutomatonData;
 import pushdown.structs.PushdownData;
 
@@ -20,7 +19,7 @@ public class PushdownFrameLoad extends AutomatonFrameLoad{
     }
 
     @Override
-    protected AutomatonIO initializeIOModule() {
+    protected AutomatonData readDataFromFile(String fullFilePath) {
         // TODO Auto-generated method stub
         return null;
     }

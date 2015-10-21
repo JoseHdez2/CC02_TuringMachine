@@ -38,6 +38,10 @@ public class TuringData extends AutomatonData {
         this.outputAlphabet = outputAlphabet;
         this.blankCharacter = blankCharacter;
     }
+    
+    public TuringData(String fullFilePath){
+        
+    }
 
     /*
      * Getters.

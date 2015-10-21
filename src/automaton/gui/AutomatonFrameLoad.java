@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,18 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import automaton.main.AutomatonIO;
 import automaton.structs.AutomatonData;
-import i18n.GUIStr;
-import i18n.I18n;
 import util.MyTableModel;
 import util.TokenizedLines;
 
 public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
-    
-    AutomatonIO io = initializeIOModule();
     
     protected String chosenFileFullPath = null;
     protected AutomatonData automatonData = null;
@@ -158,11 +152,11 @@ public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
 	}
 
 	protected void updateLoadedAutomaton(){
-        try {
-            automatonData = io.readAutomatonData(chosenFileFullPath);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+//        try {
+            automatonData = readDataFromFile(chosenFileFullPath);
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
         TokenizedLines transitions = automatonData.getTransitionRules().asStringMatrix();
         
         tableTrans.setModel(new MyTableModel(transitions));
@@ -187,8 +181,9 @@ public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
     protected abstract AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString);
     // automatonFrameTrace = new AutomatonFrameTrace(automatonData, inputString);
     
+    // TODO: Since AutomatonData cannot be instantiated.
     /**
-     * @return The corresponding (inheriting, non-abstract) AutomatonIO object.
+     * @return The corresponding (inheriting, non-abstract) AutomatonData object.
      */
-    protected abstract AutomatonIO initializeIOModule();
+    protected abstract AutomatonData readDataFromFile(String fullFilePath);
 }

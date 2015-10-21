@@ -1,4 +1,4 @@
-package automaton.main;
+package automaton.algo;
 
 import java.util.ArrayList;
 

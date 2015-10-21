@@ -2,7 +2,7 @@ package pushdown.gui;
 
 import automaton.gui.AutomatonFrameTrace;
 import automaton.structs.AutomatonData;
-import pushdown.main.PushdownAutomaton;
+import pushdown.algo.PushdownAutomaton;
 import pushdown.structs.PushdownData;
 
 public class PushdownFrameTrace extends AutomatonFrameTrace {

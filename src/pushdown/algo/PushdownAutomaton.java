@@ -1,21 +1,25 @@
-package turing.main;
+package pushdown.algo;
 
 import java.util.ArrayList;
 
-import automaton.main.Automaton;
+import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
-import common.structs.State;
+import pushdown.structs.PushdownData;
 import pushdown.structs.PushdownTransition;
-import turing.structs.TuringData;
 
-public class TuringAutomaton extends Automaton {
+/**
+ * @author jose
+ *
+ *  The automaton itself. The only class that knows how to work with
+ *  the AutomatonData it contains (e.g. apply transitions).
+ */
+public class PushdownAutomaton extends Automaton{
 
-    public TuringAutomaton(AutomatonData data) {
+    public PushdownAutomaton(PushdownData data) {
         super(data);
-        // TODO Auto-generated constructor stub
     }
-
+    
     @Override
     protected boolean correctMachineDefinition(AutomatonData data) {
         // TODO Implement
@@ -24,9 +28,7 @@ public class TuringAutomaton extends Automaton {
 
     @Override
     protected AutomatonStatus createInitialStatus() {
-        State initialState = ((TuringData) data).getInitialState();
-        // TODO
-//        return new TuringStatus();
+        // TODO Auto-generated method stub
         return null;
     }
 
@@ -47,5 +49,7 @@ public class TuringAutomaton extends Automaton {
         // TODO Auto-generated method stub
         return null;
     }
+
+
 
 }

@@ -36,6 +36,10 @@ public abstract class AutomatonData extends TokenizedLines {
         this.transitionRules = transitionRules;
     }
     
+    public AutomatonData(){};
+    
+//    public abstract AutomatonData(String fullFilePath);
+    
     /*
      * Getters.
      * No setters since this is considered a static object.
