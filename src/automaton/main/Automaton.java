@@ -51,8 +51,8 @@ public abstract class Automaton {
     			ArrayList<PushdownTransition> applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (PushdownTransition tr : applicableTransitions){
-                    TraceTrail newTrail = new TraceTrail();
-                    newTrail.addAll(tt);
+                    TraceTrail newTrail = tt.deepEnoughCopy();
+                    
     				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
     				newTrail.add(newStatus);
 
@@ -93,7 +93,7 @@ public abstract class Automaton {
     
     protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
     
-    protected abstract boolean acceptanceStatus(AutomatonStatus ms);
+    protected abstract boolean acceptanceStatus(AutomatonStatus as);
     
     /**
      * Given an automaton status and applicable transition rule,

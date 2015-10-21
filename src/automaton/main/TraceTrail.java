@@ -19,4 +19,17 @@ public class TraceTrail extends ArrayList<AutomatonStatus>{
     public AutomatonStatus getLast(){
         return this.get(this.size()-1);
     }
+    
+    // TODO find out how deep
+    /**
+     * Deep "enough" since I'm not completely sure whether it's deep.
+     * @return Deep copy
+     */
+    protected TraceTrail deepEnoughCopy(){
+        
+        TraceTrail copyTrail = new TraceTrail();
+        copyTrail.addAll(this);
+        
+        return copyTrail;
+    }
 }
