@@ -8,6 +8,7 @@ import pushdown.structs.PushdownData;
 @SuppressWarnings("serial")
 public class PushdownFrameLoad extends AutomatonFrameLoad{
 
+    
     @Override
     protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
         // TODO: Nasty typecast, for the sake of inheritance.
@@ -18,5 +19,10 @@ public class PushdownFrameLoad extends AutomatonFrameLoad{
     protected AutomatonData readDataFromFile(String fullFilePath) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    protected AutomatonData initializeAutomatonData() {
+        return new PushdownData();
     }
 }

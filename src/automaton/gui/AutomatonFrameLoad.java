@@ -28,7 +28,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
     protected String chosenFileFullPath = null;
-    protected AutomatonData automatonData = null;
+    protected AutomatonData automatonData = initializeAutomatonData();
     protected JTextField inputStringField = null;
     
     protected AutomatonFrameTrace automatonFrameTrace;
@@ -93,6 +93,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
                         STR_WINDOW_LOAD, FileDialog.LOAD);
                 openFile.setDirectory(System.getProperty("user.dir"));
                 openFile.setVisible(true);
+                
                 if(!(openFile.getFile() == null)){
                     chosenFileFullPath = openFile.getDirectory() + File.separator + openFile.getFile();
                     System.out.println(chosenFileFullPath);
@@ -172,4 +173,6 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
      * @return The corresponding (inheriting, non-abstract) AutomatonData object.
      */
     protected abstract AutomatonData readDataFromFile(String fullFilePath);
+    
+    protected abstract AutomatonData initializeAutomatonData();
 }

@@ -1,10 +1,16 @@
 package pushdown.structs;
 
+import java.io.IOException;
 import java.util.HashSet;
 
+import automaton.algo.AutomatonFile;
 import automaton.structs.AutomatonData;
 import automaton.structs.State;
+import automaton.structs.StateSet;
 import automaton.structs.Symbol;
+import automaton.structs.SymbolSet;
+import pushdown.algo.PushdownIOConst;
+import util.TokenizedLines;
 
 /**
  * @author jose
@@ -16,18 +22,13 @@ import automaton.structs.Symbol;
  *  by the AutomataIO class.
  */
 @SuppressWarnings("serial")
-public class PushdownData extends AutomatonData {
+public class PushdownData extends AutomatonData implements PushdownIOConst{
 
-    HashSet<State> stateSet;
-    HashSet<Character> inputAlphabet;
     HashSet<Symbol> stackAlphabet;
-    State initialState;
     Symbol initialStackSymbol;
-    PushdownTransitionSet pushdownTransitions;
-    HashSet<State> acceptStates;
     
     public PushdownData(HashSet<State> stateSet, 
-                HashSet<Character> inputAlphabet,
+                HashSet<Symbol> inputAlphabet,
                 HashSet<Symbol> stackAlphabet,
                 State initialState,
                 Symbol initialStackSymbol,
@@ -37,6 +38,30 @@ public class PushdownData extends AutomatonData {
 
         this.stackAlphabet = stackAlphabet;
         this.initialStackSymbol = initialStackSymbol;
+    }
+
+    public PushdownData() {};
+    
+    public PushdownData(String fullFilePath) throws IOException {
+            
+        TokenizedLines tokLines = AutomatonFile.prepareAutomatonData(fullFilePath);
+
+        stateSet = new StateSet(tokLines.get(IN_FILE_STATE_SET));
+
+        inputAlphabet = new SymbolSet(tokLines.get(IN_FILE_INPUT_ALPH));
+
+        stackAlphabet = new SymbolSet(tokLines.get(IN_FILE_STACK_ALPH));
+
+        initialState = new State(tokLines.get(IN_FILE_INIT_STATE).get(0));
+
+        initialStackSymbol = new Symbol(tokLines.get(IN_FILE_INIT_STACK).get(0));
+
+        acceptStates = new StateSet(tokLines.get(IN_FILE_ACCEPT_STATES));
+        
+        TokenizedLines transitionLines = 
+                new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
+        
+        transitionRules = new PushdownTransitionSet(transitionLines);
     }
     
     /*

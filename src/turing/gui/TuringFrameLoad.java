@@ -20,4 +20,10 @@ public class TuringFrameLoad extends AutomatonFrameLoad{
         return new TuringData(fullFilePath);
     }
 
+    @Override
+    protected AutomatonData initializeAutomatonData() {
+        // TODO Auto-generated method stub
+        return new TuringData();
+    }
+
 }

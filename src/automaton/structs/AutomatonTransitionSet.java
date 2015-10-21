@@ -16,6 +16,19 @@ import util.TokenizedLines;
 @SuppressWarnings("serial")
 public abstract class AutomatonTransitionSet extends HashSet<AutomatonTransition> {
     
+    public AutomatonTransitionSet() {};
+    
+    public AutomatonTransitionSet(TokenizedLines transitionLines){
+        AutomatonTransitionSet readTransitions = readFromLines(transitionLines);
+        this.addAll(readTransitions);
+    }
+    
+    /**
+     * @param transitionLines
+     * @return A collection of transitions, that were read from the transitionLines.
+     */
+    protected abstract AutomatonTransitionSet readFromLines(TokenizedLines transitionLines);
+    
     /**
      * Produce the representation of all of the transitions in 
      * the automata definition, according to the internal IO convention.

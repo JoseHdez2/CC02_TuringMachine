@@ -9,21 +9,18 @@ import util.TokenizedLines;
  *
  *  Semantically represents the data 
  *  of an automaton definition.
- *  
- *  Extracted and given semantic meaning 
- *  by the MachineIO class.
  */
 @SuppressWarnings("serial")
 public abstract class AutomatonData extends TokenizedLines {
 
     protected HashSet<State> stateSet;
-    protected HashSet<Character> inputAlphabet;
+    protected HashSet<Symbol> inputAlphabet;
     protected State initialState;
     protected HashSet<State> acceptStates;
     protected AutomatonTransitionSet transitionRules;
     
     public AutomatonData(HashSet<State> stateSet,
-        HashSet<Character> inputAlphabet,
+        HashSet<Symbol> inputAlphabet,
         State initialState,
         HashSet<State> acceptStates,
         AutomatonTransitionSet transitionRules){
@@ -52,7 +49,7 @@ public abstract class AutomatonData extends TokenizedLines {
         return stateSet;
     }
 
-    public HashSet<Character> getInputAlphabet() {
+    public HashSet<Symbol> getInputAlphabet() {
         return inputAlphabet;
     }
 
