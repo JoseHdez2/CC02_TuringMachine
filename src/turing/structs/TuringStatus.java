@@ -1,5 +1,7 @@
 package turing.structs;
 
+import java.util.ArrayList;
+
 import automaton.structs.AutomatonStatus;
 import common.structs.State;
 
@@ -60,6 +62,16 @@ public class TuringStatus extends AutomatonStatus{
 
     public Integer getHeadPos() {
         return headPos;
+    }
+
+    @Override
+    protected ArrayList<String> asStringArray() {
+        
+        ArrayList<String> strArr = new ArrayList<String>();
+        
+        
+        // TODO Auto-generated method stub
+        return strArr;
     }
     
 }

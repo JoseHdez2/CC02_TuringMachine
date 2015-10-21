@@ -75,21 +75,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
         return tokenizedLine;
     }
     
-    /**
-     * Produce the representation of a trace trail, according to the internal IO convention.
-     * @param tt Trace trail to be represented.
-     * @return  Array of string arrays representing the given trace trail.
-     */
-    public TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
-        
-        TokenizedLines tokenizedLines = new TokenizedLines();
-        
-        for (AutomatonStatus as : tt){
-            tokenizedLines.add(getStatusAsTokenizedLine(as));
-        }
-        
-        return tokenizedLines;
-    }
+
     
     /*
      * PROTECTED METHODS
@@ -113,19 +99,6 @@ public abstract class AutomatonIO implements AutomatonIOConst{
         TokenizedLines tokenizedLines = StringProcessing.tokenizeLines(lines, "\\s+");
         
         return tokenizedLines;
-    }
-    
-    protected static final String DUMMY_STRING = "dummy";
-    
-    protected static ArrayList<String> dummyTokensLine(int numberOfTokens){
-        ArrayList<String> tokenizedLine = new ArrayList<String>();
-        
-        // TODO: Try to one-line this?
-        for (int i = 0; i < numberOfTokens; i++){
-            tokenizedLine.add(DUMMY_STRING);
-        }
-        
-        return tokenizedLine;
     }
    
     /*

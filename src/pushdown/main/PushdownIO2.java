@@ -91,4 +91,40 @@ public class PushdownIO2 extends AutomatonIO implements PushdownIOConst2 {
     protected static ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
         return null;
     }
+
+    @Override
+    protected AutomatonData readPreparedMachineData(TokenizedLines tokLines) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected Integer getTransOutputSize() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected Integer getStatusOutputSize() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

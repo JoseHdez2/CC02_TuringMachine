@@ -1,5 +1,7 @@
 package automaton.structs;
 
+import java.util.ArrayList;
+
 /**
  * @author jose
  *  Temporal data structure used during a trace.
@@ -8,6 +10,12 @@ package automaton.structs;
  *  as a frozen frame during the evaluation of a string.
  */
 public abstract class AutomatonStatus {
+    
+    /*
+     * Output function.
+     */
+    
+    protected abstract ArrayList<String> asStringArray();
     
 	/*
 	 * Equals and hashCode.

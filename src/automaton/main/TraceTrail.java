@@ -3,6 +3,7 @@ package automaton.main;
 import java.util.ArrayList;
 
 import automaton.structs.AutomatonStatus;
+import util.TokenizedLines;
 
 /**
  * @author jose
@@ -18,6 +19,22 @@ import automaton.structs.AutomatonStatus;
 public class TraceTrail extends ArrayList<AutomatonStatus>{
     public AutomatonStatus getLast(){
         return this.get(this.size()-1);
+    }
+    
+    /**
+     * Produce the representation of a trace trail, according to the internal IO convention.
+     * @param tt Trace trail to be represented.
+     * @return  Array of string arrays representing the given trace trail.
+     */
+    public TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
+        
+        TokenizedLines tokenizedLines = new TokenizedLines();
+        
+        for (AutomatonStatus as : tt){
+            tokenizedLines.add(getStatusAsTokenizedLine(as));
+        }
+        
+        return tokenizedLines;
     }
     
     // TODO find out how deep
