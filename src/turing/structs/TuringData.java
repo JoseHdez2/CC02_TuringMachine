@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonTransitionSet;
-import common.structs.State;
+import automaton.structs.State;
 
 /**
  * @author jose

@@ -2,7 +2,6 @@ package automaton.structs;
 
 import java.util.HashSet;
 
-import common.structs.State;
 import util.TokenizedLines;
 
 /**

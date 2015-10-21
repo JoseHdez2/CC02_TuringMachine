@@ -1,6 +1,5 @@
 package automaton.structs;
 
-import common.structs.State;
 import util.StringArray;
 
 /**

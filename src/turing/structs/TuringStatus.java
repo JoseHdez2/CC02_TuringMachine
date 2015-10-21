@@ -3,7 +3,7 @@ package turing.structs;
 import java.util.ArrayList;
 
 import automaton.structs.AutomatonStatus;
-import common.structs.State;
+import automaton.structs.State;
 
 /**
  * @author jose

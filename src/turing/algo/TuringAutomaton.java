@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
-import common.structs.State;
+import automaton.structs.State;
 import pushdown.structs.PushdownTransition;
 import turing.structs.TuringData;
 

@@ -3,8 +3,8 @@ package pushdown.structs;
 import java.util.ArrayList;
 
 import automaton.structs.AutomatonTransition;
-import common.structs.State;
-import common.structs.Symbol;
+import automaton.structs.State;
+import automaton.structs.Symbol;
 import turing.structs.TuringTransition;
 
 /**

@@ -1,7 +1,7 @@
 package turing.structs;
 
 import automaton.structs.AutomatonTransition;
-import common.structs.State;
+import automaton.structs.State;
 
 /**
  * @author jose

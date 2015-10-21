@@ -3,8 +3,8 @@ package pushdown.structs;
 import java.util.HashSet;
 
 import automaton.structs.AutomatonData;
-import common.structs.State;
-import common.structs.Symbol;
+import automaton.structs.State;
+import automaton.structs.Symbol;
 
 /**
  * @author jose

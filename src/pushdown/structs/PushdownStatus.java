@@ -2,8 +2,8 @@ package pushdown.structs;
 
 import java.util.Stack;
 
-import common.structs.State;
-import common.structs.Symbol;
+import automaton.structs.State;
+import automaton.structs.Symbol;
 
 /**
  * @author jose
