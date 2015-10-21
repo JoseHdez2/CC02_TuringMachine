@@ -142,7 +142,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @return Data structure that semantically represents the automaton definition.
      * @throws IOException
      */
-    static AutomatonData readPreparedMachineData(TokenizedLines tokLines) {
+    static protected AutomatonData readPreparedMachineData(TokenizedLines tokLines) {
         return null;
     }
     
@@ -151,7 +151,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param transitionLines  Lines with transition tokens.
      * @return Data structure that semantically represents a set of transition rules.
      */
-    static HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines) {
+    static protected HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines) {
         return null;
     }
     
@@ -164,7 +164,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param tr Transition rule to be represented.
      * @return Array of strings representing the given transition rule.
      */
-    static ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at) {
+    static protected ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at) {
         return null;
     }
     
@@ -175,7 +175,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @param as AutomatonStatus to be represented.
      * @return Line with meaningful tokens representing the given automaton status.
      */
-    static ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
+    static protected ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as) {
         return null;
     }
 }
