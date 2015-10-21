@@ -5,12 +5,8 @@ import automaton.gui.AutomatonFrameTrace;
 import automaton.structs.AutomatonData;
 import pushdown.structs.PushdownData;
 
+@SuppressWarnings("serial")
 public class PushdownFrameLoad extends AutomatonFrameLoad{
-
-    @Override
-    protected AutomatonFrameLoad createAutomatonFrameLoad() {
-        return new PushdownFrameLoad();
-    }
 
     @Override
     protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {

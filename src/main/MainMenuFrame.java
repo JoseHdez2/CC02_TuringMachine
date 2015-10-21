@@ -18,6 +18,7 @@ import automaton.gui.AutomatonFrameLoad;
 import i18n.GUIStr;
 import i18n.I18n;
 import pushdown.gui.PushdownFrameLoad;
+import turing.gui.TuringFrameLoad;
 
 @SuppressWarnings("serial")
 public class MainMenuFrame extends JFrame {
@@ -71,7 +72,7 @@ public class MainMenuFrame extends JFrame {
         btnTuringMachine.setHorizontalAlignment(SwingConstants.RIGHT);
         btnTuringMachine.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frameLoad = new PushdownFrameLoad();
+                frameLoad = new TuringFrameLoad();
             }
         });
         btnTuringMachine.setAlignmentX(Component.CENTER_ALIGNMENT);   

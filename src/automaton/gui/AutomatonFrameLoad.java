@@ -1,7 +1,6 @@
 package automaton.gui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import automaton.structs.AutomatonData;
 import i18n.GUIStr;
@@ -33,7 +31,6 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
     protected AutomatonData automatonData = null;
     protected JTextField inputStringField = null;
     
-    protected JFrame frameMain = new JFrame();
     protected AutomatonFrameTrace automatonFrameTrace;
     protected JLabel labelFilename = new JLabel("---");
     protected JTable tableTrans = new JTable();
@@ -45,28 +42,26 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	 * Create the application.
 	 */
 	public AutomatonFrameLoad() {
-      frameMain.setVisible(true);
+      setVisible(true);
       initialize();
 	}
-	
-	protected abstract AutomatonFrameLoad createAutomatonFrameLoad();
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	protected void initialize() {
-		frameMain = new JFrame(STR_WINDOW_TITLE);
-		frameMain.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
-		frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle(STR_WINDOW_TITLE);
+		setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panelNorth = buildLoadPanel();
-        frameMain.getContentPane().add(panelNorth, BorderLayout.NORTH);
+        this.getContentPane().add(panelNorth, BorderLayout.NORTH);
 		
         JPanel panelSouth = buildRunPanel();
-        frameMain.getContentPane().add(panelSouth, BorderLayout.SOUTH);
+        this.getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		
 		JPanel panelTrans = new JPanel();
-		frameMain.getContentPane().add(panelTrans, BorderLayout.CENTER);
+		this.getContentPane().add(panelTrans, BorderLayout.CENTER);
 		
 		tableTrans = new JTable(tableTransDummyData, tableTransColumns[lang]);
 

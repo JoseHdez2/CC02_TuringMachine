@@ -1,13 +1,5 @@
 package automaton.gui;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
-import automaton.structs.AutomatonData;
 import i18n.GUIStr;
 import i18n.I18n;
 
