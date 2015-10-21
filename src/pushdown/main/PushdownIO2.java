@@ -14,7 +14,7 @@ import pushdown.structs.PushdownTransition;
 import pushdown.structs.PushdownTransitionSet;
 import util.TokenizedLines;
 
-public class PushdownIO2 extends AutomatonIO implements PushdownIOConst2 {
+public class PusdownIO2 extends AutomatonIO implements PushdownIOConst2 {
     
     /*
      * ABSTRACT METHODS
