@@ -16,8 +16,6 @@ import util.TokenizedLines;
 
 public class PushdownIO2 extends AutomatonIO implements PushdownIOConst2 {
     
-
-    
     /*
      * ABSTRACT METHODS
      * 

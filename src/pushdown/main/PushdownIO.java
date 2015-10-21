@@ -25,7 +25,7 @@ import util.TokenizedLines;
  * Only class that knows the input/output
  * convention (data format) used.
  */
-public abstract class PushdownIO extends PushdownIOConst{
+public abstract class PushdownIO extends PushdownIOConst {
     
     /*
      * Input functions.

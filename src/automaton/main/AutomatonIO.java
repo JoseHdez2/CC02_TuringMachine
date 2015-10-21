@@ -63,8 +63,8 @@ public abstract class AutomatonIO implements AutomatonIOConst{
     // Output functions.
     //
     
-    protected static final Integer TRANS_OUTPUT_SIZE = null;
-    protected static final Integer STATUS_OUTPUT_SIZE = null;
+    protected abstract Integer getTransOutputSize();
+    protected abstract Integer getStatusOutputSize();
     
     /**
      * Produce the representation of all of the transitions in 
@@ -90,7 +90,7 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      */
     public static ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
         
-        ArrayList<String> tokenizedLine = dummyTokensLine(STATUS_OUTPUT_SIZE);
+        ArrayList<String> tokenizedLine = dummyTokensLine(getStatusOutputSize());
         
         tokenizedLine = setOutputStatusTokens(tokenizedLine, as);
         
