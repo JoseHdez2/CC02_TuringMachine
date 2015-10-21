@@ -24,6 +24,7 @@ import i18n.I18n;
 import util.MyTableModel;
 import util.TokenizedLines;
 
+@SuppressWarnings("serial")
 public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIConst {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
@@ -44,21 +45,8 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	 * Create the application.
 	 */
 	public AutomatonFrameLoad() {
-	  super();
-
       frameMain.setVisible(true);
       initialize();
-      EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AutomatonFrameLoad window = createAutomatonFrameLoad();
-//                    if(window != null){
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 	}
 	
 	protected abstract AutomatonFrameLoad createAutomatonFrameLoad();
