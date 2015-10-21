@@ -6,7 +6,7 @@ public class StringArray extends ArrayList<String> {
     
     protected static final String DUMMY_STRING = "dummy";
     
-    protected static ArrayList<String> dummyTokensLine(int numberOfTokens){
+    public static ArrayList<String> dummyTokensLine(int numberOfTokens){
         ArrayList<String> tokenizedLine = new ArrayList<String>();
         
         // TODO: Try to one-line this?

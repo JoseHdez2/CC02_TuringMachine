@@ -7,6 +7,7 @@ import java.util.HashSet;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;
+import util.StringArray;
 import util.StringProcessing;
 import util.TokenizedLines;
 
@@ -43,37 +44,6 @@ public abstract class AutomatonIO implements AutomatonIOConst{
     //
     // Output functions.
     //
-    
-    /**
-     * Produce the representation of all of the transitions in 
-     * the automata definition, according to the internal IO convention.
-     * @param ad Automaton definition data.
-     * @return Array of string arrays representing all the transition rules.
-     */
-    public TokenizedLines getTransitionsAsTokenizedLines(AutomatonData ad){
-        
-        TokenizedLines tl = new TokenizedLines();
-        
-        for (AutomatonTransition tr : ad.getTransitionRules()){            
-            tl.add(getTransitionAsTokenizedLine(tr));
-        }
-        
-        return tl;
-    }
-    
-    /**
-     * Produce the representation of an automaton status, according to the internal IO convention.
-     * @param as Automaton status to be represented.
-     * @return Array of strings representing the given automaton status.
-     */
-    public ArrayList<String> getStatusAsTokenizedLine(AutomatonStatus as){
-        
-        ArrayList<String> tokenizedLine = dummyTokensLine(getStatusOutputSize());
-        
-        tokenizedLine = setOutputStatusTokens(tokenizedLine, as);
-        
-        return tokenizedLine;
-    }
     
 
     
@@ -124,34 +94,4 @@ public abstract class AutomatonIO implements AutomatonIOConst{
      * @return Data structure that semantically represents a set of transition rules.
      */
     protected abstract HashSet<AutomatonTransition> readTransitionRules(TokenizedLines transitionLines);
-    
-    /*
-     * Abstract output methods.
-     */
-    
-    /**
-     * Produce the representation of a transition, according to the internal IO convention.
-     * @param tr Transition rule to be represented.
-     * @return Array of strings representing the given transition rule.
-     */
-    protected abstract ArrayList<String> getTransitionAsTokenizedLine(AutomatonTransition at);
-    
-    /**
-     * Given a tokenized line with the correct number of (dummy) tokens, 
-     * write the tokens representing the AutomatonStatus in the correct order.
-     * @param tokenizedLine Line with dummy tokens to be replaced.
-     * @param as AutomatonStatus to be represented.
-     * @return Line with meaningful tokens representing the given automaton status.
-     */
-    protected abstract ArrayList<String> setOutputStatusTokens(ArrayList<String> tokenizedLine, AutomatonStatus as);
-    
-    /**
-     * @return Number of tokens a representation of a transition has.
-     */
-    protected abstract Integer getTransOutputSize();
-    
-    /**
-     * @return Number of tokens a representation of a status has.
-     */
-    protected abstract Integer getStatusOutputSize();
 }

@@ -1,6 +1,7 @@
 package automaton.structs;
 
 import common.structs.State;
+import util.StringArray;
 
 /**
  * @author jose
@@ -17,6 +18,11 @@ public class AutomatonTransition {
         this.prevState = prevState;
         this.nextState = nextState;
         this.inputCharacter = inputCharacter;
+    }
+    
+    public StringArray asStringArray(){
+        // TODO: Implement
+        return new StringArray();
     }
     
     /*

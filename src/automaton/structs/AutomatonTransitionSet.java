@@ -2,6 +2,8 @@ package automaton.structs;
 
 import java.util.HashSet;
 
+import util.TokenizedLines;
+
 /**
  * @author jose
  * 
@@ -13,4 +15,20 @@ import java.util.HashSet;
  */
 @SuppressWarnings("serial")
 public abstract class AutomatonTransitionSet extends HashSet<AutomatonTransition> {
+    
+    /**
+     * Produce the representation of all of the transitions in 
+     * the automata definition, according to the internal IO convention.
+     * @return Array of string arrays representing all the transition rules.
+     */
+    public TokenizedLines asStringMatrix(){
+        
+        TokenizedLines tl = new TokenizedLines();
+        
+        for (AutomatonTransition tr : this){            
+            tl.add(tr.asStringArray());
+        }
+        
+        return tl;
+    }
 }

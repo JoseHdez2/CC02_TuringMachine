@@ -163,7 +163,7 @@ public abstract class AutomatonFrameLoad implements AutomatonGUIConst {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        TokenizedLines transitions = io.getTransitionsAsTokenizedLines(automatonData);
+        TokenizedLines transitions = automatonData.getTransitionRules().asStringMatrix();
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);

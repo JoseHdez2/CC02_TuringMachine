@@ -2,6 +2,8 @@ package automaton.structs;
 
 import java.util.ArrayList;
 
+import util.StringArray;
+
 /**
  * @author jose
  *  Temporal data structure used during a trace.
@@ -15,7 +17,7 @@ public abstract class AutomatonStatus {
      * Output function.
      */
     
-    protected abstract ArrayList<String> asStringArray();
+    public abstract ArrayList<String> asStringArray();
     
 	/*
 	 * Equals and hashCode.

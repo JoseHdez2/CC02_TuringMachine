@@ -31,7 +31,7 @@ public class TraceTrail extends ArrayList<AutomatonStatus>{
         TokenizedLines tokenizedLines = new TokenizedLines();
         
         for (AutomatonStatus as : tt){
-            tokenizedLines.add(getStatusAsTokenizedLine(as));
+            tokenizedLines.add(as.asStringArray());
         }
         
         return tokenizedLines;

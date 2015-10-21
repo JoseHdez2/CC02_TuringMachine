@@ -41,7 +41,7 @@ public abstract class AutomatonData extends TokenizedLines {
      * No setters since this is considered a static object.
      */
 
-    public HashSet<AutomatonTransition> getTransitionRules() {
+    public AutomatonTransitionSet getTransitionRules() {
         return transitionRules;
     }
 

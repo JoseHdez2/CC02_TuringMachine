@@ -25,6 +25,16 @@ public class TuringStatus extends AutomatonStatus{
 		this.headPos = headPos;
 	}
 
+    @Override
+    public ArrayList<String> asStringArray() {
+        
+        ArrayList<String> strArr = new ArrayList<String>();
+        
+        
+        // TODO Auto-generated method stub
+        return strArr;
+    }
+	
 	/*
 	 * Equals and hashCode.
 	 */
@@ -62,16 +72,6 @@ public class TuringStatus extends AutomatonStatus{
 
     public Integer getHeadPos() {
         return headPos;
-    }
-
-    @Override
-    protected ArrayList<String> asStringArray() {
-        
-        ArrayList<String> strArr = new ArrayList<String>();
-        
-        
-        // TODO Auto-generated method stub
-        return strArr;
     }
     
 }
