@@ -17,9 +17,6 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    String[] michael = "abc".split("");
-                    for (String str : michael)
-                        System.out.println(str);
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     MainMenuFrame frame = new MainMenuFrame();
                     frame.setVisible(true);

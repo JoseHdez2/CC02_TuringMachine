@@ -14,15 +14,11 @@ import automaton.structs.State;
  */
 public class TuringStatus extends AutomatonStatus{
 	State currentState;
-	String tape;
-	Integer headPos;
+	Tape tape;
 	
-	public TuringStatus(State currentState,
-			String tape, 
-			int headPos){
+	public TuringStatus(State currentState, Tape tape){
 		this.currentState = currentState;
 		this.tape = tape;
-		this.headPos = headPos;
 	}
 
     @Override
@@ -45,15 +41,13 @@ public class TuringStatus extends AutomatonStatus{
 		TuringStatus other = (TuringStatus)ob;
 		if (!currentState.equals(other.currentState)) return false;
 		if (!tape.equals(other.tape)) return false;
-		if (!headPos.equals(other.headPos)) return false;
 
 		return true;
 	}
 	
 	public int hashCode() {
 		return 	currentState.hashCode() ^
-				tape.hashCode() ^ 
-				headPos.hashCode();
+				tape.hashCode();
 	}
 	
     /*
@@ -66,12 +60,8 @@ public class TuringStatus extends AutomatonStatus{
         return currentState;
     }
 
-    public String getTape() {
+    public Tape getTape() {
         return tape;
-    }
-
-    public Integer getHeadPos() {
-        return headPos;
     }
     
 }

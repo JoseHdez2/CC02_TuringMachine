@@ -61,12 +61,21 @@ public class TuringData extends AutomatonData implements TuringIOConst {
         transitionRules = new TuringTransitionSet(transitionLines);
     }
 
-    public TuringData() {};
+    public TuringData() {}
 
     /*
      * Getters.
      * No setters since this is considered a static object.
      */
+    
+    public HashSet<Symbol> getOutputAlphabet() {
+        return outputAlphabet;
+    }
+
+    public Symbol getBlankSymbol() {
+        return blankSymbol;
+    };
+
 
     
 }

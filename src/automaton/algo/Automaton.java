@@ -6,7 +6,6 @@ import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;
 import automaton.structs.AutomatonTransitionSet;
-import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
 /**
@@ -41,7 +40,7 @@ public abstract class Automaton {
 	    
 		// Add the initial configuration into the statuses array.
 		TraceTrail initialTrail = new TraceTrail();
-		initialTrail.add(createInitialStatus());
+		initialTrail.add(createInitialStatus(inputString));
 		possibleTrails.add(initialTrail);
 		
 		// Iterate until all possibilities are exhausted.
@@ -92,10 +91,15 @@ public abstract class Automaton {
 	
     // TODO: Write descriptions for these.
     
-    protected abstract AutomatonStatus createInitialStatus();
+    protected abstract AutomatonStatus createInitialStatus(String inputString);
     
     protected abstract AutomatonTransitionSet findApplicableTransitionRules(AutomatonStatus ms);
     
+    /**
+     * Note: Being in an acceptance state does not necessarily mean being in an acceptance status.
+     * @param as
+     * @return Whether the given state has the machine accept the string.
+     */
     protected abstract boolean acceptanceStatus(AutomatonStatus as);
     
     /**

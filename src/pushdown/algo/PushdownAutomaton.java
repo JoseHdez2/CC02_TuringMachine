@@ -26,7 +26,7 @@ public class PushdownAutomaton extends Automaton{
     }
 
     @Override
-    protected AutomatonStatus createInitialStatus() {
+    protected AutomatonStatus createInitialStatus(String inputString) {
         // TODO Auto-generated method stub
         return null;
     }

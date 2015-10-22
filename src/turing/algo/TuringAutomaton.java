@@ -5,6 +5,7 @@ import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
+import turing.structs.Tape;
 import turing.structs.TuringData;
 import turing.structs.TuringStatus;
 import turing.structs.TuringTransition;
@@ -24,11 +25,11 @@ public class TuringAutomaton extends Automaton {
     }
 
     @Override
-    protected AutomatonStatus createInitialStatus() {
-        State initialState = ((TuringData) data).getInitialState();
-        // TODO
-//        return new TuringStatus();
-        return null;
+    protected AutomatonStatus createInitialStatus(String inputString) {
+        State newState = data.getInitialState();
+        Tape newTape = new Tape(inputString, ((TuringData)data).getBlankSymbol());
+        
+        return new TuringStatus(newState, newTape);
     }
 
     @Override
@@ -41,23 +42,31 @@ public class TuringAutomaton extends Automaton {
         for (AutomatonTransition tr : data.getTransitionRules()){
             TuringTransition ttr = (TuringTransition)tr;
             if (!tr.getPrevState().equals(ts.getCurrentState())) continue;
-            if (!tr.getInputCharacter().equals(null)) continue;
+            if (!tr.getInputCharacter().equals(ts.getTape().getSymbolAtHead())) continue;
             
             applicableTransitions.add(ttr);
         }
-        return null;
+        return applicableTransitions;
     }
 
     @Override
-    protected boolean acceptanceStatus(AutomatonStatus ms) {
-        // TODO Auto-generated method stub
-        return false;
+    protected boolean acceptanceStatus(AutomatonStatus as) {
+        TuringStatus ts = (TuringStatus)as;
+        
+        if (!data.getAcceptStates().contains(ts.getCurrentState())) return false;
+        if (!findApplicableTransitionRules(as).isEmpty()) return false;
+        return true;
     }
 
     @Override
     public TuringStatus applyTransition(AutomatonStatus as, AutomatonTransition tr) {
-        // TODO Auto-generated method stub
-        return null;
+        TuringStatus ts = (TuringStatus)as;
+        TuringTransition ttr = (TuringTransition)tr;
+        
+        State newState = ttr.getNextState();
+        Tape newTape = ts.getTape().moveHead(ttr.getMovement());
+        
+        return new TuringStatus(newState, newTape);
     }
 
 }

@@ -7,7 +7,7 @@ import turing.algo.TuringIOConst;
 @SuppressWarnings("serial")
 public class Tape extends SymbolList implements TuringIOConst{
     private Integer headPos = 0;
-    private Symbol blankSymbol;
+    private Symbol blankSymbol = DEFAULT_BLANK;
     
     public Tape(String str){
         this(str, null, null);
@@ -19,8 +19,8 @@ public class Tape extends SymbolList implements TuringIOConst{
     
     public Tape(String str, Symbol blankSymbol, Integer headPos){
         super(str,"");
-        this.blankSymbol = (blankSymbol == null) ? DEFAULT_BLANK : blankSymbol;
-        this.headPos = (headPos == null) ? 0 : headPos;
+        if(blankSymbol != null) this.blankSymbol = blankSymbol;
+        if(headPos != null) this.headPos = headPos;
     }
     
     public Tape moveHead(Movement mov){
@@ -58,5 +58,26 @@ public class Tape extends SymbolList implements TuringIOConst{
         Tape copyTape = new Tape("", blankSymbol, headPos);
         copyTape.addAll(this);
         return copyTape;
+    }
+    
+    /*
+     * Equals and hashCode.
+     */
+    
+    public boolean equals(Object ob){
+        if (!super.equals(ob)) return false; // TODO: Hope this is ok.
+        if (ob == null) return false;
+        if (ob.getClass() != getClass()) return false;
+        Tape other = (Tape)ob;
+        if (!headPos.equals(other.headPos)) return false;
+        if (!blankSymbol.equals(other.blankSymbol)) return false;
+
+        return true;
+    }
+    
+    public int hashCode() {
+        return  super.hashCode() ^
+                headPos.hashCode() ^
+                blankSymbol.hashCode();
     }
 }
