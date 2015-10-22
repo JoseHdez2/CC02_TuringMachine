@@ -38,6 +38,10 @@ public class TuringTransition extends AutomatonTransition implements TuringIOCon
 	    return strArr;
 	}
 	
+	public String toString(){
+	    return String.format("{%s,%s,%s,%s,%s}", prevState, inputCharacter, nextState, outputCharacter, movement);
+	}
+	
 	/*
 	 * Equals and hashCode.
 	 */

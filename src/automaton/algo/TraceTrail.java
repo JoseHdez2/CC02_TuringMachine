@@ -23,14 +23,13 @@ public class TraceTrail extends ArrayList<AutomatonStatus>{
     
     /**
      * Produce the representation of a trace trail, according to the internal IO convention.
-     * @param tt Trace trail to be represented.
-     * @return  Array of string arrays representing the given trace trail.
+     * @return  Array of string arrays representing this trace trail.
      */
-    public TokenizedLines traceTrailAsTokenizedLines(TraceTrail tt){
+    public TokenizedLines asTokenizedLines(){
         
         TokenizedLines tokenizedLines = new TokenizedLines();
         
-        for (AutomatonStatus as : tt){
+        for (AutomatonStatus as : this){
             tokenizedLines.add(as.asStringArray());
         }
         

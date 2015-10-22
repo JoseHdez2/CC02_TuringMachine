@@ -3,9 +3,11 @@ package turing.structs;
 import automaton.structs.Symbol;
 import pushdown.structs.SymbolList;
 import turing.algo.TuringIOConst;
+import util.Debug;
 
 @SuppressWarnings("serial")
-public class Tape extends SymbolList implements TuringIOConst{
+public class Tape implements TuringIOConst{
+    private SymbolList tape = new SymbolList();
     private Integer headPos = 0;
     private Symbol blankSymbol = DEFAULT_BLANK;
     
@@ -18,46 +20,64 @@ public class Tape extends SymbolList implements TuringIOConst{
     }
     
     public Tape(String str, Symbol blankSymbol, Integer headPos){
-        super(str,"");
+        tape = new SymbolList(str,"");
         if(blankSymbol != null) this.blankSymbol = blankSymbol;
         if(headPos != null) this.headPos = headPos;
     }
     
-    public Tape moveHead(Movement mov){
-        Tape newTape = deepEnoughCopy();
+    public void moveHead(Movement mov){
+        Debug deb = new Debug(true);
+//        deb.out("before:%s", this.tape);
         
         switch(mov.value){
-        case LEFT: newTape.moveLeft();
-        case RIGHT: newTape.moveRight();
+        case LEFT: this.moveHeadLeft(); break;
+        case RIGHT: this.moveHeadRight(); break;
         case STOP: break;
         }
-        return newTape;
+        
+//        deb.out("after:%s", this.tape);
+        deb.out("%d",headPos);
     }
     
-    public Symbol getSymbolAtHead(){
-        return this.get(headPos);
+    public Symbol readSymbolAtHead(){
+        return tape.get(headPos);
     }
     
-    private void moveLeft(){
-        headPos--;
+    public Symbol writeSymbolAtHead(Symbol sym){
+        return tape.set(headPos, sym);
+    }
+    
+    private void moveHeadLeft(){
+        headPos = headPos-1;
         if(headPos < 0){
-            this.add(0, blankSymbol);
+            tape.add(0, blankSymbol);
             headPos = 0;
         }
     }
     
-    private void moveRight(){
-        headPos++;
-        if(headPos >= this.size()){
-            this.add(blankSymbol);
-            headPos = this.size()-1;
+    private void moveHeadRight(){
+        headPos = headPos + 1;
+        if(headPos >= tape.size()){
+            tape.add(blankSymbol);
+            headPos = tape.size()-1; // TODO: redundant.
         }
     }
     
-    private Tape deepEnoughCopy(){
+    public Tape deepEnoughCopy(){
         Tape copyTape = new Tape("", blankSymbol, headPos);
-        copyTape.addAll(this);
+        copyTape.tape.addAll(this.tape);
         return copyTape;
+    }
+    
+    public String toString(){
+        String str = "";
+        for (int i = 0; i < tape.size(); i++){
+            if (i == headPos)
+                str += String.format("[%s]", tape.get(i));
+            else
+                str += String.format("%s", tape.get(i));
+        }
+        return str;
     }
     
     /*

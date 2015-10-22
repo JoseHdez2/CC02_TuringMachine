@@ -6,6 +6,7 @@ import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;
 import automaton.structs.AutomatonTransitionSet;
+import util.Debug;
 import util.TokenizedLines;
 
 /**
@@ -34,13 +35,16 @@ public abstract class Automaton {
 	 * @return	Boolean indicating acceptance of input string.
 	 */
 	public boolean evaluateString(String inputString){
-		
+	    
+	    Debug debug = new Debug(true);
+	    
 	    ArrayList<TraceTrail> possibleTrails = new ArrayList<TraceTrail>();
 	    ArrayList<TraceTrail> newTrails = new ArrayList<TraceTrail>();
 	    
 		// Add the initial configuration into the statuses array.
 		TraceTrail initialTrail = new TraceTrail();
 		initialTrail.add(createInitialStatus(inputString));
+		debug.out("Initial status %s", initialTrail.getLast());
 		possibleTrails.add(initialTrail);
 		
 		// Iterate until all possibilities are exhausted.
@@ -48,19 +52,23 @@ public abstract class Automaton {
 
 		    for (TraceTrail tt : possibleTrails){
 
+		        debug.out("Finding applicable transitions for status %s", tt.getLast());
     			AutomatonTransitionSet applicableTransitions = findApplicableTransitionRules(tt.getLast());
+    			debug.out("Applicable transitions found: %s", applicableTransitions);
+    			
     			// Apply each of them to create a new status, that will be evaluated next round.
     			for (AutomatonTransition tr : applicableTransitions){
                     TraceTrail newTrail = tt.deepEnoughCopy();
                     
     				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
+    				debug.out("%s --> %s", tt.getLast(), newStatus);
     				newTrail.add(newStatus);
 
     				if (acceptanceStatus(newStatus)){
     				    // Record (first) successful trace into history.
     				    // TODO: Think about giving each class their own bit of IO functionality.
-    				    // TODO: record
-//                        traceHist = io.traceTrailAsTokenizedLines(newTrail);
+    				    traceHist = newTrail.asTokenizedLines();
+    				    debug.out("Ended with accept status %s", newStatus);
     				    return true;
     				}
 
@@ -71,8 +79,7 @@ public abstract class Automaton {
     		possibleTrails.addAll(newTrails);
     		newTrails.clear();
 		}
-		// If all possibilities have been exhausted and the string
-		// hasn't been accepted, then the string is rejected. 
+		debug.out("Exhausted all possible trace trails. String rejected.");
 		return false;
 	}
 

@@ -12,7 +12,7 @@ import turing.structs.TuringTransition;
 import turing.structs.TuringTransitionSet;
 
 public class TuringAutomaton extends Automaton {
-
+    
     public TuringAutomaton(AutomatonData data) {
         super(data);
         // TODO Auto-generated constructor stub
@@ -42,7 +42,7 @@ public class TuringAutomaton extends Automaton {
         for (AutomatonTransition tr : data.getTransitionRules()){
             TuringTransition ttr = (TuringTransition)tr;
             if (!tr.getPrevState().equals(ts.getCurrentState())) continue;
-            if (!tr.getInputCharacter().equals(ts.getTape().getSymbolAtHead())) continue;
+            if (!tr.getInputCharacter().equals(ts.getTape().readSymbolAtHead())) continue;
             
             applicableTransitions.add(ttr);
         }
@@ -64,7 +64,9 @@ public class TuringAutomaton extends Automaton {
         TuringTransition ttr = (TuringTransition)tr;
         
         State newState = ttr.getNextState();
-        Tape newTape = ts.getTape().moveHead(ttr.getMovement());
+        Tape newTape = ts.getTape().deepEnoughCopy();
+        newTape.moveHead(ttr.getMovement());
+        newTape.writeSymbolAtHead(ttr.getOutputCharacter());
         
         return new TuringStatus(newState, newTape);
     }

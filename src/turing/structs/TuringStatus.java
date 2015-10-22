@@ -50,6 +50,11 @@ public class TuringStatus extends AutomatonStatus{
 				tape.hashCode();
 	}
 	
+	public String toString(){
+//	    return "[" + currentState.toString() + "," + tape.toString()  + "]";
+	    return String.format("{%s,%s}", currentState, tape);
+	}
+	
     /*
      *  Getters.
      *  Setters do not exist, as objects of this class 
