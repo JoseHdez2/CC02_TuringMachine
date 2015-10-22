@@ -1,5 +1,7 @@
 package turing.gui;
 
+import java.io.IOException;
+
 import automaton.gui.AutomatonFrameLoad;
 import automaton.gui.AutomatonFrameTrace;
 import automaton.structs.AutomatonData;
@@ -17,7 +19,14 @@ public class TuringFrameLoad extends AutomatonFrameLoad{
     @Override
     protected AutomatonData readDataFromFile(String fullFilePath) {
         // TODO Auto-generated method stub
-        return new TuringData(fullFilePath);
+        try {
+            return new TuringData(fullFilePath);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+//            return new TuringData();
+            return null;
+        }
     }
 
     @Override

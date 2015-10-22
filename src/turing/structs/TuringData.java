@@ -1,11 +1,18 @@
 package turing.structs;
 
+import java.io.IOException;
 import java.util.HashSet;
 
+import automaton.algo.AutomatonFile;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonTransitionSet;
 import automaton.structs.State;
+import automaton.structs.StateSet;
 import automaton.structs.Symbol;
+import automaton.structs.SymbolSet;
+import pushdown.structs.PushdownTransitionSet;
+import turing.algo.TuringIOConst;
+import util.TokenizedLines;
 
 /**
  * @author jose
@@ -15,7 +22,7 @@ import automaton.structs.Symbol;
  */
 
 @SuppressWarnings("serial")
-public class TuringData extends AutomatonData {
+public class TuringData extends AutomatonData implements TuringIOConst {
 
     HashSet<Symbol> outputAlphabet;
     Symbol blankSymbol;
@@ -33,8 +40,26 @@ public class TuringData extends AutomatonData {
         this.blankSymbol = blankSymbol;
     }
     
-    public TuringData(String fullFilePath){
+    public TuringData(String fullFilePath) throws IOException{
         
+        TokenizedLines tokLines = AutomatonFile.prepareAutomatonData(fullFilePath);
+    
+        stateSet = new StateSet(tokLines.get(IN_FILE_STATE_SET));
+    
+        inputAlphabet = new SymbolSet(tokLines.get(IN_FILE_INPUT_ALPH));
+    
+        outputAlphabet = new SymbolSet(tokLines.get(IN_FILE_OUTPUT_ALPH));
+    
+        initialState = new State(tokLines.get(IN_FILE_INIT_STATE).get(0));
+    
+        blankSymbol = new Symbol(tokLines.get(IN_FILE_BLANK_SYM).get(0));
+    
+        acceptStates = new StateSet(tokLines.get(IN_FILE_ACCEPT_STATES));
+        
+        TokenizedLines transitionLines = 
+                new TokenizedLines(tokLines.subList(IN_FILE_TRANS_FUNCT, tokLines.size()));
+        
+        transitionRules = new TuringTransitionSet(transitionLines);
     }
 
     public TuringData() {};

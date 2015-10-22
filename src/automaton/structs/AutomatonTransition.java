@@ -11,9 +11,9 @@ import util.StringArray;
 public class AutomatonTransition {
     State prevState;
     State nextState;
-    Character inputCharacter;
+    Symbol inputCharacter;
     
-    public AutomatonTransition(State prevState, State nextState, Character inputCharacter){
+    public AutomatonTransition(State prevState, State nextState, Symbol inputCharacter){
         this.prevState = prevState;
         this.nextState = nextState;
         this.inputCharacter = inputCharacter;
@@ -57,7 +57,7 @@ public class AutomatonTransition {
         return nextState;
     }
 
-    public Character getInputCharacter() {
+    public Symbol getInputCharacter() {
         return inputCharacter;
     }
 }

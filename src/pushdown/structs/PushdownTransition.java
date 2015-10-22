@@ -19,7 +19,7 @@ public class PushdownTransition extends AutomatonTransition {
 	ArrayList<Symbol> stackSymbolsToPush;
 	
 	public PushdownTransition(State prevState, State nextState,
-			Character inputCharacter,
+			Symbol inputCharacter,
 			Symbol inputStackSymbol,
 			ArrayList<Symbol> stackSymbolsToPush){
 	    super(prevState, nextState, inputCharacter);

@@ -2,6 +2,7 @@ package turing.structs;
 
 import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
+import automaton.structs.Symbol;
 
 /**
  * @author jose
@@ -11,12 +12,12 @@ import automaton.structs.State;
  */
 public class TuringTransition extends AutomatonTransition {
 
-	Character outputCharacter;
+	Symbol outputCharacter;
 	Movement movement;
 	
 	public TuringTransition(State prevState, State nextState,
-			Character inputCharacter,
-			Character outputCharacter,
+			Symbol inputCharacter,
+			Symbol outputCharacter,
 			Movement movement){
 	    super(prevState, nextState, inputCharacter);
 		this.outputCharacter = outputCharacter;
@@ -32,7 +33,7 @@ public class TuringTransition extends AutomatonTransition {
 	    
 	    TuringTransition other = (TuringTransition)ob;
 		if (!outputCharacter.equals(other.outputCharacter)) return false;
-		if (!(movement == other.movement)) return false;
+		if (!movement.equals(other.movement)) return false;
 
 		return true;
 	}
@@ -47,7 +48,7 @@ public class TuringTransition extends AutomatonTransition {
      * No setters since this is considered a static object.
      */
 
-    public Character getOutputCharacter() {
+    public Symbol getOutputCharacter() {
         return outputCharacter;
     }
 

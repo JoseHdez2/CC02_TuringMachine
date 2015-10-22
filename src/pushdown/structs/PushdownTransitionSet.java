@@ -32,7 +32,7 @@ public class PushdownTransitionSet extends AutomatonTransitionSet implements Pus
         for (ArrayList<String> line : transitionLines){
             State prevState = new State(line.get(IN_TRAN_PREV_STATE));
             State nextState = new State(line.get(IN_TRAN_NEXT_STATE));
-            Character inputChar = line.get(IN_TRAN_REQ_INP_CHAR).charAt(0);
+            Symbol inputChar = new Symbol(line.get(IN_TRAN_REQ_INP_CHAR));
             Symbol inputStackSym = new Symbol(line.get(IN_TRAN_REQ_STACK_SYM));
             ArrayList<Symbol> stackSymToPush = new SymbolList(line.get(IN_TRAN_STACK_SYM_TO_PUSH),",");
             

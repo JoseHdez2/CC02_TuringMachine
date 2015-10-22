@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 
+// TODO: Change all 'char' named variables to 'sym(bol)'.
+// TODO: Add level of abstraction over Automaton, rename to NonDeterministic.
+
 public class Main {
     /**
      * Launch the application.
