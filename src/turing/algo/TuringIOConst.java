@@ -36,6 +36,7 @@ public interface TuringIOConst {
      * Output constants.
      */
     
+    final static int OUT_TRAN_TOK_NUM = 5;
     // Data positions in each transition line to output.
     final static int OUT_TRAN_INPUT_STATE = 0;
     final static int OUT_TRAN_INPUT_CHAR = 1;

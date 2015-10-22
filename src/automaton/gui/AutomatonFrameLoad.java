@@ -63,7 +63,8 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 		JPanel panelTrans = new JPanel();
 		this.getContentPane().add(panelTrans, BorderLayout.CENTER);
 		
-		tableTrans = new JTable(tableTransDummyData, tableTransColumns[lang]);
+//		tableTrans = new JTable(tableTransDummyData, tableTransColumns[lang]);
+		tableTrans = initializeTransitionTable();
 
 		tableTrans.setEnabled(false);
 		scrollPane = new JScrollPane(tableTrans);
@@ -137,14 +138,14 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	    
 	    return runPanel;
 	}
+	
+	
 
 	protected void updateLoadedAutomaton(){
-//        try {
-            automatonData = readDataFromFile(chosenFileFullPath);
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-        TokenizedLines transitions = automatonData.getTransitionRules().asStringMatrix();
+        automatonData = readDataFromFile(chosenFileFullPath);
+        
+//        TokenizedLines transitions = automatonData.getTransitionRules().asStringMatrix();
+        TokenizedLines transitions = getTransitionLines();
         
         tableTrans.setModel(new MyTableModel(transitions));
 //      tableTrans.setColumnModel(tableTransColumns[lang]);
@@ -175,4 +176,8 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
     protected abstract AutomatonData readDataFromFile(String fullFilePath);
     
     protected abstract AutomatonData initializeAutomatonData();
+    
+    protected abstract JTable initializeTransitionTable();
+    
+    protected abstract TokenizedLines getTransitionLines();
 }

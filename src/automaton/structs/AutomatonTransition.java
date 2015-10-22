@@ -1,5 +1,8 @@
 package automaton.structs;
 
+import java.util.ArrayList;
+
+import automaton.algo.AutomatonIOConst;
 import util.StringArray;
 
 /**
@@ -8,10 +11,10 @@ import util.StringArray;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class AutomatonTransition {
-    State prevState;
-    State nextState;
-    Symbol inputCharacter;
+public class AutomatonTransition implements AutomatonIOConst {
+    protected State prevState;
+    protected State nextState;
+    protected Symbol inputCharacter;
     
     public AutomatonTransition(State prevState, State nextState, Symbol inputCharacter){
         this.prevState = prevState;
@@ -19,8 +22,11 @@ public class AutomatonTransition {
         this.inputCharacter = inputCharacter;
     }
     
-    public StringArray asStringArray(){
-        // TODO: Implement
+    public ArrayList<String> asStringArray(){
+        StringArray strArr = (StringArray) StringArray.dummyTokensLine(OUT_TRAN_TOK_NUM);
+        strArr.set(OUT_TRAN_INPUT_STATE, prevState.toString());
+        strArr.set(OUT_TRAN_INPUT_CHAR, inputCharacter.toString());
+        strArr.set(OUT_TRAN_OUTPUT_STATE, nextState.toString());
         return new StringArray();
     }
     

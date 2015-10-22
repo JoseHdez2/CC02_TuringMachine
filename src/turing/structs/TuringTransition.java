@@ -1,8 +1,12 @@
 package turing.structs;
 
+import java.util.ArrayList;
+
 import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
 import automaton.structs.Symbol;
+import turing.algo.TuringIOConst;
+import util.StringArray;
 
 /**
  * @author jose
@@ -10,7 +14,7 @@ import automaton.structs.Symbol;
  *	Represents a transition rule, 
  *	which the automata use to move between states.
  */
-public class TuringTransition extends AutomatonTransition {
+public class TuringTransition extends AutomatonTransition implements TuringIOConst {
 
 	Symbol outputCharacter;
 	Movement movement;
@@ -22,6 +26,16 @@ public class TuringTransition extends AutomatonTransition {
 	    super(prevState, nextState, inputCharacter);
 		this.outputCharacter = outputCharacter;
 		this.movement = movement;
+	}
+	
+	public ArrayList<String> asStringArray(){
+	    ArrayList<String> strArr = StringArray.dummyTokensLine(TuringIOConst.OUT_TRAN_TOK_NUM);
+        strArr.set(TuringIOConst.OUT_TRAN_INPUT_STATE, prevState.toString());
+        strArr.set(TuringIOConst.OUT_TRAN_INPUT_CHAR, inputCharacter.toString());
+        strArr.set(TuringIOConst.OUT_TRAN_OUTPUT_STATE, nextState.toString());
+        strArr.set(TuringIOConst.OUT_TRAN_OUTPUT_CHAR, outputCharacter.toString());
+        strArr.set(TuringIOConst.OUT_TRAN_MOVEMENT, movement.toString());
+	    return strArr;
 	}
 	
 	/*
