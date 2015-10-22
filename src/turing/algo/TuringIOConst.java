@@ -1,5 +1,7 @@
 package turing.algo;
 
+import automaton.structs.Symbol;
+
 /**
  * @author jose
  *
@@ -45,4 +47,7 @@ public interface TuringIOConst {
     final static int OUT_STAT_CUR_STATE = 0;
     final static int OUT_STAT_TAPE = 1;
     final static int OUT_STAT_HEAD_POS = 2;
+    
+    // Turing special
+    final static Symbol DEFAULT_BLANK = new Symbol("-");
 }
