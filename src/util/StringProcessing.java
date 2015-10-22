@@ -50,7 +50,11 @@ public abstract class StringProcessing {
 		ArrayList<String> strippedStringList = new ArrayList<String>();
 	    
 		for (String str : lines) {
-			strippedStringList.add(str.split(delimiter)[0]);
+		    ArrayList<String> splat = new ArrayList<String>(Arrays.asList(str.split(delimiter)));
+            if(!splat.isEmpty()){
+                strippedStringList.add(splat.get(0));
+            }
+			
 		}
 		
 		return strippedStringList;

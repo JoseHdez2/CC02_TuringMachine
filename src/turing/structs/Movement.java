@@ -1,9 +1,10 @@
 package turing.structs;
 
-import java.io.IOException;
-
-import automaton.structs.Symbol;
-
+/**
+ * @author jose
+ *
+ *  Represents a Turing Machine movement.
+ */
 public class Movement {
     MovementEnum value;
     

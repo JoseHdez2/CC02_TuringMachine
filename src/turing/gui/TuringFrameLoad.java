@@ -13,7 +13,7 @@ public class TuringFrameLoad extends AutomatonFrameLoad{
     @Override
     protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
         // TODO Auto-generated method stub
-        return null;
+        return new TuringFrameTrace(automatonData, inputString);
     }
 
     @Override

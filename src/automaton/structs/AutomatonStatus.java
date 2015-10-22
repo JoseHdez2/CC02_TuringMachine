@@ -2,8 +2,6 @@ package automaton.structs;
 
 import java.util.ArrayList;
 
-import util.StringArray;
-
 /**
  * @author jose
  *  Temporal data structure used during a trace.

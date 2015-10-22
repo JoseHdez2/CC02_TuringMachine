@@ -1,13 +1,14 @@
 package turing.algo;
 
-import java.util.ArrayList;
-
 import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
+import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
-import pushdown.structs.PushdownTransition;
 import turing.structs.TuringData;
+import turing.structs.TuringStatus;
+import turing.structs.TuringTransition;
+import turing.structs.TuringTransitionSet;
 
 public class TuringAutomaton extends Automaton {
 
@@ -31,8 +32,19 @@ public class TuringAutomaton extends Automaton {
     }
 
     @Override
-    protected ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms) {
-        // TODO Auto-generated method stub
+    protected TuringTransitionSet findApplicableTransitionRules(AutomatonStatus as) {
+        
+        TuringStatus ts = (TuringStatus)as;
+        
+        TuringTransitionSet applicableTransitions = new TuringTransitionSet();
+        
+        for (AutomatonTransition tr : data.getTransitionRules()){
+            TuringTransition ttr = (TuringTransition)tr;
+            if (!tr.getPrevState().equals(ts.getCurrentState())) continue;
+            if (!tr.getInputCharacter().equals(null)) continue;
+            
+            applicableTransitions.add(ttr);
+        }
         return null;
     }
 
@@ -43,7 +55,7 @@ public class TuringAutomaton extends Automaton {
     }
 
     @Override
-    public AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr) {
+    public TuringStatus applyTransition(AutomatonStatus as, AutomatonTransition tr) {
         // TODO Auto-generated method stub
         return null;
     }

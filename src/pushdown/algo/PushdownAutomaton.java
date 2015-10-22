@@ -1,12 +1,11 @@
 package pushdown.algo;
 
-import java.util.ArrayList;
-
 import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
+import automaton.structs.AutomatonTransition;
 import pushdown.structs.PushdownData;
-import pushdown.structs.PushdownTransition;
+import pushdown.structs.PushdownTransitionSet;
 
 /**
  * @author jose
@@ -33,7 +32,7 @@ public class PushdownAutomaton extends Automaton{
     }
 
     @Override
-    protected ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms) {
+    protected PushdownTransitionSet findApplicableTransitionRules(AutomatonStatus ms) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -45,7 +44,7 @@ public class PushdownAutomaton extends Automaton{
     }
 
     @Override
-    public AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr) {
+    public AutomatonStatus applyTransition(AutomatonStatus as, AutomatonTransition tr) {
         // TODO Auto-generated method stub
         return null;
     }

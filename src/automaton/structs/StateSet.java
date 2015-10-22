@@ -3,6 +3,7 @@ package automaton.structs;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+@SuppressWarnings("serial")
 public class StateSet extends HashSet<State>{
     StateSet(){};
     

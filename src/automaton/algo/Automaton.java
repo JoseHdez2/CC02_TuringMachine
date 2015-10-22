@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
+import automaton.structs.AutomatonTransition;
+import automaton.structs.AutomatonTransitionSet;
 import pushdown.structs.PushdownTransition;
 import util.TokenizedLines;
 
@@ -47,9 +49,9 @@ public abstract class Automaton {
 
 		    for (TraceTrail tt : possibleTrails){
 
-    			ArrayList<PushdownTransition> applicableTransitions = findApplicableTransitionRules(tt.getLast());
+    			AutomatonTransitionSet applicableTransitions = findApplicableTransitionRules(tt.getLast());
     			// Apply each of them to create a new status, that will be evaluated next round.
-    			for (PushdownTransition tr : applicableTransitions){
+    			for (AutomatonTransition tr : applicableTransitions){
                     TraceTrail newTrail = tt.deepEnoughCopy();
                     
     				AutomatonStatus newStatus = applyTransition(tt.getLast(), tr);
@@ -92,7 +94,7 @@ public abstract class Automaton {
     
     protected abstract AutomatonStatus createInitialStatus();
     
-    protected abstract ArrayList<PushdownTransition> findApplicableTransitionRules(AutomatonStatus ms);
+    protected abstract AutomatonTransitionSet findApplicableTransitionRules(AutomatonStatus ms);
     
     protected abstract boolean acceptanceStatus(AutomatonStatus as);
     
@@ -106,7 +108,7 @@ public abstract class Automaton {
      * @param tr    Transition rule to be applied to the status.
      * @return  New automaton status.
      */
-    public abstract AutomatonStatus applyTransition(AutomatonStatus as, PushdownTransition tr);
+    public abstract AutomatonStatus applyTransition(AutomatonStatus as, AutomatonTransition tr);
 	
 	/*
 	 * Getters and setters.

@@ -10,7 +10,6 @@ import automaton.structs.State;
 import automaton.structs.StateSet;
 import automaton.structs.Symbol;
 import automaton.structs.SymbolSet;
-import pushdown.structs.PushdownTransitionSet;
 import turing.algo.TuringIOConst;
 import util.TokenizedLines;
 

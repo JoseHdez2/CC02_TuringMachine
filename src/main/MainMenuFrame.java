@@ -23,6 +23,7 @@ import turing.gui.TuringFrameLoad;
 @SuppressWarnings("serial")
 public class MainMenuFrame extends JFrame {
 
+    @SuppressWarnings("unused")
     private AutomatonFrameLoad frameLoad = null;
     
     private JPanel contentPane;

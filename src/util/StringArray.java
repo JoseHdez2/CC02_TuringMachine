@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class StringArray extends ArrayList<String> {
     
     protected static final String DUMMY_STRING = "dummy";

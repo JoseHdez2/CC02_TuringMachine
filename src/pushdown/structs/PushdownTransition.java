@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
 import automaton.structs.Symbol;
-import turing.structs.TuringTransition;
 
 /**
  * @author jose

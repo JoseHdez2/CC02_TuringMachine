@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import automaton.structs.AutomatonTransitionSet;
 import automaton.structs.State;
 import automaton.structs.Symbol;
-import pushdown.structs.PushdownTransition;
-import pushdown.structs.SymbolList;
 import turing.algo.TuringIOConst;
 import util.TokenizedLines;
 
@@ -19,6 +17,7 @@ import util.TokenizedLines;
  *  
  *  So, we do it more explicitly here.
  */
+@SuppressWarnings("serial")
 public class TuringTransitionSet extends AutomatonTransitionSet implements TuringIOConst{
     
     public TuringTransitionSet(TokenizedLines transitionLines) {
