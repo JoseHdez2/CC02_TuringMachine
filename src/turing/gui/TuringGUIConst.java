@@ -9,8 +9,8 @@ public interface TuringGUIConst {
     // Strings.
     //
     
-    final String STR_WINDOW_TITLE = I18n.getString(GUIStr.TURING_WINDOW_TITLE);
-    final String STR_WINDOW_LOAD = I18n.getString(GUIStr.TURING_WINDOW_LOAD);
+    final String STR_WINDOW_TITLE = I18n.getString(GUIStr.PUSHDOWN_WINDOW_TITLE);
+    final String STR_WINDOW_LOAD = I18n.getString(GUIStr.PUSHDOWN_WINDOW_LOAD);
     
     final String STR_LOAD = I18n.getString(GUIStr.LOAD);
     final String STR_RUN = I18n.getString(GUIStr.RUN);

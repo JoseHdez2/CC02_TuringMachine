@@ -23,11 +23,9 @@ import util.MyTableModel;
 import util.TokenizedLines;
 
 @SuppressWarnings("serial")
-public abstract class AutomatonFrameLoad extends JFrame {
+public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIConst {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
-    
-    protected AutomatonGUIConst GUIConst = new AutomatonGUIConst();
     
     protected String chosenFileFullPath = null;
     protected AutomatonData automatonData = initializeAutomatonData();
@@ -52,10 +50,7 @@ public abstract class AutomatonFrameLoad extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	protected void initialize() {
-	    
-	    initializeGUIConst();
-	    
-		setTitle(GUIConst.get(AutomatonGUIConstEnum.WINDOW_TITLE));
+		setTitle(STR_WINDOW_TITLE);
 		setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -185,8 +180,4 @@ public abstract class AutomatonFrameLoad extends JFrame {
     protected abstract JTable initializeTransitionTable();
     
     protected abstract TokenizedLines getTransitionLines();
-    
-    protected abstract void initializeGUIConst();
-        
-    }
 }

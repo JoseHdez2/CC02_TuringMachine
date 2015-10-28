@@ -5,6 +5,7 @@ import pushdown.structs.SymbolList;
 import turing.algo.TuringIOConst;
 import util.Debug;
 
+@SuppressWarnings("serial")
 public class Tape implements TuringIOConst{
     private SymbolList tape = new SymbolList();
     private Integer headPos = 0;
@@ -20,15 +21,13 @@ public class Tape implements TuringIOConst{
     
     public Tape(String str, Symbol blankSymbol, Integer headPos){
         tape = new SymbolList(str,"");
-//        tape.
-//        if(blankSymbol != null) this.blankSymbol = blankSymbol;
+        if(blankSymbol != null) this.blankSymbol = blankSymbol;
         if(headPos != null) this.headPos = headPos;
     }
     
     public void moveHead(Movement mov){
         Debug deb = new Debug(true);
-        deb.out("beforeMove%nsize:%d, head:%d",tape.size(),headPos);
-        checkHeadIntegrity();
+//        deb.out("before:%s", this.tape);
         
         switch(mov.value){
         case LEFT: this.moveHeadLeft(); break;
@@ -36,7 +35,8 @@ public class Tape implements TuringIOConst{
         case STOP: break;
         }
         
-        deb.out("afterMove%nsize:%d, head:%d",tape.size(),headPos);
+//        deb.out("after:%s", this.tape);
+        deb.out("%d",headPos);
     }
     
     public Symbol readSymbolAtHead(){
@@ -47,53 +47,32 @@ public class Tape implements TuringIOConst{
         return tape.set(headPos, sym);
     }
     
-    private void checkHeadIntegrity(){
-        if (headPos < 0){
-            throw new RuntimeException("OOB head (underflow).");
-        }
-        if (headPos > tape.size()-1){
-            throw new RuntimeException("OOB head (overflow).");
-        }
-    }
-    
     private void moveHeadLeft(){
-        
-        Debug deb = new Debug(true);
-        
-        deb.out("Going left.");
-        if (headPos.equals(0)){
-            deb.out("Would underflow; prepending blank.");
+        headPos = headPos-1;
+        if(headPos < 0){
             tape.add(0, blankSymbol);
-        } else {
-            headPos--;
+            headPos = 0;
         }
     }
     
     private void moveHeadRight(){
-
-        Debug deb = new Debug(true);
-        
-        deb.out("Going right.");
-        if (headPos == tape.size()-1){
-            deb.out("Would overflow; appending blank.");
+        headPos = headPos + 1;
+        if(headPos >= tape.size()){
             tape.add(blankSymbol);
+            headPos = tape.size()-1; // TODO: redundant.
         }
-        headPos++;
     }
     
     public Tape deepEnoughCopy(){
-        Debug deb = new Debug(true);
-        deb.out("beforeCopy%nsize:%d, head:%d",tape.size(),headPos);
         Tape copyTape = new Tape("", blankSymbol, headPos);
         copyTape.tape.addAll(this.tape);
-        deb.out("afterCopy%nsize:%d, head:%d",tape.size(),headPos);
         return copyTape;
     }
     
     public String toString(){
         String str = "";
         for (int i = 0; i < tape.size(); i++){
-            if (headPos.equals(i))
+            if (i == headPos)
                 str += String.format("[%s]", tape.get(i));
             else
                 str += String.format("%s", tape.get(i));
@@ -106,7 +85,7 @@ public class Tape implements TuringIOConst{
      */
     
     public boolean equals(Object ob){
-        if (!super.equals(ob)) return false; // TODO: Hope this is OK.
+        if (!super.equals(ob)) return false; // TODO: Hope this is ok.
         if (ob == null) return false;
         if (ob.getClass() != getClass()) return false;
         Tape other = (Tape)ob;

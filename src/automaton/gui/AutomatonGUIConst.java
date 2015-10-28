@@ -1,17 +1,10 @@
 package automaton.gui;
 
-import java.util.HashMap;
-
 import i18n.GUIStr;
 import i18n.I18n;
 
-public class AutomatonGUIConst extends HashMap<AutomatonGUIConst, Object> {
-    
-    public AutomatonGUIConst(){
-       super();
-       this.put(WINDOW_TITLE, value)
-    }
-    
+public interface AutomatonGUIConst {
+
     //
     // Strings.
     //
@@ -39,6 +32,8 @@ public class AutomatonGUIConst extends HashMap<AutomatonGUIConst, Object> {
     // change to true if you want an English interface.
     boolean englishGUI = false;
     int lang = englishGUI ? 0 : 1;
+    
+
 
     String[][] tableTransDummyData =
         {

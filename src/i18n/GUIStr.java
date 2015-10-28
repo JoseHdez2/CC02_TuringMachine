@@ -1,0 +1,14 @@
+package i18n;
+
+public enum GUIStr {
+    MAIN_TITLE,
+    LOAD,
+    RUN,
+    TRACE,
+    TRANSITIONS,
+    PUSHDOWN_WINDOW_TITLE,
+    PUSHDOWN_WINDOW_LOAD,
+    TURING_WINDOW_TITLE,
+    TURING_WINDOW_LOAD
+}
+
