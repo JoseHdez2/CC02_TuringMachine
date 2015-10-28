@@ -5,5 +5,5 @@ a1 a2 a3 # alfabeto salida
 q1 # estado inicial
 b # simbolo blanco
 q2 q3 # estados de aceptacion
-q1 a1 q2 a2 m # funcion de transicion: d(q1,a1) = (q2,a2,m)
+q1 a1 q2 a2 r # funcion de transicion: d(q1,a1) = (q2,a2,m)
 # cada una de las transiciones en una linea distinta

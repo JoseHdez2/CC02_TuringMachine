@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 // TODO: Add level of abstraction over Automaton, rename to NonDeterministic.
 // TODO: Abstract separation of input and output values in transitions, to allow for generic code.
 // Generic code both in finding applicable transitions, as well as applying a transition to a status.
+// TODO: Use ArrayList#ensureCapacity instead of pushing dummy strings.
 
 public class Main {
     /**

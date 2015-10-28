@@ -41,6 +41,7 @@ public class TuringAutomaton extends Automaton {
         
         for (AutomatonTransition tr : data.getTransitionRules()){
             TuringTransition ttr = (TuringTransition)tr;
+            
             if (!tr.getPrevState().equals(ts.getCurrentState())) continue;
             if (!tr.getInputCharacter().equals(ts.getTape().readSymbolAtHead())) continue;
             

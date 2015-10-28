@@ -16,26 +16,21 @@ public class TuringFrameLoad extends AutomatonFrameLoad implements TuringGUICons
 
     @Override
     protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
-        // TODO Auto-generated method stub
         return new TuringFrameTrace(automatonData, inputString);
     }
 
     @Override
     protected AutomatonData readDataFromFile(String fullFilePath) {
-        // TODO Auto-generated method stub
         try {
             return new TuringData(fullFilePath);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-//            return new TuringData();
             return null;
         }
     }
 
     @Override
     protected AutomatonData initializeAutomatonData() {
-        // TODO Auto-generated method stub
         return new TuringData();
     }
 
