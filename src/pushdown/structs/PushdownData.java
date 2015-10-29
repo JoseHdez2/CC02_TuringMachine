@@ -9,7 +9,7 @@ import automaton.structs.State;
 import automaton.structs.StateSet;
 import automaton.structs.Symbol;
 import automaton.structs.SymbolSet;
-import pushdown.main.PushdownIOConst;
+import pushdown.main.FrameConstPushdown;
 import util.TokenizedLines;
 
 /**
@@ -22,7 +22,7 @@ import util.TokenizedLines;
  *  by the AutomataIO class.
  */
 @SuppressWarnings("serial")
-public class PushdownData extends AutomatonData implements PushdownIOConst{
+public class PushdownData extends AutomatonData implements FrameConstPushdown{
 
     HashSet<Symbol> stackAlphabet;
     Symbol initialStackSymbol;

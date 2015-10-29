@@ -13,7 +13,7 @@ import automaton.structs.AutomatonData;
 import util.MyTableModel;
 
 @SuppressWarnings("serial")
-public abstract class AutomatonFrameTrace extends JFrame {
+public abstract class FrameAutomatonTrace extends JFrame {
 
     protected AutomatonData automatonData = null;
     protected Automaton myAutomaton = null;
@@ -54,7 +54,7 @@ public abstract class AutomatonFrameTrace extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public AutomatonFrameTrace(AutomatonData automatonData, String inputString) {
+	public FrameAutomatonTrace(AutomatonData automatonData, String inputString) {
 	    this.automatonData = automatonData;
 	    this.inputString = inputString;
 	    setTitle(STR_WINDOW_TITLE[lang]);

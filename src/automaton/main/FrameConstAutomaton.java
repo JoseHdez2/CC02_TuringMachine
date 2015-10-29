@@ -1,9 +1,9 @@
-package turing.gui;
+package automaton.main;
 
 import i18n.GUIStr;
 import i18n.I18n;
 
-public interface TuringGUIConst {
+public interface FrameConstAutomaton {
 
     //
     // Strings.
@@ -41,8 +41,8 @@ public interface TuringGUIConst {
         };
     String[][] tableTransColumns = 
         {
-            {"IN State", "IN Symbol", "OUT State", "OUT Symbol", "Movement"},
-            {"Estado IN", "Simbolo IN", "Estado OUT", "Simbolo OUT", "Movimiento"},
+            {"State 1", "State 2", "Input", "Stack Pop", "Stack Push"},
+            {"Estado 1", "Estado 2", "Entrada", "De pila", "A pila"},
         };
     
     String[][] tableTraceDummyData =
@@ -52,7 +52,7 @@ public interface TuringGUIConst {
     
     String[][] tableTraceColumns = 
         {
-            {"Current State", "Current Tape"},
-            {"Estado Actual", "Cinta Actual"},
+            {"Current State", "Remaining String", "Stack Content"},
+            {"Estado Actual", "Cadena Restante", "Contenido de Pila"},
         };
 }

@@ -1,4 +1,4 @@
-package turing.gui;
+package turing.main;
 
 import automaton.main.Automaton;
 import automaton.structs.AutomatonData;

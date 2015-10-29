@@ -1,12 +1,12 @@
-package turing.gui;
+package turing.main;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JTable;
 
-import automaton.main.AutomatonFrameLoad;
-import automaton.main.AutomatonFrameTrace;
+import automaton.main.FrameAutomatonLoad;
+import automaton.main.FrameAutomatonTrace;
 import automaton.structs.AutomatonData;
 import i18n.GUIStr;
 import i18n.I18n;
@@ -15,10 +15,10 @@ import turing.structs.TuringTransitionSet;
 import util.TokenizedLines;
 
 @SuppressWarnings("serial")
-public class FrameTuringLoad extends AutomatonFrameLoad implements TuringGUIConst{
+public class FrameTuringLoad extends FrameAutomatonLoad implements FrameConstTuring{
 
     @Override
-    protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
+    protected FrameAutomatonTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
         // TODO Auto-generated method stub
         return new FrameTuringTrace(automatonData, inputString);
     }
@@ -44,7 +44,7 @@ public class FrameTuringLoad extends AutomatonFrameLoad implements TuringGUICons
 
     @Override
     protected JTable initializeTransitionTable() {
-        return new JTable(TuringGUIConst.tableTransDummyData, TuringGUIConst.tableTransColumns[0]);
+        return new JTable(FrameConstTuring.tableTransDummyData, FrameConstTuring.tableTransColumns[0]);
     }
 
     @Override

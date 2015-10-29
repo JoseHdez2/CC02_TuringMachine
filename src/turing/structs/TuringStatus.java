@@ -26,7 +26,6 @@ public class TuringStatus extends AutomatonStatus{
         
         ArrayList<String> strArr = new ArrayList<String>();
         
-        
         // TODO Auto-generated method stub
         return strArr;
     }

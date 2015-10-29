@@ -10,7 +10,7 @@ import automaton.structs.State;
 import automaton.structs.StateSet;
 import automaton.structs.Symbol;
 import automaton.structs.SymbolSet;
-import turing.gui.TuringIOConst;
+import turing.main.TuringIOConst;
 import util.TokenizedLines;
 
 /**

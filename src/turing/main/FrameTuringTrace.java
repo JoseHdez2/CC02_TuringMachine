@@ -1,11 +1,11 @@
-package turing.gui;
+package turing.main;
 
-import automaton.main.AutomatonFrameTrace;
+import automaton.main.FrameAutomatonTrace;
 import automaton.structs.AutomatonData;
 import turing.structs.TuringData;
 
 @SuppressWarnings("serial")
-public class FrameTuringTrace extends AutomatonFrameTrace{
+public class FrameTuringTrace extends FrameAutomatonTrace{
 
     public FrameTuringTrace(AutomatonData automatonData, String inputString) {
         super(automatonData, inputString);

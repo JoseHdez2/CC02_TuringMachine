@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import javax.swing.JTable;
 
-import automaton.main.AutomatonFrameLoad;
-import automaton.main.AutomatonFrameTrace;
+import automaton.main.FrameAutomatonLoad;
+import automaton.main.FrameAutomatonTrace;
 import automaton.structs.AutomatonData;
 import pushdown.structs.PushdownData;
 import util.TokenizedLines;
 
 @SuppressWarnings("serial")
-public class FramePushdownLoad extends AutomatonFrameLoad{
+public class FramePushdownLoad extends FrameAutomatonLoad{
     
     @Override
-    protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
+    protected FrameAutomatonTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
         // TODO: Nasty typecast, for the sake of inheritance.
         return new FramePushdownTrace((PushdownData)automatonData, inputString);
     }

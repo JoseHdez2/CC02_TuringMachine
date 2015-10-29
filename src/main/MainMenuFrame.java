@@ -14,17 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import automaton.main.AutomatonFrameLoad;
+import automaton.main.FrameAutomatonLoad;
 import i18n.GUIStr;
 import i18n.I18n;
 import pushdown.main.FramePushdownLoad;
-import turing.gui.FrameTuringLoad;
+import turing.main.FrameTuringLoad;
 
 @SuppressWarnings("serial")
 public class MainMenuFrame extends JFrame {
 
     @SuppressWarnings("unused")
-    private AutomatonFrameLoad frameLoad = null;
+    private FrameAutomatonLoad frameLoad = null;
     
     private JPanel contentPane;
 

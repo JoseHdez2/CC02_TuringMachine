@@ -23,7 +23,7 @@ import util.MyTableModel;
 import util.TokenizedLines;
 
 @SuppressWarnings("serial")
-public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIConst {
+public abstract class FrameAutomatonLoad extends JFrame implements FrameConstAutomaton {
 //    TODO: be able to consider acceptance states to accept string (in pushdown)
 //    TODO: have the tables in the GUI be scrollable (somehow they aren't)
     
@@ -31,7 +31,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
     protected AutomatonData automatonData = initializeAutomatonData();
     protected JTextField inputStringField = null;
     
-    protected AutomatonFrameTrace automatonFrameTrace;
+    protected FrameAutomatonTrace frameAutomatonTrace;
     protected JLabel labelFilename = new JLabel("---");
     protected JTable tableTrans = new JTable();
     protected JScrollPane scrollPane = new JScrollPane();
@@ -41,7 +41,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	/**
 	 * Create the application.
 	 */
-	public AutomatonFrameLoad() {
+	public FrameAutomatonLoad() {
       setVisible(true);
       initialize();
 	}
@@ -130,8 +130,8 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
             @Override
             public void actionPerformed(ActionEvent e) {
                 String inputString = inputStringField.getText();
-                automatonFrameTrace = createAutomatonFrameTrace(automatonData, inputString);
-                automatonFrameTrace.setVisible(true);
+                frameAutomatonTrace = createAutomatonFrameTrace(automatonData, inputString);
+                frameAutomatonTrace.setVisible(true);
             }
             
         });
@@ -166,7 +166,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	 * To be implemented by inheriting classes.
 	 */
 	
-    protected abstract AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString);
+    protected abstract FrameAutomatonTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString);
     // automatonFrameTrace = new AutomatonFrameTrace(automatonData, inputString);
     
     // TODO: Since AutomatonData cannot be instantiated.

@@ -8,7 +8,7 @@ package pushdown.main;
  *  that were chosen as the input/output standard.
  *  It helps give semantics to the base string data.
  */
-public interface PushdownIOConst {
+public interface FrameConstPushdown {
     
     /*
      * Input constants.

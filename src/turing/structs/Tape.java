@@ -2,7 +2,7 @@ package turing.structs;
 
 import automaton.structs.Symbol;
 import pushdown.structs.SymbolList;
-import turing.gui.TuringIOConst;
+import turing.main.TuringIOConst;
 import util.Debug;
 
 @SuppressWarnings("serial")
@@ -51,18 +51,18 @@ public class Tape implements TuringIOConst{
     
     private void moveHeadLeft(){
         headPos = headPos-1;
-        if(headPos < 0){
-            tape.add(0, blankSymbol);
-            headPos = 0;
-        }
+//        if(headPos < 0){
+//            tape.add(0, blankSymbol);
+//            headPos = 0;
+//        }
     }
     
     private void moveHeadRight(){
         headPos = headPos + 1;
-        if(headPos >= tape.size()){
-            tape.add(blankSymbol);
-            headPos = tape.size()-1; // TODO: redundant.
-        }
+//        if(headPos >= tape.size()-1){
+//            tape.add(blankSymbol);
+//            headPos = tape.size()-1; // TODO: redundant.
+//        }
     }
     
     public Tape deepEnoughCopy(){

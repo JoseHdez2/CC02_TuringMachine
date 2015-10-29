@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import automaton.structs.AutomatonTransitionSet;
 import automaton.structs.State;
 import automaton.structs.Symbol;
-import pushdown.main.PushdownIOConst;
+import pushdown.main.FrameConstPushdown;
 import util.TokenizedLines;
 
 /**
@@ -17,7 +17,7 @@ import util.TokenizedLines;
  *  
  *  So, we do it more explicitly here.
  */
-public class PushdownTransitionSet extends AutomatonTransitionSet implements PushdownIOConst {
+public class PushdownTransitionSet extends AutomatonTransitionSet implements FrameConstPushdown {
 
     public PushdownTransitionSet(TokenizedLines transitionLines) {
         super(transitionLines);

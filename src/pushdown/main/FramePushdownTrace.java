@@ -1,10 +1,10 @@
 package pushdown.main;
 
-import automaton.main.AutomatonFrameTrace;
+import automaton.main.FrameAutomatonTrace;
 import automaton.structs.AutomatonData;
 import pushdown.structs.PushdownData;
 
-public class FramePushdownTrace extends AutomatonFrameTrace {
+public class FramePushdownTrace extends FrameAutomatonTrace {
 
     public FramePushdownTrace(AutomatonData automatonData, String inputString) {
         super(automatonData, inputString);

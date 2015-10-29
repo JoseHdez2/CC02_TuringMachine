@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import automaton.structs.AutomatonTransition;
 import automaton.structs.State;
 import automaton.structs.Symbol;
-import turing.gui.TuringIOConst;
+import turing.main.TuringIOConst;
 import util.StringArray;
 
 /**
