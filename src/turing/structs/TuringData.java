@@ -51,7 +51,9 @@ public class TuringData extends AutomatonData implements TuringIOConst {
     
         initialState = new State(tokLines.get(IN_FILE_INIT_STATE).get(0));
     
-        blankSymbol = new Symbol(tokLines.get(IN_FILE_BLANK_SYM).get(0));
+//        blankSymbol = new Symbol(tokLines.get(IN_FILE_BLANK_SYM).get(0));
+        // TODO: shortcircuit, override, hotfix.
+        blankSymbol = new Symbol("*");
     
         acceptStates = new StateSet(tokLines.get(IN_FILE_ACCEPT_STATES));
         
