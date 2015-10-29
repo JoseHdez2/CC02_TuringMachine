@@ -1,22 +1,22 @@
-package pushdown.gui;
+package pushdown.main;
 
 import java.io.IOException;
 
 import javax.swing.JTable;
 
-import automaton.gui.AutomatonFrameLoad;
-import automaton.gui.AutomatonFrameTrace;
+import automaton.main.AutomatonFrameLoad;
+import automaton.main.AutomatonFrameTrace;
 import automaton.structs.AutomatonData;
 import pushdown.structs.PushdownData;
 import util.TokenizedLines;
 
 @SuppressWarnings("serial")
-public class PushdownFrameLoad extends AutomatonFrameLoad{
+public class FramePushdownLoad extends AutomatonFrameLoad{
     
     @Override
     protected AutomatonFrameTrace createAutomatonFrameTrace(AutomatonData automatonData, String inputString) {
         // TODO: Nasty typecast, for the sake of inheritance.
-        return new PushdownFrameTrace((PushdownData)automatonData, inputString);
+        return new FramePushdownTrace((PushdownData)automatonData, inputString);
     }
 
     @Override
@@ -44,6 +44,12 @@ public class PushdownFrameLoad extends AutomatonFrameLoad{
 
     @Override
     protected TokenizedLines getTransitionLines() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected String str(String strId) {
         // TODO Auto-generated method stub
         return null;
     }

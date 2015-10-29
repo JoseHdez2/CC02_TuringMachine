@@ -1,4 +1,4 @@
-package automaton.algo;
+package automaton.main;
 
 /**
  * @author jose

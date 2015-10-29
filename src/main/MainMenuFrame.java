@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import automaton.gui.AutomatonFrameLoad;
+import automaton.main.AutomatonFrameLoad;
 import i18n.GUIStr;
 import i18n.I18n;
-import pushdown.gui.PushdownFrameLoad;
-import turing.gui.TuringFrameLoad;
+import pushdown.main.FramePushdownLoad;
+import turing.gui.FrameTuringLoad;
 
 @SuppressWarnings("serial")
 public class MainMenuFrame extends JFrame {
@@ -60,7 +60,7 @@ public class MainMenuFrame extends JFrame {
         JButton btnPushdownAutomaton = new JButton(STR_PUSHDOWN);
         btnPushdownAutomaton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frameLoad = new PushdownFrameLoad();
+                frameLoad = new FramePushdownLoad();
             }
         });
         btnPushdownAutomaton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -73,7 +73,7 @@ public class MainMenuFrame extends JFrame {
         btnTuringMachine.setHorizontalAlignment(SwingConstants.RIGHT);
         btnTuringMachine.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frameLoad = new TuringFrameLoad();
+                frameLoad = new FrameTuringLoad();
             }
         });
         btnTuringMachine.setAlignmentX(Component.CENTER_ALIGNMENT);   

@@ -1,4 +1,4 @@
-package automaton.algo;
+package automaton.main;
 
 import java.io.IOException;
 import java.util.ArrayList;

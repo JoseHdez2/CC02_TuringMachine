@@ -1,13 +1,12 @@
-package pushdown.gui;
+package pushdown.main;
 
-import automaton.gui.AutomatonFrameTrace;
+import automaton.main.AutomatonFrameTrace;
 import automaton.structs.AutomatonData;
-import pushdown.algo.PushdownAutomaton;
 import pushdown.structs.PushdownData;
 
-public class PushdownFrameTrace extends AutomatonFrameTrace {
+public class FramePushdownTrace extends AutomatonFrameTrace {
 
-    public PushdownFrameTrace(AutomatonData automatonData, String inputString) {
+    public FramePushdownTrace(AutomatonData automatonData, String inputString) {
         super(automatonData, inputString);
         // TODO Auto-generated constructor stub
     }

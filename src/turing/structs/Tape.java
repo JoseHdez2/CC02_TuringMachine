@@ -2,7 +2,7 @@ package turing.structs;
 
 import automaton.structs.Symbol;
 import pushdown.structs.SymbolList;
-import turing.algo.TuringIOConst;
+import turing.gui.TuringIOConst;
 import util.Debug;
 
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public class Tape implements TuringIOConst{
         if(headPos != null) this.headPos = headPos;
     }
     
-    public void moveHead(Movement mov){
+    public Tape moveHead(Movement mov){
         Debug deb = new Debug(true);
 //        deb.out("before:%s", this.tape);
         
@@ -37,14 +37,16 @@ public class Tape implements TuringIOConst{
         
 //        deb.out("after:%s", this.tape);
         deb.out("%d",headPos);
+        return this;
     }
     
     public Symbol readSymbolAtHead(){
         return tape.get(headPos);
     }
     
-    public Symbol writeSymbolAtHead(Symbol sym){
-        return tape.set(headPos, sym);
+    public Tape writeSymbolAtHead(Symbol sym){
+        tape.set(headPos, sym);
+        return this;
     }
     
     private void moveHeadLeft(){

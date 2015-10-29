@@ -1,4 +1,4 @@
-package automaton.gui;
+package automaton.main;
 
 import java.awt.BorderLayout;
 import java.awt.FileDialog;
@@ -50,7 +50,7 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
 	 * Initialize the contents of the frame.
 	 */
 	protected void initialize() {
-		setTitle(STR_WINDOW_TITLE);
+		setTitle(str("STR_WINDOW_TITLE"));
 		setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -180,4 +180,6 @@ public abstract class AutomatonFrameLoad extends JFrame implements AutomatonGUIC
     protected abstract JTable initializeTransitionTable();
     
     protected abstract TokenizedLines getTransitionLines();
+    
+    protected abstract String str(String strId);
 }

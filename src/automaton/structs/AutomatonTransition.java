@@ -2,7 +2,7 @@ package automaton.structs;
 
 import java.util.ArrayList;
 
-import automaton.algo.AutomatonIOConst;
+import automaton.main.AutomatonIOConst;
 import util.StringArray;
 
 /**

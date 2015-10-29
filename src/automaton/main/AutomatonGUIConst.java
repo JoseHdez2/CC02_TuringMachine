@@ -1,4 +1,4 @@
-package automaton.gui;
+package automaton.main;
 
 import i18n.GUIStr;
 import i18n.I18n;

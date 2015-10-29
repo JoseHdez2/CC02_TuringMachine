@@ -1,6 +1,6 @@
-package pushdown.algo;
+package pushdown.main;
 
-import automaton.algo.Automaton;
+import automaton.main.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;

@@ -1,6 +1,6 @@
-package turing.algo;
+package turing.gui;
 
-import automaton.algo.Automaton;
+import automaton.main.Automaton;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonStatus;
 import automaton.structs.AutomatonTransition;
@@ -13,9 +13,12 @@ import turing.structs.TuringTransitionSet;
 
 public class TuringAutomaton extends Automaton {
     
+    protected TuringData data;
+    
     public TuringAutomaton(AutomatonData data) {
         super(data);
-        // TODO Auto-generated constructor stub
+        this.data = (TuringData)data;
+        // TODO Constructor raro.
     }
 
     @Override
@@ -60,13 +63,15 @@ public class TuringAutomaton extends Automaton {
 
     @Override
     public TuringStatus applyTransition(AutomatonStatus as, AutomatonTransition tr) {
+        // Type-casting, to 'specify' from the general inherited algorithm.
         TuringStatus ts = (TuringStatus)as;
         TuringTransition ttr = (TuringTransition)tr;
         
-        State newState = ttr.getNextState();
-        Tape newTape = ts.getTape().deepEnoughCopy();
-        newTape.moveHead(ttr.getMovement());
-        newTape.writeSymbolAtHead(ttr.getOutputCharacter());
+        // Construct the new status:
+        State newState = ttr.getNextState();    // the state will be the transition's output state.
+        Tape newTape = ts.getTape().deepEnoughCopy(); // the tape will be the same, except we...
+        newTape = newTape.writeSymbolAtHead(ttr.getOutputCharacter()); // ...write transition symbol.
+        newTape = newTape.moveHead(ttr.getMovement()); // ...move tape head.
         
         return new TuringStatus(newState, newTape);
     }

@@ -1,4 +1,4 @@
-package automaton.gui;
+package automaton.main;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import automaton.algo.Automaton;
 import automaton.structs.AutomatonData;
 import util.MyTableModel;
 

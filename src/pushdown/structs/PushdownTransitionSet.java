@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import automaton.structs.AutomatonTransitionSet;
 import automaton.structs.State;
 import automaton.structs.Symbol;
-import pushdown.algo.PushdownIOConst;
+import pushdown.main.PushdownIOConst;
 import util.TokenizedLines;
 
 /**

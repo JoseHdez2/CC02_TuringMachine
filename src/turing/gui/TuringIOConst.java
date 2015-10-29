@@ -1,4 +1,4 @@
-package turing.algo;
+package turing.gui;
 
 import automaton.structs.Symbol;
 

@@ -3,14 +3,14 @@ package turing.structs;
 import java.io.IOException;
 import java.util.HashSet;
 
-import automaton.algo.AutomatonFile;
+import automaton.main.AutomatonFile;
 import automaton.structs.AutomatonData;
 import automaton.structs.AutomatonTransitionSet;
 import automaton.structs.State;
 import automaton.structs.StateSet;
 import automaton.structs.Symbol;
 import automaton.structs.SymbolSet;
-import turing.algo.TuringIOConst;
+import turing.gui.TuringIOConst;
 import util.TokenizedLines;
 
 /**
